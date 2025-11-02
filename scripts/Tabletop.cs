@@ -6,48 +6,49 @@ using System.Drawing;
 [GlobalClass]
 public partial class Tabletop : Node3D
 {
-    public const int TABLETOP_SIZE = 3;
-    public static int[][] table = new int[TABLETOP_SIZE][];
+    public const int TABLETOP_WIDTH = 4;
+    public const int TABLETOP_HEIGHT = 5;
+
+    [Export]
+    public Node3D tableRectBegin;
+    [Export]
+    public float tileSize = 0.1f;
+
+    public static TabletopTile[][] table = new TabletopTile[TABLETOP_HEIGHT][];
 
     public static Tabletop Instance;
 
     public static Tween animationTween;
 
-    public List<PlacedObject> objects = new();
-
-    [Export]
-    public Node3D tableRectBegin;
-
-    [Export]
-    public float tableSlotRectSize;
 
 
-    
+
+
 
     [Signal]
     public delegate void OnPlaceCreatureEventHandler(CreatureData card, Vector2I position);
 
 
+
     public static List<Vector2I> GetPlaceablePositions(CardEffect effect)
     {
-        if (effect is SpawnCreatureCardEffect)
+
+        var list = new List<Vector2I>();
+
+        for (int y = 0; y < TABLETOP_HEIGHT; y++)
         {
-            var list = TurnState.isPlayerTurn ?
-            new List<Vector2I> {
-                new Vector2I(2, 0),
-                new Vector2I(2, 1),
-                new Vector2I(2, 2)
+            for (int x = 0; x < TABLETOP_WIDTH; x++)
+            {
+                list.Add(new Vector2I(x, y));
             }
-            : new List<Vector2I> {
-                new Vector2I(0, 0),
-                new Vector2I(0, 1),
-                new Vector2I(0, 2)
-            };
-
-            //TODO: Check whenever there are unities or traps in the chosen positions.
-
-            return list;
         }
+
+        return list;
+
+        // if (effect is SpawnCreatureCardEffect)
+        // {
+
+        // }
         // else if (card is SpellCard)
         // {
 
@@ -83,11 +84,18 @@ public partial class Tabletop : Node3D
 
     // }
 
+    public static TabletopTile GetNextTile(TabletopTile current, int direction)
+    {
+        int newY = current.tilePosition.Y + direction;
+
+        if(newY >= TABLETOP_HEIGHT || newY < 0){ return null;  }
+
+        return table[current.tilePosition.X][newY];
+    }
 
     public static void MoveCreatures()
     {
         animationTween = Instance.CreateTween();
-        if (Instance.objects.Count < 1) return;
         if (TurnState.isPlayerTurn) Instance.MovePlayerCreatures();
         else Instance.MoveEnemyCreatures();
         animationTween.TweenInterval(0.5);
@@ -95,14 +103,15 @@ public partial class Tabletop : Node3D
 
     public void MovePlayerCreatures()
     {
-        for (int y = 0; y < TABLETOP_SIZE; y++)
+        for (int y = 0; y < TABLETOP_HEIGHT; y++)
         { 
-            for (int x = 0; x < TABLETOP_SIZE; x++)
+            for (int x = 0; x < TABLETOP_WIDTH; x++)
             {
-                var obj = objects[table[y][x]];
-                if (obj is Creature creature && creature.isPlayerObject)
+                var tile = table[x][y];
+                var creature = tile.containsCreature();
+                if (creature != null)
                 {
-                    TryMoveCreature(x,y, creature, -1);
+                    TryMoveCreature(creature, tile, -1);
                 }
             }
         }
@@ -110,25 +119,26 @@ public partial class Tabletop : Node3D
     
     public void MoveEnemyCreatures()
     {
-        for (int y = TABLETOP_SIZE-1; y >= 0; y--)
+        for (int y = TABLETOP_HEIGHT-1; y >= 0; y--)
         { 
-            for (int x = TABLETOP_SIZE-1; x >= 0 ; x--)
+            for (int x = TABLETOP_WIDTH-1; x >= 0 ; x--)
             {
-                var obj = objects[table[y][x]];
-                if (obj is Creature creature && !creature.isPlayerObject)
+                var tile = table[x][y];
+                var creature = tile.containsCreature();
+                if (creature != null)
                 {
-                    TryMoveCreature(x,y, creature, 1);
+                    TryMoveCreature(creature, tile, 1);
                 }
             }
         }
     }
 
-    public void TryMoveCreature(int x, int y, Creature creature, int direction)
+    public void TryMoveCreature(Creature creature, TabletopTile currentTile, int direction)
     {
-        
+        var nextTile = GetNextTile(currentTile, direction);
         
 
-        if (y + direction > TABLETOP_SIZE || y + direction < 0)
+        if (nextTile == null)
         {
             EmitSignal("RoundOver", TurnState.isPlayerTurn);///TODO: Make this signal mean that the current player won the round.
             //TODO: Add death animation
@@ -137,39 +147,41 @@ public partial class Tabletop : Node3D
             return;
         }
 
-        if (table[y + direction][x] == -1)
+        var nextTileCreature = nextTile.containsCreature();
+
+        if (nextTileCreature == null)
         {
-            animationTween.TweenProperty(creature, "position", TranslatePositionToLocalSpace(x, y + direction), 0.5);
+            animationTween.TweenProperty(creature, "position", new
+            Vector3(nextTile.Position.X, creature.Position.Y, nextTile.Position.Z), 0.5);
 
-            int tmp = table[y][x];
-            table[y][x] = -1;
-            y += direction;
-            table[y][x] = tmp;
+            currentTile.objectsInThisTile.Remove(creature);
+            nextTile.objectsInThisTile.Add(creature);
 
-            creature.position = new Vector2I(x, y);
+            creature.position = nextTile.tilePosition;
 
             creature.data.MoveEffect();
         }
-        else if (objects[table[y + direction][x]] is Creature enemyCreature && enemyCreature.isPlayerObject != TurnState.isPlayerTurn)
+        else if (nextTileCreature.isPlayerObject != TurnState.isPlayerTurn)
         {
-            animationTween.TweenProperty(creature, "position", TranslatePositionToLocalSpace(x, y + direction), 0.2).SetTrans(Tween.TransitionType.Quad);
-            animationTween.TweenProperty(creature, "position", TranslatePositionToLocalSpace(x, y), 0.3);
+            animationTween.TweenProperty(creature, "position",
+                new Vector3(nextTile.Position.X, creature.Position.Y, nextTile.Position.Z), 0.2).SetTrans(Tween.TransitionType.Quad);
+            animationTween.TweenProperty(creature, "position", new Vector3(currentTile.Position.X, creature.Position.Y, currentTile.Position.Z), 0.3);
             animationTween.TweenInterval(0.5);
 
 
-            enemyCreature.currentHp -= creature.currentDamage;
+            nextTileCreature.currentHp -= creature.currentDamage;
 
-            creature.data.AttackEffect(enemyCreature);
+            creature.data.AttackEffect(nextTileCreature);
 
-            if (enemyCreature.currentHp > 0)
+            if (nextTileCreature.currentHp > 0)
             {
-                enemyCreature.data.SurviveEffect(creature);
+                nextTileCreature.data.SurviveEffect(creature);
             }
             else
             {
-                enemyCreature.data.DeathEffect(creature);
+                nextTileCreature.data.DeathEffect(creature);
                 animationTween.TweenInterval(1);
-                animationTween.TweenCallback(Callable.From( () => KillCreature(enemyCreature) ) );
+                animationTween.TweenCallback(Callable.From(() => KillCreature(nextTileCreature, nextTile)));
             }
         }
 
@@ -178,16 +190,15 @@ public partial class Tabletop : Node3D
 
     }
 
-    public void KillCreature(Creature creature)
+    public void KillCreature(Creature creature, TabletopTile tile)
     { 
-        objects.Remove(creature);
-        table[creature.position.Y][creature.position.X] = -1;
+        tile.objectsInThisTile.Remove(creature);
         creature.QueueFree();
     }
 
     public static Vector3 TranslatePositionToLocalSpace(int x, int y)
     {
-        return Instance.tableRectBegin.Position + Instance.tableSlotRectSize * new Vector3(x, y, 0);
+        return Instance.tableRectBegin.Position + Instance.tileSize * new Vector3(x, y, 0);
     }
 
 
@@ -197,7 +208,35 @@ public partial class Tabletop : Node3D
         if (Instance == null) Instance = this;
         else if (Instance != this) {QueueFree(); return;}
 
-        for (int i = 0; i < TABLETOP_SIZE; i++) table[i] = new int[TABLETOP_SIZE];
+        for (int x = 0; x < TABLETOP_WIDTH; x++)
+        {
+            table[x] = new TabletopTile[TABLETOP_HEIGHT];
+            for (int y = 0; y < TABLETOP_HEIGHT; y++)
+            {
+                var tile = new TabletopTile { Scale = Vector3.One/this.Scale.X};
+
+                var mesh = new MeshInstance3D()
+                {
+                    Mesh = new BoxMesh { Size = new Vector3(tileSize, 1, tileSize)  },
+                };
+
+                tile.AddChild(mesh);
+
+                var collision = new CollisionShape3D();
+                collision.Shape = new BoxShape3D { Size = new Vector3(tileSize, 1, tileSize) };
+
+                tile.AddChild(collision);
+
+                tile.tilePosition = new Vector2I(x, y);
+                table[x][y] = tile;
+
+
+                tile.Position = tableRectBegin.Position + (Vector3.Right * (x * tileSize)) + (Vector3.Forward * (y * tileSize ));
+                
+
+                AddChild(tile);
+            }
+        }
 
         OnPlaceCreature += PlaceCreature;
     }

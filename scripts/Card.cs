@@ -2,13 +2,10 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class Card : Node3D
+public partial class Card : Area3D
 {
     
     public CardEffect effect;
-
-    [Export]
-    public Area3D collision;
 
     public void Select()
     {
@@ -23,11 +20,11 @@ public partial class Card : Node3D
         //TODO! Make the card visuals appear!
     }
 
-    public bool TryPlace(Vector2I position)
+    public bool TryPlace(TabletopTile tile)
     {
-        if (Tabletop.GetPlaceablePositions(effect).Contains(position))
+        if (tile.IsTileValid(this.effect)) //Verificar se a posição é válida
         {
-            effect.ApplyEffects(position);
+            effect.ApplyEffects(tile.tilePosition);
             return true;
         }
         return false;
@@ -37,8 +34,8 @@ public partial class Card : Node3D
     public override void _Ready()
     {
         base._Ready();
-        collision.InputCaptureOnDrag = true;
-        collision.InputRayPickable = true;
+        InputCaptureOnDrag = true;
+        InputRayPickable = true;
     }
 
     private Vector3 defaultPos;

@@ -45,8 +45,7 @@ public partial class GameCamera : Camera3D
 
             if (result.Count > 0)
             {
-                var collider = (Node3D)result["collider"];
-                var cardLooked = collider.GetParent<Card>();
+                var cardLooked = (Card)result["collider"];
                 GD.Print(cardLooked);
                 if (cardLooked != lastCardLooked)
                 {

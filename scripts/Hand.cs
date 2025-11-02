@@ -69,11 +69,11 @@ public partial class Hand : Node3D
 
 
 
-    public virtual bool TryPlay(Card card, Vector2I position)
+    public virtual bool PlayCard(Card card, TabletopTile tile)
     {
         //TODO: Dispawn placeable positions vfx for the selected card;
 
-        bool placed = card.TryPlace(position);
+        bool placed = card.TryPlace(tile);
 
         if (placed)
         {
