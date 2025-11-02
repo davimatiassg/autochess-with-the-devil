@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpcmktm2l5pqe"]
+
+[ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
+
+[node name="TabletopScene" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.92516994, 0.37955305, 0, -0.37955305, 0.92516994, 0, 0.35484147, 1.0900402)
+fov = 40.65623
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = ExtResource("1_5vtir")

@@ -8,6 +8,8 @@ public abstract partial class CardEffect : Resource
     public Texture2D portrait;
     [Export]
     public string description = "";
+
+    public double animationDuration = 0.2;
     public abstract void ApplyEffects(Vector2I position);
 
 }

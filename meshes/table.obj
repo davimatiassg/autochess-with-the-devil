@@ -1,0 +1,99 @@
+# Modelo de Mesa Simples em formato .obj
+# Um objeto simples composto por 5 cubos: 1 tampo e 4 pernas.
+
+# Definicao de vertices (v x y z)
+
+# Tampo da mesa (aprox. 1.2x0.8x0.05m, topo em y=0.75m)
+v -0.6  0.75  0.4
+v  0.6  0.75  0.4
+v -0.6  0.8   0.4
+v  0.6  0.8   0.4
+v -0.6  0.75 -0.4
+v  0.6  0.75 -0.4
+v -0.6  0.8  -0.4
+v  0.6  0.8  -0.4
+
+# Perna 1 (frontal esquerda)
+v -0.55 0    0.35
+v -0.55 0.75 0.35
+v -0.6  0    0.4
+v -0.6  0.75 0.4
+v -0.55 0    0.4
+v -0.55 0.75 0.4
+v -0.6  0    0.35
+v -0.6  0.75 0.35
+
+# Perna 2 (frontal direita)
+v  0.55 0    0.35
+v  0.55 0.75 0.35
+v  0.6  0    0.4
+v  0.6  0.75 0.4
+v  0.55 0    0.4
+v  0.55 0.75 0.4
+v  0.6  0    0.35
+v  0.6  0.75 0.35
+
+# Perna 3 (traseira esquerda)
+v -0.55 0   -0.35
+v -0.55 0.75 -0.35
+v -0.6  0   -0.4
+v -0.6  0.75 -0.4
+v -0.55 0   -0.4
+v -0.55 0.75 -0.4
+v -0.6  0   -0.35
+v -0.6  0.75 -0.35
+
+# Perna 4 (traseira direita)
+v  0.55 0   -0.35
+v  0.55 0.75 -0.35
+v  0.6  0   -0.4
+v  0.6  0.75 -0.4
+v  0.55 0   -0.4
+v  0.55 0.75 -0.4
+v  0.6  0   -0.35
+v  0.6  0.75 -0.35
+
+
+# Definicao de faces (f v1 v2 v3 ...)
+# As faces são definidas usando os índices dos vértices listados acima.
+# A ordem dos vértices define a normal da face (sentido anti-horário).
+
+# Faces do tampo
+f 4 3 1 2
+f 2 1 5 6
+f 6 5 7 8
+f 8 7 3 4
+f 4 2 6 8
+f 1 3 7 5
+
+# Faces da Perna 1 (indices de 9 a 16)
+f 12 11 9 10
+f 10 9 13 14
+f 14 13 15 16
+f 16 15 11 12
+f 12 10 14 16
+f 9 11 15 13
+
+# Faces da Perna 2 (indices de 17 a 24)
+f 20 19 17 18
+f 18 17 21 22
+f 22 21 23 24
+f 24 23 19 20
+f 20 18 22 24
+f 17 19 23 21
+
+# Faces da Perna 3 (indices de 25 a 32)
+f 28 27 25 26
+f 26 25 29 30
+f 30 29 31 32
+f 32 31 27 28
+f 28 26 30 32
+f 25 27 31 29
+
+# Faces da Perna 4 (indices de 33 a 40)
+f 36 35 33 34
+f 34 33 37 38
+f 38 37 39 40
+f 40 39 35 36
+f 36 34 38 40
+f 33 35 39 37

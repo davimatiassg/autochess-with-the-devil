@@ -8,7 +8,7 @@ public partial class Card : Node3D
 
     public void Select()
     {
-        EmitSignal("OnSelectCard", this, Tabletop.isPlayerTurn);
+        EmitSignal("OnSelectCard", this, TurnState.isPlayerTurn);
     }
 
     public void TryPlace(Vector2I position)

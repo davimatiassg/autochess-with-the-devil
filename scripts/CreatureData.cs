@@ -11,10 +11,10 @@ public partial class CreatureData : Resource
     { }
     public virtual void MoveEffect()
     { }
-    public virtual void AttackEffect()
+    public virtual void AttackEffect(PlacedObject target)
     { }
-    public virtual void SurviveEffect()
+    public virtual void SurviveEffect(PlacedObject attacker)
     { }
-    public virtual void DeathEffect()
+    public virtual void DeathEffect(PlacedObject killer)
     { }
 }

@@ -2,12 +2,12 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class Creature : Sprite3D
+public partial class Creature : PlacedObject
 {
     [Export]
-    int currentHp;
+    public int currentHp;
     [Export]
-    int currentDamage;
+    public int currentDamage;
 
     [Export]
     public CreatureData data;
