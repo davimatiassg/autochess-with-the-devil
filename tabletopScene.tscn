@@ -1,13 +1,36 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=7 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
+[ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://GameCamera.cs" id="1_r3hxv"]
+[ext_resource type="Script" uid="uid://c34n4er00nvcv" path="res://scripts/Tabletop.cs" id="2_k20h1"]
+[ext_resource type="Script" uid="uid://cbo1txag8k6d3" path="res://scripts/PlayerHand.cs" id="4_js8at"]
+[ext_resource type="Script" uid="uid://cjk18k6qfsm61" path="res://scripts/Deck.cs" id="5_7q2o4"]
+[ext_resource type="PackedScene" uid="uid://2eu83js14mgw" path="res://Card.tscn" id="5_js8at"]
 
 [node name="TabletopScene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.92516994, 0.37955305, 0, -0.37955305, 0.92516994, 0, 0.35484147, 1.0900402)
-fov = 40.65623
+transform = Transform3D(1, 0, 0, 0, 0.8135882, 0.58144164, 0, -0.58144164, 0.8135882, 0, 0.54288685, 0.9443594)
+fov = 43.90874
+script = ExtResource("1_r3hxv")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." node_paths=PackedStringArray("tableRectBegin")]
+transform = Transform3D(-4.371139e-08, 0, 1.0000001, 0, 1, 0, -1, 0, -4.3711392e-08, 0, -0.78064597, 0)
 mesh = ExtResource("1_5vtir")
+script = ExtResource("2_k20h1")
+tableRectBegin = NodePath("Marker3D")
+tableSlotRectSize = 1.0
+
+[node name="Marker3D" type="Marker3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38318667, 0.8211446, 0.07823439)
+
+[node name="PlayerHand" type="Node3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 0.12396488, 0.08445536, 0, -0.08445536, 0.12396488, 0, 0.109870404, 0.71102023)
+script = ExtResource("4_js8at")
+metadata/_custom_type_script = "uid://cbo1txag8k6d3"
+
+[node name="Card" parent="PlayerHand" instance=ExtResource("5_js8at")]
+
+[node name="Deck" type="Node3D" parent="."]
+script = ExtResource("5_7q2o4")
+metadata/_custom_type_script = "uid://cjk18k6qfsm61"

@@ -60,14 +60,16 @@ public partial class Tabletop : Node3D
 
         return new List<Vector2I>();
     }
-    
+
 
 
 
     public void PlaceCreature(CreatureData card, Vector2I position)
     {
         Creature creature = new Creature(card);
-
+        creature.position = position;
+        
+        
     }
 
     // TODO!
@@ -137,7 +139,7 @@ public partial class Tabletop : Node3D
 
         if (table[y + direction][x] == -1)
         {
-            animationTween.TweenProperty(creature, ":Position", TranslatePositionToLocalSpace(x, y + direction), 0.5);
+            animationTween.TweenProperty(creature, "position", TranslatePositionToLocalSpace(x, y + direction), 0.5);
 
             int tmp = table[y][x];
             table[y][x] = -1;
@@ -150,8 +152,8 @@ public partial class Tabletop : Node3D
         }
         else if (objects[table[y + direction][x]] is Creature enemyCreature && enemyCreature.isPlayerObject != TurnState.isPlayerTurn)
         {
-            animationTween.TweenProperty(creature, ":Position", TranslatePositionToLocalSpace(x, y + direction), 0.2).SetTrans(Tween.TransitionType.Quad);
-            animationTween.TweenProperty(creature, ":Position", TranslatePositionToLocalSpace(x, y), 0.3);
+            animationTween.TweenProperty(creature, "position", TranslatePositionToLocalSpace(x, y + direction), 0.2).SetTrans(Tween.TransitionType.Quad);
+            animationTween.TweenProperty(creature, "position", TranslatePositionToLocalSpace(x, y), 0.3);
             animationTween.TweenInterval(0.5);
 
 

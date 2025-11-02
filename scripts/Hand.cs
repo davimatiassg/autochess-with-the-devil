@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-[GlobalClass]
+
 public partial class Hand : Node3D
 {
     [Export]
@@ -13,31 +13,26 @@ public partial class Hand : Node3D
     public int cardSeparation = 12;
     List<Card> cards;
 
-
-    [Signal]
-    public delegate void OnSelectCardEventHandler(Card card, bool showPlaceablePositions);
+    public Deck deck;
 
 
 
-    public void SelectCard(Card card, bool showPlaceablePositions = false)
+
+    public bool _AllowPlay = false;
+    public bool AllowPlay
     {
-
-
-        List<Vector2I> PlaceablePositions = Tabletop.GetPlaceablePositions(card.effect);
-
-        //TODO: Spawn placeable positions vfx for the selected card;
-
+        get => _AllowPlay;
+        set
+        {
+            _AllowPlay = value;
+            if (value){ RestoreHand(); }
+        }
     }
 
-    public void DrawCard(CardEffect effect)
-    {
-        //TODO!
-    }
 
-    public void DiscardCard(Card card)
-    {
-        //TODO!
-    }
+
+
+
 
 
     public void SpreadCards()
@@ -52,22 +47,48 @@ public partial class Hand : Node3D
     }
 
 
-    public bool _AllowPlay = false;
-    public bool AllowPlay
+    public void RestoreHand()
     {
-        get => _AllowPlay;
-        set
-        {
-            _AllowPlay = value;
+        while (cards.Count < maxCards) DrawNewCard();
 
-        }
+        
     }
 
+    public void DrawNewCard()
+    {
+        cards.Add(new Card(deck.GetTopCard()));
+    }
+
+    public void Discard(Card card)
+    {
+        cards.Remove(card);
+        deck.PlaceAtBottom(card.effect);
+    }
+
+    public void Replace(Card card) { Discard(card); DrawNewCard(); }
+
+
+
+    public virtual bool TryPlay(Card card, Vector2I position)
+    {
+        //TODO: Dispawn placeable positions vfx for the selected card;
+
+        bool placed = card.TryPlace(position);
+
+        if (placed)
+        {
+            Discard(card);
+            EmitSignal("OnTurnEnd");
+        }
+
+        return placed;
+    }  
 
     public override void _Ready()
     {
         base._Ready();
-        OnSelectCard += SelectCard;
+        RestoreHand();
+        SpreadCards();
     }
 
 
