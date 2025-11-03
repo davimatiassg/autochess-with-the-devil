@@ -54,7 +54,7 @@ public partial class PlayerHand : Hand
         Discard(card);
         
         Instance.rightHand.RemoveChild(card);
-    } 
+    }
 
 
     public override void _Ready()
@@ -62,6 +62,8 @@ public partial class PlayerHand : Hand
         base._Ready();
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
+
+        RestoreHand();
     }
     
 }
