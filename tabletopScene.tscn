@@ -1,39 +1,77 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=11 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
 [ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://GameCamera.cs" id="1_r3hxv"]
 [ext_resource type="Script" uid="uid://c34n4er00nvcv" path="res://scripts/Tabletop.cs" id="2_k20h1"]
+[ext_resource type="PackedScene" uid="uid://c3ggx03ww16bh" path="res://TabletopTile.tscn" id="3_7q2o4"]
 [ext_resource type="Script" uid="uid://cbo1txag8k6d3" path="res://scripts/PlayerHand.cs" id="4_js8at"]
 [ext_resource type="Script" uid="uid://cjk18k6qfsm61" path="res://scripts/Deck.cs" id="5_7q2o4"]
 [ext_resource type="PackedScene" uid="uid://2eu83js14mgw" path="res://Card.tscn" id="5_js8at"]
 
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_7q2o4"]
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture_force_srgb = true
+albedo_texture_msdf = true
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_yspwb"]
+albedo_color = Color(0.30903947, 0.11751383, 0.036398713, 1)
+emission_enabled = true
+emission = Color(0.4643463, 0, 0.08406494, 1)
+normal_enabled = true
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_somcj"]
+emission_enabled = true
+
 [node name="TabletopScene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.8135882, 0.58144164, 0, -0.58144164, 0.8135882, 0, 1.6984425, 1.0337515)
-fov = 56.925125
+transform = Transform3D(1, 0, 0, 0, 0.8135882, 0.58144164, 0, -0.58144164, 0.8135882, 0.002, 2, 1.5)
+fov = 67.10886
 script = ExtResource("1_r3hxv")
 
-[node name="Node3D" type="Node3D" parent="." node_paths=PackedStringArray("tableRectBegin")]
+[node name="Tabletop" type="Node3D" parent="." node_paths=PackedStringArray("tableRectCenter")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 script = ExtResource("2_k20h1")
-tableRectBegin = NodePath("MeshInstance3D/Marker3D")
+tileSize = 0.2
+tableRectCenter = NodePath("Marker3D")
+tilePrefab = ExtResource("3_7q2o4")
+blackMaterial = SubResource("ORMMaterial3D_7q2o4")
+whiteMaterial = SubResource("ORMMaterial3D_yspwb")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.78064597, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Tabletop"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.46038628, 0)
+material_override = SubResource("ORMMaterial3D_somcj")
 mesh = ExtResource("1_5vtir")
 skeleton = NodePath("../..")
 
-[node name="Marker3D" type="Marker3D" parent="Node3D/MeshInstance3D"]
-transform = Transform3D(1, 0, 3.5527137e-15, 0, 1, 0, -3.5527137e-15, 0, 1, -0.31982216, 0.8211446, -0.2211969)
+[node name="Marker3D" type="Marker3D" parent="Tabletop"]
+transform = Transform3D(2, 0, 7.1054274e-15, 0, 2, 0, -7.1054274e-15, 0, 2, 0, 1.15, 0)
+gizmo_extents = 4.2
 
 [node name="PlayerHand" type="Node3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.12396488, 0.08445536, 0, -0.08445536, 0.12396488, 0, 0.109870404, 0.71102023)
+transform = Transform3D(0.15, 0, 0, 0, 0.12396488, 0.08445536, 0, -0.08445536, 0.12396488, 0, 1.4454908, 1.2518226)
 script = ExtResource("4_js8at")
 metadata/_custom_type_script = "uid://cbo1txag8k6d3"
 
 [node name="Card" parent="PlayerHand" instance=ExtResource("5_js8at")]
 
 [node name="Deck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 script = ExtResource("5_7q2o4")
 metadata/_custom_type_script = "uid://cjk18k6qfsm61"
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(0.9661214, 0.25808406, -0.0014664009, -0.25229087, 0.945602, 0.20539246, 0.05439516, -0.1980641, 0.9786786, 60.481, 0, 193.777)
+light_color = Color(0.72297376, 0.49072868, 1.107, 1)
+light_energy = 16.0
+light_volumetric_fog_energy = 6.135
+spot_range = 284.02487
+spot_angle_attenuation = 0.2176377
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.9576324, 0.23760039, -0.16274679, 0.19600783, 0.9517444, 0.23614278, 0.21100098, 0.19423836, -0.9579928, -4.535, 9.705, -25.474)
+light_color = Color(0.90588236, 0, 0.17254902, 1)
+light_energy = 9.637
+light_volumetric_fog_energy = 6.135
+spot_range = 165.11188
+spot_angle_attenuation = 0.2176377

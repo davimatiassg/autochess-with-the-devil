@@ -2,19 +2,30 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 
 [GlobalClass]
 public partial class Tabletop : Node3D
 {
-    public const int TABLETOP_WIDTH = 4;
-    public const int TABLETOP_HEIGHT = 5;
+    [Export]
+    public int boardWidth = 4;
+    [Export]
+    public int boardHeight = 5;
+    [Export]
+    public float tileSize = 0.3f;
 
     [Export]
-    public Node3D tableRectBegin;
+    public Node3D tableRectCenter;
+    
     [Export]
-    public float tileSize = 0.1f;
+    public PackedScene tilePrefab;
 
-    public static TabletopTile[][] table = new TabletopTile[TABLETOP_HEIGHT][];
+    [Export]
+    Material blackMaterial;
+
+    [Export]
+    Material whiteMaterial;
+    public static TabletopTile[][] table;
 
     public static Tabletop Instance;
 
@@ -35,9 +46,9 @@ public partial class Tabletop : Node3D
 
         var list = new List<Vector2I>();
 
-        for (int y = 0; y < TABLETOP_HEIGHT; y++)
+        for (int y = 0; y < Instance.boardHeight; y++)
         {
-            for (int x = 0; x < TABLETOP_WIDTH; x++)
+            for (int x = 0; x < Instance.boardWidth; x++)
             {
                 list.Add(new Vector2I(x, y));
             }
@@ -88,7 +99,7 @@ public partial class Tabletop : Node3D
     {
         int newY = current.tilePosition.Y + direction;
 
-        if(newY >= TABLETOP_HEIGHT || newY < 0){ return null;  }
+        if(newY >= Instance.boardHeight || newY < 0){ return null;  }
 
         return table[current.tilePosition.X][newY];
     }
@@ -103,9 +114,9 @@ public partial class Tabletop : Node3D
 
     public void MovePlayerCreatures()
     {
-        for (int y = 0; y < TABLETOP_HEIGHT; y++)
+        for (int y = 0; y < boardHeight; y++)
         { 
-            for (int x = 0; x < TABLETOP_WIDTH; x++)
+            for (int x = 0; x < boardWidth; x++)
             {
                 var tile = table[x][y];
                 var creature = tile.containsCreature();
@@ -119,9 +130,9 @@ public partial class Tabletop : Node3D
     
     public void MoveEnemyCreatures()
     {
-        for (int y = TABLETOP_HEIGHT-1; y >= 0; y--)
+        for (int y = boardHeight-1; y >= 0; y--)
         { 
-            for (int x = TABLETOP_WIDTH-1; x >= 0 ; x--)
+            for (int x = boardWidth-1; x >= 0 ; x--)
             {
                 var tile = table[x][y];
                 var creature = tile.containsCreature();
@@ -196,45 +207,41 @@ public partial class Tabletop : Node3D
         creature.QueueFree();
     }
 
-    public static Vector3 TranslatePositionToLocalSpace(int x, int y)
-    {
-        return Instance.tableRectBegin.Position + Instance.tileSize * new Vector3(x, y, 0);
-    }
-
 
     public override void _Ready()
     {
         base._Ready();
+
         if (Instance == null) Instance = this;
-        else if (Instance != this) {QueueFree(); return;}
+        else if (Instance != this) { QueueFree(); return; }
 
-        for (int x = 0; x < TABLETOP_WIDTH; x++)
+        var tableOffset = new Vector3(tileSize * boardHeight, 0, tileSize * boardWidth)/2;
+
+
+        bool isBlack = true;
+
+        table = new TabletopTile[boardWidth][];
+        for (int x = 0; x < boardWidth; x++)
         {
-            table[x] = new TabletopTile[TABLETOP_HEIGHT];
-            for (int y = 0; y < TABLETOP_HEIGHT; y++)
+            table[x] = new TabletopTile[boardHeight];
+            for (int y = 0; y < boardHeight; y++)
             {
-                var tile = new TabletopTile { Scale = Vector3.One/this.Scale.X};
-
-                var mesh = new MeshInstance3D()
-                {
-                    Mesh = new BoxMesh { Size = new Vector3(tileSize, 1, tileSize)  },
-                };
-
-                tile.AddChild(mesh);
-
-                var collision = new CollisionShape3D();
-                collision.Shape = new BoxShape3D { Size = new Vector3(tileSize, 1, tileSize) };
-
-                tile.AddChild(collision);
+                var tile = (TabletopTile)tilePrefab.Instantiate();
 
                 tile.tilePosition = new Vector2I(x, y);
                 table[x][y] = tile;
 
+                tile.Size = new Vector3(tileSize, 0.015f, tileSize);
 
-                tile.Position = tableRectBegin.Position + (Vector3.Right * (x * tileSize)) + (Vector3.Forward * (y * tileSize ));
-                
+                tableRectCenter.AddChild(tile);
 
-                AddChild(tile);
+                tile.Position = new Vector3((y+0.5f) * tileSize, 0, (x+0.5f) * tileSize) - tableOffset;
+
+                if (isBlack) tile.meshInstance.MaterialOverlay = blackMaterial;
+                else tile.meshInstance.MaterialOverlay = whiteMaterial;
+
+                isBlack = !isBlack;
+
             }
         }
 
