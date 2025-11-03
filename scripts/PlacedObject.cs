@@ -5,7 +5,7 @@ using System;
 public partial class PlacedObject : Sprite3D
 {
     [Export]
-    public Vector2I position;
+    public virtual TabletopTile Tile { get; set; }
 
     [Export]
     public bool isPlayerObject;

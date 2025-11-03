@@ -33,14 +33,6 @@ public partial class Tabletop : Node3D
 
 
 
-
-
-
-    [Signal]
-    public delegate void OnPlaceCreatureEventHandler(CreatureData card, Vector2I position);
-
-
-
     public static List<Vector2I> GetPlaceablePositions(CardEffect effect)
     {
 
@@ -50,50 +42,15 @@ public partial class Tabletop : Node3D
         {
             for (int x = 0; x < Instance.boardWidth; x++)
             {
-                list.Add(new Vector2I(x, y));
+                if(table[x][y].IsTileValid(effect)) list.Add(new Vector2I(x, y));
             }
         }
 
         return list;
-
-        // if (effect is SpawnCreatureCardEffect)
-        // {
-
-        // }
-        // else if (card is SpellCard)
-        // {
-
-        // }
-        // else if(card is TrapCard)
-        // {
-
-        // }
-
-
-        return new List<Vector2I>();
     }
 
 
 
-
-    public void PlaceCreature(CreatureData card, Vector2I position)
-    {
-        Creature creature = new Creature(card);
-        creature.position = position;
-        
-        
-    }
-
-    // TODO!
-    // public void PlaceSpell(SpellCard card, Vector2I position)
-    // {
-
-    // }
-
-    // public void PlaceTrap(TrapCard card, Vector2I position)
-    // {
-
-    // }
 
     public static TabletopTile GetNextTile(TabletopTile current, int direction)
     {
@@ -147,7 +104,7 @@ public partial class Tabletop : Node3D
     public void TryMoveCreature(Creature creature, TabletopTile currentTile, int direction)
     {
         var nextTile = GetNextTile(currentTile, direction);
-        
+
 
         if (nextTile == null)
         {
@@ -158,43 +115,28 @@ public partial class Tabletop : Node3D
             return;
         }
 
+
+
+        Action<Creature> awaitProcess = async (Creature c) => { await ToSignal(c.animationTween, Tween.SignalName.Finished); };
+
         var nextTileCreature = nextTile.containsCreature();
 
-        if (nextTileCreature == null)
+        if (nextTileCreature == null) //Move
         {
-            animationTween.TweenProperty(creature, "position", new
-            Vector3(nextTile.Position.X, creature.Position.Y, nextTile.Position.Z), 0.5);
+            creature.Tile = nextTile;
 
-            currentTile.objectsInThisTile.Remove(creature);
-            nextTile.objectsInThisTile.Add(creature);
-
-            creature.position = nextTile.tilePosition;
+            currentTile.RemoveObject(creature);
+            nextTile.AddObject(creature);
 
             creature.data.MoveEffect();
         }
-        else if (nextTileCreature.isPlayerObject != TurnState.isPlayerTurn)
+        else if (nextTileCreature.isPlayerObject != TurnState.isPlayerTurn) //Attack
         {
-            animationTween.TweenProperty(creature, "position",
-                new Vector3(nextTile.Position.X, creature.Position.Y, nextTile.Position.Z), 0.2).SetTrans(Tween.TransitionType.Quad);
-            animationTween.TweenProperty(creature, "position", new Vector3(currentTile.Position.X, creature.Position.Y, currentTile.Position.Z), 0.3);
-            animationTween.TweenInterval(0.5);
+            creature.AttackCreature(nextTileCreature);
 
-
-            nextTileCreature.currentHp -= creature.currentDamage;
-
-            creature.data.AttackEffect(nextTileCreature);
-
-            if (nextTileCreature.currentHp > 0)
-            {
-                nextTileCreature.data.SurviveEffect(creature);
-            }
-            else
-            {
-                nextTileCreature.data.DeathEffect(creature);
-                animationTween.TweenInterval(1);
-                animationTween.TweenCallback(Callable.From(() => KillCreature(nextTileCreature, nextTile)));
-            }
         }
+
+        animationTween.TweenCallback(Callable.From(() => { awaitProcess(creature); }));
 
 
         //TODO: if (objects[table[x][i]] is Trap) <-activate trap card->
@@ -203,7 +145,7 @@ public partial class Tabletop : Node3D
 
     public void KillCreature(Creature creature, TabletopTile tile)
     { 
-        tile.objectsInThisTile.Remove(creature);
+        tile.RemoveObject(creature);
         creature.QueueFree();
     }
 
@@ -244,8 +186,6 @@ public partial class Tabletop : Node3D
 
             }
         }
-
-        OnPlaceCreature += PlaceCreature;
     }
 
 }

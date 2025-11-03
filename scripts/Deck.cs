@@ -6,30 +6,35 @@ using System.Collections.Generic;
 public partial class Deck : Node3D
 {
     [Export]
+    public PackedScene CardPrefab;
+
+    [Export]
     public Godot.Collections.Array<CardEffect> cards = new();
 
-    public List<CardEffect> cardList = new();
 
 
     public override void _Ready()
     {
         base._Ready();
-        foreach (var card in cards)
-        {
-            cardList.Add(card);
-        }
     }
 
     public void PlaceAtBottom(CardEffect card)
     {
-        cardList.Add(card);
+        cards.Add(card);
     }
 
-    public CardEffect GetTopCard()
+    public Card GetTopCard()
     {
-        var ret = cardList[0];
-        cardList.RemoveAt(0);
-        return ret;
+        GD.Print(cards[0]);
+
+        var topCardEffect = cards[0];
+        cards.RemoveAt(0);
+
+        var card = (Card)CardPrefab.Instantiate();
+        card.effect = topCardEffect;
+        card.sprite.Texture = card.effect.portrait;
+
+        return card;
     }
     
 

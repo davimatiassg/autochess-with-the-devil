@@ -4,8 +4,13 @@ using System;
 [GlobalClass]
 public partial class CreatureData : Resource
 {
+    [Export]
     public int damage;
+
+    [Export]
     public int hp;
+
+    public Texture2D PlayTexture;
 
     public virtual void SpawnEffect()
     { }

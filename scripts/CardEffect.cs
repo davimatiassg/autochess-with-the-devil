@@ -10,6 +10,6 @@ public abstract partial class CardEffect : Resource
     public string description = "";
 
     public double animationDuration = 0.2;
-    public abstract void ApplyEffects(Vector2I position);
+    public abstract void ApplyEffects(TabletopTile tile);
 
 }

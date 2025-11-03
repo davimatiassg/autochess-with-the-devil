@@ -4,32 +4,11 @@ using System;
 [GlobalClass]
 public partial class Card : Area3D
 {
-    
+    [Export]
     public CardEffect effect;
 
-    public void Select()
-    {
-        EmitSignal("OnSelectCard", this, TurnState.isPlayerTurn);
-    }
-
-    public Card() { }
-
-    public Card(CardEffect effect)
-    {
-        this.effect = effect;
-        //TODO! Make the card visuals appear!
-    }
-
-    public bool TryPlace(TabletopTile tile)
-    {
-        if (tile.IsTileValid(this.effect)) //Verificar se a posição é válida
-        {
-            effect.ApplyEffects(tile.tilePosition);
-            return true;
-        }
-        return false;
-    }
-
+    [Export]
+    public Sprite3D sprite;
 
     public override void _Ready()
     {

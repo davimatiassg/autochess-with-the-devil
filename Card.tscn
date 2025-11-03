@@ -1,17 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://2eu83js14mgw"]
+[gd_scene load_steps=6 format=3 uid="uid://2eu83js14mgw"]
 
 [ext_resource type="Texture2D" uid="uid://ce6bvcbd7ykhy" path="res://icon.svg" id="1_dd2wi"]
 [ext_resource type="Script" uid="uid://cyb23rr66nny7" path="res://scripts/Card.cs" id="1_hael8"]
 
+[sub_resource type="Gradient" id="Gradient_dd2wi"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hael8"]
+gradient = SubResource("Gradient_dd2wi")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0.3974359, 0.52991456)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_dd2wi"]
 size = Vector3(0.9, 1.2, 0)
 
-[node name="Card" type="Area3D"]
+[node name="Card" type="Area3D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_hael8")
+sprite = NodePath("Sprite3D")
 
-[node name="PlaceHolderSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.714, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.54, 0, 0, 0, 0.54, 0, 0, 0, 0.54, 0, 0.19, 0)
 texture = ExtResource("1_dd2wi")
+
+[node name="CardBackGround" type="Sprite3D" parent="."]
+transform = Transform3D(1.374, 0, 0, 0, 1.95, 0, 0, 0, 1, 0, 0, 0)
+texture = SubResource("GradientTexture2D_hael8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.006286621, 0.032714844, 0)

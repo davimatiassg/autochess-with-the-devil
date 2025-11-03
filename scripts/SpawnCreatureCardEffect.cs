@@ -6,8 +6,12 @@ public partial class SpawnCreatureCardEffect : CardEffect
 {
     [Export]
     public CreatureData creatureData;
-    public override void ApplyEffects(Vector2I position)
+    public override void ApplyEffects(TabletopTile tile)
     {
-        EmitSignal("OnPlaceCreature", creatureData, position);
+        creatureData.PlayTexture = portrait;
+        Creature creature = new Creature(creatureData);
+        Tabletop.Instance.AddChild(creature);
+        creature.Tile = tile;
+
     }
 }

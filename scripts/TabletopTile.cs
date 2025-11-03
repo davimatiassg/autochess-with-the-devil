@@ -14,6 +14,8 @@ public partial class TabletopTile : Area3D
     [Export]
     public CollisionShape3D collision;
 
+    public Vector3 TileTop { get => this.GlobalPosition + Vector3.Up * (this.Scale.Y * Size.Y); }
+
 
     
     public Vector2I tilePosition;
@@ -38,13 +40,27 @@ public partial class TabletopTile : Area3D
     public bool IsTileValid(CardEffect effect)
     {
         //STUB: tem que verificar a situação da carta
-        return true;
+        return containsCreature() == null;
     }
 
     public Creature containsCreature()
     {
         foreach (var obj in objectsInThisTile) if (obj is Creature creature) return creature;
         return null;
+    }
+
+
+    public void AddObject(PlacedObject placedObject)
+    {
+        objectsInThisTile.Add(placedObject);
+        placedObject.Tile = this;
+
+    }
+    public void RemoveObject(PlacedObject placedObject)
+    {
+        objectsInThisTile.Remove(placedObject);
+        placedObject.Tile = null;
+        
     }
 
     public override void _Ready()
