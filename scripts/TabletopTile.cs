@@ -54,7 +54,7 @@ public partial class TabletopTile : Area3D
 
     public Creature containsCreature()
     {
-        foreach (var obj in objectsInThisTile) if (obj is Creature creature) return creature;
+        foreach (var obj in objectsInThisTile) { if (obj is Creature creature) return creature; }
         return null;
     }
 
@@ -67,9 +67,7 @@ public partial class TabletopTile : Area3D
     }
     public void RemoveObject(PlacedObject placedObject)
     {
-        objectsInThisTile.Remove(placedObject);
-        placedObject.Tile = null;
-        
+        objectsInThisTile.Remove(placedObject);        
     }
 
     public override void _Ready()

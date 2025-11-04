@@ -102,7 +102,7 @@ script = ExtResource("1_r3hxv")
 transform = Transform3D(0.175, 0, 0, 0, 0.175, -5.2154063e-09, 0, 5.2154063e-09, 0.175, 0.1, -0.05, -0.2)
 
 [node name="Sprite3D" type="Sprite3D" parent="Camera3D/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0.11, -0.085, 0.025)
+transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0.235396, -0.26095068, 0.024999712)
 billboard = 1
 texture_filter = 0
 texture = ExtResource("2_somcj")
@@ -133,7 +133,7 @@ transform = Transform3D(2, 0, 7.1054274e-15, 0, 2, 0, -7.1054274e-15, 0, 2, 0, 1
 gizmo_extents = 4.2
 
 [node name="PlayerHand" type="Node3D" parent="." node_paths=PackedStringArray("rightHand", "deck")]
-transform = Transform3D(0.15, 0, 0, 0, 0.12396488, 0.08445536, 0, -0.08445536, 0.12396488, 0, 1.5, 1.6)
+transform = Transform3D(0.135, 0, 0, 0, 0.1115684, 0.076009825, 0, -0.076009825, 0.1115684, 0, 1.4748416, 1.364809)
 script = ExtResource("4_js8at")
 rightHand = NodePath("../Camera3D/Node3D")
 maxCards = 1
@@ -172,6 +172,7 @@ script = ExtResource("14_m1bcj")
 playerHand = NodePath("../PlayerHand")
 playerCamera = NodePath("../Camera3D")
 devilHand = NodePath("../DevilHand")
+turnTime = 4.0
 metadata/_custom_type_script = "uid://dk5sto74m2gdi"
 
 [node name="TileHighlighter" type="Node" parent="TurnState"]

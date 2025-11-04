@@ -43,6 +43,7 @@ public partial class PlayerCamera : Camera3D
 
     public void PlayCard(Card card, TabletopTile tile)
     {
+        GD.Print("playedCard");
         PlayerHand.Instance.PlayCard(card, tile);
         TileHighlighter.ToggleOff();
         pickedCard = null;

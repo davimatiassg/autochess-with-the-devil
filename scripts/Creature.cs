@@ -15,9 +15,11 @@ public partial class Creature : PlacedObject
         get => base.Tile;
         set
         {
+
             base.Tile = value;
+
             animationTween = CreateTween();
-            animationTween.TweenProperty(this, "global_position", Tile.TileTop + Scale.Y/2 * Vector3.Up, 0.3);
+            animationTween.TweenProperty(this, "global_position", value.TileTop + Scale.Y/2 * Vector3.Up, 0.3);
             
         }
     }
@@ -50,15 +52,37 @@ public partial class Creature : PlacedObject
         animationTween.TweenCallback(Callable.From(() => creature.currentHp -= currentDamage));
         animationTween.TweenCallback(Callable.From(() => data.AttackEffect(creature)));
         animationTween.TweenProperty(this, "position", currentPos, 0.3);
-        animationTween.TweenCallback(Callable.From(() => AttackedResponse(creature)));        
+        animationTween.TweenCallback(Callable.From(() => DefendFromCreature(creature)));        
     }
 
-    public void AttackedResponse(Creature attacker)
+    public void DefendFromCreature(Creature attacker)
     {
         if (currentHp > 0) data.SurviveEffect(attacker);
         else data.DeathEffect(attacker);
     }
 
+
+    public void Move(TabletopTile nextTile)
+    {
+        var possibleTarget = nextTile.containsCreature();
+        if (possibleTarget != null)
+        {
+            if (possibleTarget.isPlayerObject != isPlayerObject)
+            {
+                AttackCreature(possibleTarget);
+                return;
+            }
+        }
+        animationTween = CreateTween();
+        animationTween.TweenCallback(Callable.From(() =>
+        {
+            Tile.RemoveObject(this);
+            nextTile.AddObject(this);
+            Tile = nextTile;
+            data.MoveEffect();
+        }));
+    }
+    
 
     public void Die()
     {

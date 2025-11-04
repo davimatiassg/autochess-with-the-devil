@@ -21,7 +21,7 @@ public partial class PlayerHand : Hand
             {
                 TurnState.OnStartPlayPhase += StartPlayPhase;
             }
-            else TurnState.OnStartPlayPhase += StartPlayPhase;
+            else TurnState.OnStartPlayPhase -= StartPlayPhase;
         }
     }
 

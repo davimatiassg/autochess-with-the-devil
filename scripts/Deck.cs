@@ -20,12 +20,12 @@ public partial class Deck : Node3D
 
     public void PlaceAtBottom(CardEffect card)
     {
+        GD.Print($"restoring card {card.GetType()}");
         cards.Add(card);
     }
 
     public Card GetTopCard()
     {
-        GD.Print(cards[0]);
 
         var topCardEffect = cards[0];
         cards.RemoveAt(0);

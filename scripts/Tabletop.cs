@@ -64,7 +64,6 @@ public partial class Tabletop : Node3D
 
     public static async Task MoveCreatures()
     {
-        GD.Print("Moving creatures");
         animationTween = Instance.CreateTween();
         animationTween.TweenInterval(0.5);
         if (TurnState.isPlayerTurn) await Instance.MovePlayerCreatures();
@@ -74,17 +73,15 @@ public partial class Tabletop : Node3D
 
     public async Task MovePlayerCreatures()
     {
-        for (int y = 0; y < boardHeight; y++)
+        
+        for (int y = boardHeight-1; y >= 0; y--)
         { 
-            for (int x = 0; x < boardWidth; x++)
-            {
+            for (int x = boardWidth-1; x >= 0 ; x--){
                 var tile = table[x][y];
                 var creature = tile.containsCreature();
-                GD.Print($"inspecting tile {x}, {y}");
                 if (creature != null)
                 {
-                    GD.Print($"moving creature on tile {x}, {y}");
-                    await TryMoveCreatureAsync(creature, tile, -1);
+                    if(creature.isPlayerObject) await TryMoveCreature(creature, tile, 1);
                 }
             }
         }
@@ -92,63 +89,38 @@ public partial class Tabletop : Node3D
     
     public async Task MoveEnemyCreatures()
     {
-        for (int y = boardHeight-1; y >= 0; y--)
+        for (int y = 0; y < boardHeight; y++)
         { 
-            for (int x = boardWidth-1; x >= 0 ; x--)
+            for (int x = 0; x < boardWidth; x++)
             {
                 var tile = table[x][y];
                 var creature = tile.containsCreature();
                 if (creature != null)
                 {
-                    await TryMoveCreatureAsync(creature, tile, 1);
+                    if (!creature.isPlayerObject) await TryMoveCreature(creature, tile, -1);
                 }
             }
         }
     }
 
-    public async Task TryMoveCreatureAsync(Creature creature, TabletopTile currentTile, int direction)
+    public async Task TryMoveCreature(Creature creature, TabletopTile currentTile, int direction)
     {
         var nextTile = GetNextTile(currentTile, direction);
 
             
         if (nextTile == null)
         {
-            EmitSignal("RoundOver", TurnState.isPlayerTurn);///TODO: Make this signal mean that the current player won the round.
-            //TODO: Add death animation
+            //TODO: End the round. The current player won.
 
             animationTween.Kill();
             return;
         }
 
-
-        var nextTileCreature = nextTile.containsCreature();
-
-        if (nextTileCreature == null) //Move
-        {
-            animationTween.TweenCallback(Callable.From(() =>
-            {
-                creature.Tile = nextTile;
-                currentTile.RemoveObject(creature);
-                nextTile.AddObject(creature);
-                creature.data.MoveEffect();
-            }));
-            animationTween.TweenInterval(1);
-
-            
-        }
-        else if (nextTileCreature.isPlayerObject != TurnState.isPlayerTurn) //Attack
-        {
-            animationTween.TweenCallback(Callable.From(() =>
-            {
-                creature.AttackCreature(nextTileCreature);
-            }));
-            animationTween.TweenInterval(1);
-        }
-
+        creature.Move(nextTile);
         
-        await ToSignal(creature.animationTween, Tween.SignalName.Finished);
+        while (creature.animationTween.IsRunning()) await Task.Delay(200);
 
-        //TODO: if (objects[table[x][i]] is Trap) <-activate trap card->
+        //TODO: if (nextTile.ContainsTrap() != null) <-activate trap card->
 
     }
 

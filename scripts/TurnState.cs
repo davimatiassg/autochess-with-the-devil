@@ -38,11 +38,8 @@ public partial class TurnState : Node3D
     public static async Task StartTurn()
     {
         OnStartTurn?.Invoke();
-
         await Tabletop.MoveCreatures();
-    
         await PlayPhase();
-
         _ = EndCurrentTurn();
     }
 
@@ -59,12 +56,18 @@ public partial class TurnState : Node3D
         turnStateTween = Instance.CreateTween();
         turnStateTween.TweenInterval(0.1);
 
-        if (Instance.turnTime > 0.1)
+        if (Instance.turnTime > 0.0)
         {
-            turnStateTween.TweenInterval(Instance.turnTime -0.1);
+            turnStateTween.TweenInterval(Instance.turnTime);
+            turnStateTween.TweenCallback(Callable.From(() => GD.Print("timeEnd")));
+            turnStateTween.TweenCallback(Callable.From(() => interrupt = true));
+
         }
-        while (!interrupt || turnStateTween.IsRunning()) {
-            await Task.Delay(100); }
+        while (!interrupt)
+        {
+            await Task.Delay(100);
+        }
+        turnStateTween.Stop();
         
     }
 
@@ -72,17 +75,15 @@ public partial class TurnState : Node3D
     private static async Task EndCurrentTurn()
     {
 
-        
+        OnEndTurn?.Invoke();
         
         Instance.playerHand.AllowPlay = false;
         Instance.devilHand.AllowPlay = false;
         
+        
+        interrupt = false;
+        
         turnStateTween = Instance.CreateTween();
-        if (interrupt)
-        {
-            interrupt = false;
-            turnStateTween.TweenInterval(1);
-        }
 
         Vector3 lookDirection = Instance.playerCamera.Position - Instance.playerCamera.GlobalBasis.Z;
 
