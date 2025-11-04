@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class Tabletop : Node3D
@@ -79,7 +80,7 @@ public partial class Tabletop : Node3D
                 var creature = tile.containsCreature();
                 if (creature != null)
                 {
-                    TryMoveCreature(creature, tile, -1);
+                    TryMoveCreatureAsync(creature, tile, -1);
                 }
             }
         }
@@ -95,13 +96,13 @@ public partial class Tabletop : Node3D
                 var creature = tile.containsCreature();
                 if (creature != null)
                 {
-                    TryMoveCreature(creature, tile, 1);
+                    TryMoveCreatureAsync(creature, tile, 1);
                 }
             }
         }
     }
 
-    public void TryMoveCreature(Creature creature, TabletopTile currentTile, int direction)
+    public async Task TryMoveCreatureAsync(Creature creature, TabletopTile currentTile, int direction)
     {
         var nextTile = GetNextTile(currentTile, direction);
 
@@ -117,7 +118,7 @@ public partial class Tabletop : Node3D
 
 
 
-        Action<Creature> awaitProcess = async (Creature c) => { await ToSignal(c.animationTween, Tween.SignalName.Finished); };
+        Action<Creature> awaitProcess = async (Creature c) => {  };
 
         var nextTileCreature = nextTile.containsCreature();
 
@@ -136,8 +137,7 @@ public partial class Tabletop : Node3D
 
         }
 
-        animationTween.TweenCallback(Callable.From(() => { awaitProcess(creature); }));
-
+        await ToSignal(creature.animationTween, Tween.SignalName.Finished);
 
         //TODO: if (objects[table[x][i]] is Trap) <-activate trap card->
 

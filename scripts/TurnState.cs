@@ -26,18 +26,19 @@ public partial class TurnState : Node3D
 
     public static void StartTurn()
     {
-        turnStateTween = Instance.CreateTween();
-        turnStateTween.TweenCallback(Callable.From(async () =>
+
+        Action awaitForMove = async () =>
         {
             Tabletop.MoveCreatures();
             await Instance.ToSignal(Tabletop.animationTween, Tween.SignalName.Finished);
             PlayPhase();
-        }));
+        };
+        turnStateTween.Stop();
+        turnStateTween.TweenCallback(Callable.From(() => awaitForMove));
     }
 
     public static void PlayPhase()
     { 
-        turnStateTween = Instance.CreateTween();
         turnStateTween.TweenInterval(5);
         turnStateTween.TweenCallback(Callable.From(EndCurrentTurn));
     }
@@ -73,6 +74,7 @@ public partial class TurnState : Node3D
         base._Ready();
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
+
         turnStateTween = Instance.CreateTween();
         turnStateTween.TweenInterval(1.0);
         turnStateTween.TweenCallback(Callable.From(StartTurn));

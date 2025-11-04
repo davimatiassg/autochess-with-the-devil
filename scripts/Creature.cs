@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class Creature : PlacedObject
@@ -38,32 +39,39 @@ public partial class Creature : PlacedObject
         this.Billboard = BaseMaterial3D.BillboardModeEnum.Enabled;
     }
 
-    
-    private async void AttackedResponse(Creature creature)
-    {
-        if (creature.currentHp > 0) creature.data.SurviveEffect(creature);
-        else creature.data.DeathEffect(creature);
 
-        await ToSignal(creature.animationTween, Tween.SignalName.Finished);
-    }
 
-    public void AttackCreature(Creature creature)
+
+    public async Task AttackCreature(Creature creature)
     {
 
         var currentPos = Position;
         animationTween = CreateTween();
         animationTween.TweenProperty(this, "position", creature.Position, 0.3).SetTrans(Tween.TransitionType.Expo);
-        animationTween.TweenCallback(Callable.From(() => creature.currentHp -= currentDamage ));
+        animationTween.TweenCallback(Callable.From(() => creature.currentHp -= currentDamage));
         animationTween.TweenCallback(Callable.From(() => data.AttackEffect(creature)));
         animationTween.TweenProperty(this, "position", currentPos, 0.3);
-
-        animationTween.TweenCallback(Callable.From(() => { AttackedResponse(creature); }));
+        animationTween.TweenCallback(Callable.From(() => AttackedResponse(creature)));
+        animationTween.TweenCallback(Callable.From(animationTween.Pause));
         animationTween.TweenInterval(0.2);
+
+        await ToSignal(creature.animationTween, Tween.SignalName.Finished);
+        
+        animationTween.Play();
+    }
+
+    public void AttackedResponse(Creature attacker)
+    {
+        if (currentHp > 0) data.SurviveEffect(attacker);
+        else data.DeathEffect(attacker);
+
+        animationTween = CreateTween();
+        animationTween.TweenInterval(0.5);
     }
 
 
     public void Die()
-    { 
+    {
 
     }
 }
