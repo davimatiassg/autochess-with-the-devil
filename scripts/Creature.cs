@@ -18,7 +18,6 @@ public partial class Creature : PlacedObject
             base.Tile = value;
             animationTween = CreateTween();
             animationTween.TweenProperty(this, "global_position", Tile.TileTop + Scale.Y/2 * Vector3.Up, 0.3);
-            animationTween.TweenInterval(0.1);
             
         }
     }
@@ -42,7 +41,7 @@ public partial class Creature : PlacedObject
 
 
 
-    public async Task AttackCreature(Creature creature)
+    public void AttackCreature(Creature creature)
     {
 
         var currentPos = Position;
@@ -51,22 +50,13 @@ public partial class Creature : PlacedObject
         animationTween.TweenCallback(Callable.From(() => creature.currentHp -= currentDamage));
         animationTween.TweenCallback(Callable.From(() => data.AttackEffect(creature)));
         animationTween.TweenProperty(this, "position", currentPos, 0.3);
-        animationTween.TweenCallback(Callable.From(() => AttackedResponse(creature)));
-        animationTween.TweenCallback(Callable.From(animationTween.Pause));
-        animationTween.TweenInterval(0.2);
-
-        await ToSignal(creature.animationTween, Tween.SignalName.Finished);
-        
-        animationTween.Play();
+        animationTween.TweenCallback(Callable.From(() => AttackedResponse(creature)));        
     }
 
     public void AttackedResponse(Creature attacker)
     {
         if (currentHp > 0) data.SurviveEffect(attacker);
         else data.DeathEffect(attacker);
-
-        animationTween = CreateTween();
-        animationTween.TweenInterval(0.5);
     }
 
 

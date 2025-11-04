@@ -62,15 +62,17 @@ public partial class Tabletop : Node3D
         return table[current.tilePosition.X][newY];
     }
 
-    public static void MoveCreatures()
+    public static async Task MoveCreatures()
     {
+        GD.Print("Moving creatures");
         animationTween = Instance.CreateTween();
-        if (TurnState.isPlayerTurn) Instance.MovePlayerCreatures();
-        else Instance.MoveEnemyCreatures();
         animationTween.TweenInterval(0.5);
+        if (TurnState.isPlayerTurn) await Instance.MovePlayerCreatures();
+        else await Instance.MoveEnemyCreatures();
+        
     }
 
-    public void MovePlayerCreatures()
+    public async Task MovePlayerCreatures()
     {
         for (int y = 0; y < boardHeight; y++)
         { 
@@ -78,15 +80,17 @@ public partial class Tabletop : Node3D
             {
                 var tile = table[x][y];
                 var creature = tile.containsCreature();
+                GD.Print($"inspecting tile {x}, {y}");
                 if (creature != null)
                 {
-                    TryMoveCreatureAsync(creature, tile, -1);
+                    GD.Print($"moving creature on tile {x}, {y}");
+                    await TryMoveCreatureAsync(creature, tile, -1);
                 }
             }
         }
     }
     
-    public void MoveEnemyCreatures()
+    public async Task MoveEnemyCreatures()
     {
         for (int y = boardHeight-1; y >= 0; y--)
         { 
@@ -96,7 +100,7 @@ public partial class Tabletop : Node3D
                 var creature = tile.containsCreature();
                 if (creature != null)
                 {
-                    TryMoveCreatureAsync(creature, tile, 1);
+                    await TryMoveCreatureAsync(creature, tile, 1);
                 }
             }
         }
@@ -106,7 +110,7 @@ public partial class Tabletop : Node3D
     {
         var nextTile = GetNextTile(currentTile, direction);
 
-
+            
         if (nextTile == null)
         {
             EmitSignal("RoundOver", TurnState.isPlayerTurn);///TODO: Make this signal mean that the current player won the round.
@@ -117,26 +121,31 @@ public partial class Tabletop : Node3D
         }
 
 
-
-        Action<Creature> awaitProcess = async (Creature c) => {  };
-
         var nextTileCreature = nextTile.containsCreature();
 
         if (nextTileCreature == null) //Move
         {
-            creature.Tile = nextTile;
+            animationTween.TweenCallback(Callable.From(() =>
+            {
+                creature.Tile = nextTile;
+                currentTile.RemoveObject(creature);
+                nextTile.AddObject(creature);
+                creature.data.MoveEffect();
+            }));
+            animationTween.TweenInterval(1);
 
-            currentTile.RemoveObject(creature);
-            nextTile.AddObject(creature);
-
-            creature.data.MoveEffect();
+            
         }
         else if (nextTileCreature.isPlayerObject != TurnState.isPlayerTurn) //Attack
         {
-            creature.AttackCreature(nextTileCreature);
-
+            animationTween.TweenCallback(Callable.From(() =>
+            {
+                creature.AttackCreature(nextTileCreature);
+            }));
+            animationTween.TweenInterval(1);
         }
 
+        
         await ToSignal(creature.animationTween, Tween.SignalName.Finished);
 
         //TODO: if (objects[table[x][i]] is Trap) <-activate trap card->

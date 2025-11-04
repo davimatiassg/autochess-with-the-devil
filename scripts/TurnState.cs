@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class TurnState : Node3D
@@ -24,21 +25,19 @@ public partial class TurnState : Node3D
     public delegate void OnTurnEndEventHandler();
 
 
-    public static void StartTurn()
+    public static async Task StartTurn()
     {
-
-        Action awaitForMove = async () =>
-        {
-            Tabletop.MoveCreatures();
-            await Instance.ToSignal(Tabletop.animationTween, Tween.SignalName.Finished);
-            PlayPhase();
-        };
-        turnStateTween.Stop();
-        turnStateTween.TweenCallback(Callable.From(() => awaitForMove));
+        await Task.Delay(800);
+        await Tabletop.MoveCreatures();
+        PlayPhase();
     }
 
     public static void PlayPhase()
-    { 
+    {
+        GD.Print("Play Phase");
+        Instance.playerHand.AllowPlay = isPlayerTurn;
+        Instance.devilHand.AllowPlay = !isPlayerTurn;
+        turnStateTween = Instance.CreateTween();
         turnStateTween.TweenInterval(5);
         turnStateTween.TweenCallback(Callable.From(EndCurrentTurn));
     }
@@ -47,17 +46,18 @@ public partial class TurnState : Node3D
     public static void EndCurrentTurn()
     {
 
-        isPlayerTurn = !isPlayerTurn;
-        Instance.playerHand.AllowPlay = isPlayerTurn;
-        Instance.devilHand.AllowPlay = !isPlayerTurn;
         
-        Vector3 basisZ = Instance.playerCamera.Transform.Basis.Z;
+        
+        Instance.playerHand.AllowPlay = false;
+        Instance.devilHand.AllowPlay = false;
+        
+        Vector3 basisZ = Instance.playerCamera.GlobalBasis.Z;
 
         turnStateTween = Instance.CreateTween();
         turnStateTween.TweenInterval(1);
-        if (!isPlayerTurn)
+        if (isPlayerTurn)
         {
-            
+            GD.Print("Ending Player's turn");
             turnStateTween.TweenMethod(Callable.From(
                 (Vector3 target) => Instance.playerCamera.LookAt(target)), basisZ, Instance.devilHand.Position, 0.2);
         }
@@ -66,6 +66,7 @@ public partial class TurnState : Node3D
             turnStateTween.TweenMethod(Callable.From(
                 (Vector3 target) => Instance.playerCamera.LookAt(target)), basisZ, Instance.playerHand.Position, 0.5);
         }
+        turnStateTween.TweenCallback(Callable.From(() => isPlayerTurn = !isPlayerTurn));
         turnStateTween.TweenCallback(Callable.From(StartTurn));
     }
 
@@ -75,8 +76,7 @@ public partial class TurnState : Node3D
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        turnStateTween = Instance.CreateTween();
-        turnStateTween.TweenInterval(1.0);
-        turnStateTween.TweenCallback(Callable.From(StartTurn));
+        isPlayerTurn = true;
+        _ = StartTurn();
     }
 }

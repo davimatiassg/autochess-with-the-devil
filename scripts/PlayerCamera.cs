@@ -40,7 +40,7 @@ public partial class PlayerCamera : Camera3D
 
     public void PlayCard(Card card, TabletopTile tile)
     {
-        PlayerHand.PlayCard(card, tile);
+        PlayerHand.Instance.PlayCard(card, tile);
         pickedCard = null;
 
     }

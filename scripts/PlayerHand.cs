@@ -5,9 +5,10 @@ using System.Collections.Generic;
 [GlobalClass]
 public partial class PlayerHand : Hand
 {
-    public static new PlayerHand Instance;
     [Export]
     public Node3D rightHand;
+
+    public static PlayerHand Instance;
 
 
     public override bool AllowPlay
@@ -45,7 +46,7 @@ public partial class PlayerHand : Hand
 
     }
 
-    public override void PlayCardWrapped(Card card, TabletopTile tile)
+    public override void PlayCard(Card card, TabletopTile tile)
     {
         //TODO: Dispawn placeable positions vfx for the selected card;
 
@@ -60,10 +61,11 @@ public partial class PlayerHand : Hand
     public override void _Ready()
     {
         base._Ready();
-        if (Instance == null) Instance = this;
+                if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
         RestoreHand();
+        SpreadCards();
     }
-    
+
 }

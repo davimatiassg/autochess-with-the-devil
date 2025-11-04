@@ -7,13 +7,6 @@ public abstract partial class Hand : Node3D
 {
 
 
-
-    public static Hand Instance { get; set; }
-    
-
-
-    
-
     [Export]
     public int maxCards = 3;
 
@@ -35,7 +28,6 @@ public abstract partial class Hand : Node3D
         set
         {
             _AllowPlay = value;
-            if (value){ RestoreHand(); }
         }
     }
 
@@ -59,43 +51,32 @@ public abstract partial class Hand : Node3D
     }
 
 
-    public static void RestoreHand()
+    public void RestoreHand()
     {
-        while (Instance.cards.Count < Instance.maxCards) DrawNewCard();
+        while (cards.Count < maxCards) DrawNewCard();
     }
 
-    public static void DrawNewCard()
+    public void DrawNewCard()
     {
-        Instance.cards.Add(Instance.deck.GetTopCard());
+        cards.Add(deck.GetTopCard());
     }
 
-    public static void Discard(Card card)
+    public void Discard(Card card)
     {
-        Instance.cards.Remove(card);
-        Instance.deck.PlaceAtBottom(card.effect);
+        cards.Remove(card);
+        deck.PlaceAtBottom(card.effect);
     }
 
-    public static void Replace(Card card) { Discard(card); DrawNewCard(); }
+    public void Replace(Card card) { Discard(card); DrawNewCard(); }
 
 
 
-    public abstract void PlayCardWrapped(Card card, TabletopTile tile);
-
-    public static void PlayCard(Card card, TabletopTile tile)
-    {
-        Instance.PlayCardWrapped(card, tile);
-    }
+    public abstract void PlayCard(Card card, TabletopTile tile);
 
     public override void _Ready()
     {
         base._Ready();
 
-        if (Instance == null) Instance = this;
-        else if (Instance != this) { QueueFree(); return; }
-
-
-        RestoreHand();
-        SpreadCards();
     }
 
 
