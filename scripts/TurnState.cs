@@ -21,29 +21,28 @@ public partial class TurnState : Node3D
 
 
 
-    [Signal]
-    public delegate void OnTurnEndEventHandler();
-
-
     public static async Task StartTurn()
     {
-        await Task.Delay(800);
+
         await Tabletop.MoveCreatures();
-        PlayPhase();
+ 
+        await PlayPhaseAsync();
+
+        _ = EndCurrentTurn();
     }
 
-    public static void PlayPhase()
+    public static async Task PlayPhaseAsync()
     {
-        GD.Print("Play Phase");
         Instance.playerHand.AllowPlay = isPlayerTurn;
         Instance.devilHand.AllowPlay = !isPlayerTurn;
         turnStateTween = Instance.CreateTween();
         turnStateTween.TweenInterval(5);
-        turnStateTween.TweenCallback(Callable.From(EndCurrentTurn));
+
+        await Instance.ToSignal(turnStateTween, Tween.SignalName.Finished);
     }
 
 
-    public static void EndCurrentTurn()
+    public static async Task EndCurrentTurn()
     {
 
         
@@ -51,23 +50,30 @@ public partial class TurnState : Node3D
         Instance.playerHand.AllowPlay = false;
         Instance.devilHand.AllowPlay = false;
         
-        Vector3 basisZ = Instance.playerCamera.GlobalBasis.Z;
+        Vector3 lookDirection = Instance.playerCamera.Position - Instance.playerCamera.GlobalBasis.Z;
 
         turnStateTween = Instance.CreateTween();
-        turnStateTween.TweenInterval(1);
         if (isPlayerTurn)
         {
-            GD.Print("Ending Player's turn");
-            turnStateTween.TweenMethod(Callable.From(
-                (Vector3 target) => Instance.playerCamera.LookAt(target)), basisZ, Instance.devilHand.Position, 0.2);
+            turnStateTween.TweenMethod(
+                Callable.From((Vector3 target) => Instance.playerCamera.LookAt(target)),
+                lookDirection,
+                Instance.devilHand.Position,
+                0.5)
+                .SetTrans(Tween.TransitionType.Bounce);
         }
         else
         {
-            turnStateTween.TweenMethod(Callable.From(
-                (Vector3 target) => Instance.playerCamera.LookAt(target)), basisZ, Instance.playerHand.Position, 0.5);
+            turnStateTween.TweenMethod(Callable.From((Vector3 target) => Instance.playerCamera.LookAt(target)),
+                lookDirection,
+                Instance.playerHand.Position,
+                0.8)
+                .SetTrans(Tween.TransitionType.Circ);
         }
         turnStateTween.TweenCallback(Callable.From(() => isPlayerTurn = !isPlayerTurn));
-        turnStateTween.TweenCallback(Callable.From(StartTurn));
+
+        await Instance.ToSignal(turnStateTween, Tween.SignalName.Finished);
+        _ = StartTurn();
     }
 
     public override void _Ready()
