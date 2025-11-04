@@ -59,13 +59,27 @@ public partial class PlayerHand : Hand
         
         Instance.rightHand.RemoveChild(card);
     }
+    
+    public void SpreadCards()
+    {
+        Vector3 startPos = new Vector3(-(maxCards * cardSize + (maxCards - 1) * cardSeparation) / 2, 0, 0);
+        float i = 0;
+
+        foreach (var card in cards)
+        {
+            if (card.GetParent() == null) AddChild(card);
+            card.Position = startPos + i * (cardSize + cardSeparation) * Vector3.Right;
+            i++;
+        }
+    }
 
 
     public void StartPlayPhase()
-    { 
+    {
         RestoreHand(); SpreadCards();
     }
 
+    
 
     public override void _Ready()
     {
@@ -73,8 +87,8 @@ public partial class PlayerHand : Hand
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        
-        
+
+
     }
 
 }

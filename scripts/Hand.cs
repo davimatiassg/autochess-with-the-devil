@@ -13,7 +13,7 @@ public abstract partial class Hand : Node3D
     [Export]
     public float cardSize = 1f;
     public float cardSeparation = 0.5f;
-    List<Card> cards = new();
+    protected List<Card> cards = new();
 
     [Export]
     public Deck deck;
@@ -37,18 +37,7 @@ public abstract partial class Hand : Node3D
 
 
 
-    public void SpreadCards()
-    {
-        Vector3 startPos = new Vector3(-(maxCards * cardSize + (maxCards - 1) * cardSeparation) / 2, 0, 0);
-        float i = 0;
 
-        foreach (var card in cards)
-        {
-            if (card.GetParent() == null) AddChild(card);
-            card.Position = startPos + i * (cardSize + cardSeparation) * Vector3.Right;
-            i++;
-        }
-    }
 
 
     public void RestoreHand()
@@ -78,6 +67,7 @@ public abstract partial class Hand : Node3D
         base._Ready();
 
     }
+    
 
 
 }

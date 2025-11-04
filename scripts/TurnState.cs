@@ -67,6 +67,7 @@ public partial class TurnState : Node3D
         {
             await Task.Delay(100);
         }
+        GD.Print("lol");
         turnStateTween.Stop();
         
     }
