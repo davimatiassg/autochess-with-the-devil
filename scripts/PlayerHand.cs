@@ -17,10 +17,11 @@ public partial class PlayerHand : Hand
         set
         {
             base.AllowPlay = value;
-            if (!value)
+            if (value)
             {
-                //DropCard();
+                TurnState.OnStartPlayPhase += StartPlayPhase;
             }
+            else TurnState.OnStartPlayPhase += StartPlayPhase;
         }
     }
 
@@ -53,19 +54,27 @@ public partial class PlayerHand : Hand
         card.effect.ApplyEffects(tile);
 
         Discard(card);
+
+        TurnState.OnInterruptPlayPhase?.Invoke();
         
         Instance.rightHand.RemoveChild(card);
+    }
+
+
+    public void StartPlayPhase()
+    { 
+        RestoreHand(); SpreadCards();
     }
 
 
     public override void _Ready()
     {
         base._Ready();
-                if (Instance == null) Instance = this;
+        if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        RestoreHand();
-        SpreadCards();
+        
+        
     }
 
 }

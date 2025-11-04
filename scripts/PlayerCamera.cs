@@ -130,7 +130,7 @@ public partial class PlayerCamera : Camera3D
                 if (pickedCard == null)
                 {
                     PickupCard(lastCardLooked);
-                    
+                    lastCardLooked = null;
                 }
             }
             

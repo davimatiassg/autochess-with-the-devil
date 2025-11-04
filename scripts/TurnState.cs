@@ -38,6 +38,7 @@ public partial class TurnState : Node3D
     public static async Task StartTurn()
     {
         OnStartTurn?.Invoke();
+
         await Tabletop.MoveCreatures();
     
         await PlayPhase();
@@ -61,10 +62,10 @@ public partial class TurnState : Node3D
         if (Instance.turnTime > 0.1)
         {
             turnStateTween.TweenInterval(Instance.turnTime -0.1);
-
         }
-        while (!interrupt || turnStateTween.IsRunning()) { await Task.Delay(100); }
-        if (interrupt) interrupt = false; 
+        while (!interrupt || turnStateTween.IsRunning()) {
+            await Task.Delay(100); }
+        
     }
 
 
@@ -76,9 +77,17 @@ public partial class TurnState : Node3D
         Instance.playerHand.AllowPlay = false;
         Instance.devilHand.AllowPlay = false;
         
+        turnStateTween = Instance.CreateTween();
+        if (interrupt)
+        {
+            interrupt = false;
+            turnStateTween.TweenInterval(1);
+        }
+
         Vector3 lookDirection = Instance.playerCamera.Position - Instance.playerCamera.GlobalBasis.Z;
 
-        turnStateTween = Instance.CreateTween();
+        //TODO: this should go to the camera's script. 
+        // Code to make the player look to the game
         if (isPlayerTurn)
         {
             turnStateTween.TweenMethod(
@@ -86,7 +95,7 @@ public partial class TurnState : Node3D
                 lookDirection,
                 Instance.devilHand.Position,
                 0.5)
-                .SetTrans(Tween.TransitionType.Bounce);
+                .SetTrans(Tween.TransitionType.Circ);
         }
         else
         {
@@ -109,6 +118,7 @@ public partial class TurnState : Node3D
         else if (Instance != this) { QueueFree(); return; }
 
         isPlayerTurn = true;
+
         _ = StartTurn();
     }
 }
