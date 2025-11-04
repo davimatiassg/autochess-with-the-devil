@@ -34,16 +34,16 @@ public partial class Tabletop : Node3D
 
 
 
-    public static List<Vector2I> GetPlaceablePositions(CardEffect effect)
+    public static List<TabletopTile> GetPlaceablePositions(CardEffect effect)
     {
 
-        var list = new List<Vector2I>();
+        var list = new List<TabletopTile>();
 
         for (int y = 0; y < Instance.boardHeight; y++)
         {
             for (int x = 0; x < Instance.boardWidth; x++)
             {
-                if(table[x][y].IsTileValid(effect)) list.Add(new Vector2I(x, y));
+                if(table[x][y].IsTileValid(effect)) list.Add(table[x][y]);
             }
         }
 

@@ -29,18 +29,22 @@ public partial class PlayerCamera : Camera3D
     {
         pickedCard = card;
         PlayerHand.PickCard(pickedCard);
+        TileHighlighter.ToggleOn(card);
     }
 
     public void DropCard()
     {
 
         PlayerHand.DropCard(pickedCard);
+        TileHighlighter.ToggleOff();
         pickedCard = null;
+        
     }
 
     public void PlayCard(Card card, TabletopTile tile)
     {
         PlayerHand.Instance.PlayCard(card, tile);
+        TileHighlighter.ToggleOff();
         pickedCard = null;
 
     }
@@ -126,8 +130,10 @@ public partial class PlayerCamera : Camera3D
                 if (pickedCard == null)
                 {
                     PickupCard(lastCardLooked);
+                    
                 }
             }
+            
         }
         else if (pickedCard != null)
         {
@@ -140,7 +146,7 @@ public partial class PlayerCamera : Camera3D
                 else
                 {
                     if (tile.IsTileValid(pickedCard.effect)) PlayCard(pickedCard, tile);
-                    else DropCard(); 
+                    else DropCard();
                 }
             }
             else DropCard();

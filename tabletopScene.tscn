@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=28 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
 [ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/PlayerCamera.cs" id="1_r3hxv"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://dyx18p17d6dv0" path="res://scripts/SpawnCreatureCardEffect.cs" id="12_m1bcj"]
 [ext_resource type="Texture2D" uid="uid://ce6bvcbd7ykhy" path="res://icon.svg" id="12_vp6my"]
 [ext_resource type="Script" uid="uid://dk5sto74m2gdi" path="res://scripts/TurnState.cs" id="14_m1bcj"]
+[ext_resource type="Script" uid="uid://cokot44ts0kwq" path="res://scripts/TileHighlighter.cs" id="16_kc8hc"]
 
 [sub_resource type="Resource" id="Resource_s2des"]
 script = ExtResource("11_vp6my")
@@ -66,6 +67,11 @@ normal_enabled = true
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_somcj"]
 emission_enabled = true
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_qvchn"]
+emission_enabled = true
+emission = Color(0, 1.4687854, 0, 1)
+emission_energy_multiplier = 2.73
 
 [node name="TabletopScene" type="Node3D"]
 
@@ -167,3 +173,8 @@ playerHand = NodePath("../PlayerHand")
 playerCamera = NodePath("../Camera3D")
 devilHand = NodePath("../DevilHand")
 metadata/_custom_type_script = "uid://dk5sto74m2gdi"
+
+[node name="TileHighlighter" type="Node" parent="TurnState"]
+script = ExtResource("16_kc8hc")
+highlightMaterial = SubResource("ORMMaterial3D_qvchn")
+metadata/_custom_type_script = "uid://cokot44ts0kwq"

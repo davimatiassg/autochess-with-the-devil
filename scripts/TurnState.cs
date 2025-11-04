@@ -19,30 +19,56 @@ public partial class TurnState : Node3D
 
     public static TurnState Instance;
 
+    public static Action OnStartTurn;
 
+    public static Action OnStartPlayPhase;
+
+    private static bool interrupt = false;
+    public static Action OnInterruptPlayPhase = () => interrupt = true;
+
+    public static Action OnEndTurn;
+
+
+
+    /// <summary>
+    /// The time limit for each turn's playing phase. Values equal or less than 0.1 make the turn infinite. 
+    /// </summary>
+    [Export] public double turnTime = 0;
 
     public static async Task StartTurn()
     {
-
+        OnStartTurn?.Invoke();
         await Tabletop.MoveCreatures();
- 
-        await PlayPhaseAsync();
+    
+        await PlayPhase();
 
         _ = EndCurrentTurn();
     }
 
-    public static async Task PlayPhaseAsync()
+
+
+
+    private static async Task PlayPhase()
     {
         Instance.playerHand.AllowPlay = isPlayerTurn;
         Instance.devilHand.AllowPlay = !isPlayerTurn;
-        turnStateTween = Instance.CreateTween();
-        turnStateTween.TweenInterval(5);
 
-        await Instance.ToSignal(turnStateTween, Tween.SignalName.Finished);
+        OnStartPlayPhase?.Invoke();
+
+        turnStateTween = Instance.CreateTween();
+        turnStateTween.TweenInterval(0.1);
+
+        if (Instance.turnTime > 0.1)
+        {
+            turnStateTween.TweenInterval(Instance.turnTime -0.1);
+
+        }
+        while (!interrupt || turnStateTween.IsRunning()) { await Task.Delay(100); }
+        if (interrupt) interrupt = false; 
     }
 
 
-    public static async Task EndCurrentTurn()
+    private static async Task EndCurrentTurn()
     {
 
         

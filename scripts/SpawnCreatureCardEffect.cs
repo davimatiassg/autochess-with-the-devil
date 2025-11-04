@@ -12,6 +12,6 @@ public partial class SpawnCreatureCardEffect : CardEffect
         Creature creature = new Creature(creatureData);
         Tabletop.Instance.AddChild(creature);
         creature.Tile = tile;
-
+        creature.GlobalPosition = tile.GlobalPosition;
     }
 }

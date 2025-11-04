@@ -36,11 +36,20 @@ public partial class TabletopTile : Area3D
             boxShape.Size = value;
         }
     }
-   
+
     public bool IsTileValid(CardEffect effect)
     {
         //STUB: tem que verificar a situação da carta
-        return containsCreature() == null;
+        if (containsCreature() != null) return false;
+
+        if (effect is SpawnCreatureCardEffect)
+        {
+            if (TurnState.isPlayerTurn) {
+                if (tilePosition.Y > 0) { return false; } }
+            else if (tilePosition.Y < Tabletop.Instance.boardHeight - 1) return false;
+        }
+
+        return true;
     }
 
     public Creature containsCreature()
