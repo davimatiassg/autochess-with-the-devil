@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=32 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
 [ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/PlayerCamera.cs" id="1_r3hxv"]
@@ -84,6 +84,8 @@ emission_energy_multiplier = 2.73
 emission_enabled = true
 emission = Color(18.892157, 18.892157, 18.892157, 1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_kc8hc"]
+
 [node name="TabletopScene" type="Node3D"]
 
 [node name="devildeck" type="Node3D" parent="."]
@@ -124,7 +126,7 @@ texture_filter = 0
 texture = ExtResource("2_yspwb")
 
 [node name="PlayerHand" type="Node3D" parent="." node_paths=PackedStringArray("rightHand", "deck")]
-transform = Transform3D(0.135, 0, 0, 0, 0.1115684, 0.076009825, 0, -0.076009825, 0.1115684, -2.9802322e-08, 2.1723876, 1.3628567)
+transform = Transform3D(0.2, 0, 0, 0, 0.16528651, 0.112607144, 0, -0.112607144, 0.16528651, -2.9802322e-08, 1.5367208, 1.18836)
 script = ExtResource("4_js8at")
 rightHand = NodePath("../Camera3D/Node3D")
 CardPrefab = ExtResource("5_js8at")
@@ -192,3 +194,38 @@ script = ExtResource("16_kc8hc")
 highlightMaterial = SubResource("ORMMaterial3D_qvchn")
 ultraHighlightMaterial = SubResource("ORMMaterial3D_kc8hc")
 metadata/_custom_type_script = "uid://cokot44ts0kwq"
+
+[node name="floor" type="Node3D" parent="."]
+transform = Transform3D(0.5891963, 0, 0.8079899, 0, 1, 0, -0.8079899, 0, 0.5891963, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, -0.08297381, -0.5125237, -3.9276528)
+mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 1.1091481, -0.5125237, -0.13162984)
+mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.5857779, -0.5125237, -1.0939713)
+mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.26593986, -0.5125237, 2.7034588)
+mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.047868878, -0.5125237, -2.0357544)
+mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.81838727, -0.5125237, 0.7654557)
+mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 1.2545291, -0.5125237, 1.6933448)
+mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.30955377, -0.5125237, -2.9761999)
+mesh = SubResource("BoxMesh_kc8hc")

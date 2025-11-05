@@ -58,7 +58,12 @@ public partial class Creature : PlacedObject
     public void DefendFromCreature(Creature attacker)
     {
         if (currentHp > 0) data.SurviveEffect(attacker);
-        else data.DeathEffect(attacker);
+        else
+        {
+            data.DeathEffect(attacker);
+            Tile.RemoveObject(this);
+            QueueFree();
+        }
     }
 
 

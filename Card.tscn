@@ -1,14 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://2eu83js14mgw"]
+[gd_scene load_steps=5 format=3 uid="uid://2eu83js14mgw"]
 
-[ext_resource type="Texture2D" uid="uid://ce6bvcbd7ykhy" path="res://icon.svg" id="1_dd2wi"]
 [ext_resource type="Script" uid="uid://cyb23rr66nny7" path="res://scripts/Card.cs" id="1_hael8"]
-
-[sub_resource type="Gradient" id="Gradient_dd2wi"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hael8"]
-gradient = SubResource("Gradient_dd2wi")
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0.3974359, 0.52991456)
+[ext_resource type="Texture2D" uid="uid://dmxwrracimcjh" path="res://sprites/cards/fire.png" id="2_21rx5"]
+[ext_resource type="Texture2D" uid="uid://c4qvnu7pwshy5" path="res://sprites/cards/card.png" id="3_21rx5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dd2wi"]
 margin = 0.347
@@ -19,15 +13,25 @@ script = ExtResource("1_hael8")
 sprite = NodePath("Sprite3D")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(0.18, 0, 0, 0, 0.18, 0, 0, 0, 0.18, 0, 0.073, 0.001)
+transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, -0.002, 0.108, 0)
 transparent = false
 double_sided = false
-texture = ExtResource("1_dd2wi")
+texture_filter = 0
+texture = ExtResource("2_21rx5")
 
 [node name="CardBackGround" type="Sprite3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.7, 0, 0, 0, 0.5, 0, 0, 0)
-texture = SubResource("GradientTexture2D_hael8")
+transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0, 0, -0.001)
+texture_filter = 0
+texture = ExtResource("3_21rx5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("BoxShape3D_dd2wi")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00077852607, -0.031141786, 0.05)
+texture_filter = 0
+text = "rrewr"
+font_size = 12
+outline_size = 0
+width = 500.105

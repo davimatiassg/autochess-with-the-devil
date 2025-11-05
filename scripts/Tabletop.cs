@@ -33,6 +33,9 @@ public partial class Tabletop : Node3D
     public static Tween animationTween;
 
 
+    
+
+
 
     public static List<TabletopTile> GetPlaceablePositions(CardEffect effect)
     {
@@ -43,7 +46,7 @@ public partial class Tabletop : Node3D
         {
             for (int x = 0; x < Instance.boardWidth; x++)
             {
-                if(table[x][y].IsTileValid(effect)) list.Add(table[x][y]);
+                if (table[x][y].IsTileValid(effect)) list.Add(table[x][y]);
             }
         }
 
@@ -118,18 +121,11 @@ public partial class Tabletop : Node3D
 
         creature.Move(nextTile);
         
-        while (creature.animationTween.IsRunning()) await Task.Delay(200);
+        while (creature.animationTween.IsRunning()) await Task.Delay(1000);
 
         //TODO: if (nextTile.ContainsTrap() != null) <-activate trap card->
 
     }
-
-    public void KillCreature(Creature creature, TabletopTile tile)
-    { 
-        tile.RemoveObject(creature);
-        creature.QueueFree();
-    }
-
 
     public override void _Ready()
     {

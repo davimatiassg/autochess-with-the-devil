@@ -29,12 +29,11 @@ public partial class TurnState : Node3D
 
     public static async Task LoopTurn()
     {
-        
+
         while (true)
         {
-            Instance.playerCamera.SlideLookAt(isPlayerTurn ? PlayerHand.Instance.Position : DevilHand.Instance.Position, 0.5);
-            Instance.playerHand.AllowPlay = false;
-            Instance.devilHand.AllowPlay = false;
+
+            
             OnStartTurn?.Invoke();
 
             await Tabletop.MoveCreatures();
@@ -56,6 +55,11 @@ public partial class TurnState : Node3D
 
 
             isPlayerTurn = !isPlayerTurn;
+            
+            Instance.playerHand.AllowPlay = false;
+            Instance.devilHand.AllowPlay = false;
+            
+            Instance.playerCamera.SlideLookAt(isPlayerTurn ? PlayerHand.Instance.Position : DevilHand.Instance.Position, 0.5);
         }
         
     }
