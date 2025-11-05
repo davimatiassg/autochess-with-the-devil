@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class DevilHand : Hand
@@ -14,23 +15,20 @@ public partial class DevilHand : Hand
         set
         {
             base.AllowPlay = value;
-            if (value)
-            {
-                RestoreHand();
-                GD.Print("aloooooo");
-                GD.Print($"fora - card: {cards.Count} tile {Tabletop.table[3][3]}");
-                this.PlayCard(cards[0], Tabletop.table[3][3]);
-            }
         }
+    }
+
+    public void StartTurn()
+    {
+        
     }
 
     public override void PlayCard(Card card, TabletopTile tile)
     {
-        GD.Print("caraio");
-        GD.Print($"card: {card} tile {tile}");
+
         card.effect.ApplyEffects(tile);
         Discard(card);
-        TurnState.OnInterruptPlayPhase?.Invoke();
+        TurnState.InterruptPlayPhase();
     }
 
 
@@ -39,6 +37,17 @@ public partial class DevilHand : Hand
         base._Ready();
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
+
+        TurnState.OnStartPlayPhase += () =>
+        {
+            //STUB: make proper ai for the devil
+            if (TurnState.isPlayerTurn) return;
+            RestoreHand();
+            Tween tween = CreateTween();
+            tween.TweenInterval(1);
+            tween.TweenCallback(Callable.From( () => this.PlayCard(cards[0], Tabletop.table[1][4])));
+            
+        };  
 
     }
 

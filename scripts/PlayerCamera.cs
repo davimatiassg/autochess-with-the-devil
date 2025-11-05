@@ -15,7 +15,7 @@ public partial class PlayerCamera : Camera3D
     private Card pickedCard = null;
 
     public void HoverCard(Card cardLooked)
-    {      
+    {
         if (cardLooked != lastCardLooked)
         {
             lastCardLooked?.OnMouseExited();
@@ -38,7 +38,7 @@ public partial class PlayerCamera : Camera3D
         PlayerHand.DropCard(pickedCard);
         TileHighlighter.ToggleOff();
         pickedCard = null;
-        
+
     }
 
     public void PlayCard(Card card, TabletopTile tile)
@@ -64,8 +64,8 @@ public partial class PlayerCamera : Camera3D
         query.CollideWithAreas = true;
         query.CollideWithBodies = false;
         return spaceState.IntersectRay(query);
-            
-    
+
+
     }
 
     public override void _Ready()
@@ -74,9 +74,9 @@ public partial class PlayerCamera : Camera3D
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
-    
-    
-    
+
+
+
     public override void _Input(InputEvent @event)
     {
         if (Input.IsActionJustPressed("ui_cancel"))
@@ -88,7 +88,8 @@ public partial class PlayerCamera : Camera3D
         }
 
         if (!PlayerHand.Instance.AllowPlay) return;
-        
+
+
         if (@event is InputEventMouseMotion mouseMotion)
         {
             // Rotação da câmera
@@ -134,7 +135,7 @@ public partial class PlayerCamera : Camera3D
                     lastCardLooked = null;
                 }
             }
-            
+
         }
         else if (pickedCard != null)
         {
@@ -154,6 +155,19 @@ public partial class PlayerCamera : Camera3D
         }
 
 
+    }
+
+
+    public void SlideLookAt(Vector3 position, double slideDuration)
+    { 
+            Vector3 lookDirection = GlobalPosition - GlobalBasis.Z;
+            var tween = CreateTween(); 
+            tween.TweenMethod(
+                Callable.From((Vector3 target) => LookAt(target)),
+                lookDirection,
+                position,
+                slideDuration
+            ).SetTrans(Tween.TransitionType.Circ);
     }
     
 

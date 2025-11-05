@@ -70,8 +70,9 @@ public partial class Creature : PlacedObject
             if (possibleTarget.isPlayerObject != isPlayerObject)
             {
                 AttackCreature(possibleTarget);
-                return;
+
             }
+            return;
         }
         animationTween = CreateTween();
         animationTween.TweenCallback(Callable.From(() =>

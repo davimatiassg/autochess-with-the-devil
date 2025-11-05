@@ -15,8 +15,6 @@ public partial class TurnState : Node3D
 
     public static bool isPlayerTurn;
 
-    public static Tween turnStateTween;
-
     public static TurnState Instance;
 
     public static Action OnStartTurn;
@@ -24,7 +22,7 @@ public partial class TurnState : Node3D
     public static Action OnStartPlayPhase;
 
     private static bool interrupt = false;
-    public static Action OnInterruptPlayPhase = () => interrupt = true;
+    public static Action InterruptPlayPhase = () => interrupt = true;
 
     public static Action OnEndTurn;
 
@@ -35,12 +33,36 @@ public partial class TurnState : Node3D
     /// </summary>
     [Export] public double turnTime = 0;
 
-    public static async Task StartTurn()
+    public static async Task LoopTurn()
     {
-        OnStartTurn?.Invoke();
-        await Tabletop.MoveCreatures();
-        await PlayPhase();
-        _ = EndCurrentTurn();
+        InterruptPlayPhase += () => GD.Print("INTERRUPT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        while (true)
+        {
+            Instance.playerCamera.SlideLookAt(isPlayerTurn ? PlayerHand.Instance.Position : DevilHand.Instance.Position, 0.5);
+            Instance.playerHand.AllowPlay = false;
+            Instance.devilHand.AllowPlay = false;
+            OnStartTurn?.Invoke();
+            var x = isPlayerTurn ? "player" : "inimigo";
+            GD.Print($"Startou {x}");
+            await Tabletop.MoveCreatures();
+            GD.Print("moveu");
+
+            Instance.playerHand.AllowPlay = isPlayerTurn;
+            Instance.devilHand.AllowPlay = !isPlayerTurn;
+            OnStartPlayPhase?.Invoke();
+            
+            GD.Print($"Playphase fez {x}");
+            await PlayPhase();
+            GD.Print($"Terminou {x}");
+
+
+            await EndCurrentTurn();
+            OnEndTurn?.Invoke();
+
+
+            isPlayerTurn = !isPlayerTurn;
+        }
+        
     }
 
 
@@ -48,69 +70,22 @@ public partial class TurnState : Node3D
 
     private static async Task PlayPhase()
     {
-        Instance.playerHand.AllowPlay = isPlayerTurn;
-        Instance.devilHand.AllowPlay = !isPlayerTurn;
-
-        OnStartPlayPhase?.Invoke();
-
-        turnStateTween = Instance.CreateTween();
-        turnStateTween.TweenInterval(0.1);
-
-        if (Instance.turnTime > 0.0)
-        {
-            turnStateTween.TweenInterval(Instance.turnTime);
-            turnStateTween.TweenCallback(Callable.From(() => GD.Print("timeEnd")));
-            turnStateTween.TweenCallback(Callable.From(() => interrupt = true));
-
-        }
-        while (!interrupt)
-        {
-            await Task.Delay(100);
-        }
-        GD.Print("lol");
-        turnStateTween.Stop();
         
+        while (!interrupt) { await Task.Delay(100); }
+
+        interrupt = false;
     }
 
 
     private static async Task EndCurrentTurn()
     {
 
-        OnEndTurn?.Invoke();
-        
         Instance.playerHand.AllowPlay = false;
         Instance.devilHand.AllowPlay = false;
-        
-        
-        interrupt = false;
-        
-        turnStateTween = Instance.CreateTween();
 
-        Vector3 lookDirection = Instance.playerCamera.Position - Instance.playerCamera.GlobalBasis.Z;
+        
 
-        //TODO: this should go to the camera's script. 
-        // Code to make the player look to the game
-        if (isPlayerTurn)
-        {
-            turnStateTween.TweenMethod(
-                Callable.From((Vector3 target) => Instance.playerCamera.LookAt(target)),
-                lookDirection,
-                Instance.devilHand.Position,
-                0.5)
-                .SetTrans(Tween.TransitionType.Circ);
-        }
-        else
-        {
-            turnStateTween.TweenMethod(Callable.From((Vector3 target) => Instance.playerCamera.LookAt(target)),
-                lookDirection,
-                Instance.playerHand.Position,
-                0.8)
-                .SetTrans(Tween.TransitionType.Circ);
-        }
-        turnStateTween.TweenCallback(Callable.From(() => isPlayerTurn = !isPlayerTurn));
-
-        await Instance.ToSignal(turnStateTween, Tween.SignalName.Finished);
-        _ = StartTurn();
+        await Task.Delay(500);
     }
 
     public override void _Ready()
@@ -119,8 +94,8 @@ public partial class TurnState : Node3D
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        isPlayerTurn = true;
-
-        _ = StartTurn();
+        isPlayerTurn = true;    
+    
+        _ = LoopTurn();
     }
 }

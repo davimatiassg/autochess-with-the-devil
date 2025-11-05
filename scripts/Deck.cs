@@ -20,7 +20,7 @@ public partial class Deck : Node3D
 
     public void PlaceAtBottom(CardEffect card)
     {
-        GD.Print($"restoring card {card.GetType()}");
+
         cards.Add(card);
     }
 

@@ -10,20 +10,7 @@ public partial class PlayerHand : Hand
 
     public static PlayerHand Instance;
 
-
-    public override bool AllowPlay
-    {
-        get => base.AllowPlay;
-        set
-        {
-            base.AllowPlay = value;
-            if (value)
-            {
-                TurnState.OnStartPlayPhase += StartPlayPhase;
-            }
-            else TurnState.OnStartPlayPhase -= StartPlayPhase;
-        }
-    }
+    [Export] public double turnTimeLimit = 0.0;
 
 
     public static void PickCard(Card card)
@@ -55,9 +42,9 @@ public partial class PlayerHand : Hand
 
         Discard(card);
 
-        TurnState.OnInterruptPlayPhase?.Invoke();
-        
-        Instance.rightHand.RemoveChild(card);
+        TurnState.InterruptPlayPhase();
+
+        card.QueueFree();
     }
     
     public void SpreadCards()
@@ -76,10 +63,22 @@ public partial class PlayerHand : Hand
 
     public void StartPlayPhase()
     {
-        RestoreHand(); SpreadCards();
+        RestoreHand();
+        SpreadCards();
+
+
+
+        if (turnTimeLimit > 0.0)
+        {
+
+            Tween loopPlayPhase = Instance.CreateTween();
+            loopPlayPhase.TweenInterval(turnTimeLimit);
+            loopPlayPhase.TweenCallback(Callable.From(TurnState.InterruptPlayPhase));
+            TurnState.InterruptPlayPhase += () => { if (loopPlayPhase != null) loopPlayPhase.Kill(); };
+        }
     }
 
-    
+
 
     public override void _Ready()
     {
@@ -87,7 +86,7 @@ public partial class PlayerHand : Hand
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-
+        TurnState.OnStartPlayPhase += () => { if (TurnState.isPlayerTurn) StartPlayPhase(); };  
 
     }
 
