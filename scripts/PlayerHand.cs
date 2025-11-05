@@ -13,6 +13,10 @@ public partial class PlayerHand : Hand
     public PackedScene CardPrefab;
     public static PlayerHand Instance;
 
+        /// <summary>
+    /// The time limit for each turn's playing phase. Values equal or less than 0.1 make the turn infinite. 
+    /// </summary>
+
     [Export] public double turnTimeLimit = 0.0;
 
 
@@ -76,9 +80,10 @@ public partial class PlayerHand : Hand
         Vector3 startPos = new Vector3(-(maxCards * cardSize + (maxCards - 1) * cardSeparation) / 2, 0, 0);
         float i = 0;
 
-        foreach (Node3D card in GetChildren())
+        foreach (Card card in GetChildren())
         {
             card.Position = startPos + i * (cardSize + cardSeparation) * Vector3.Right;
+            card.defaultPos = card.Position;
             i++;
         }
     }

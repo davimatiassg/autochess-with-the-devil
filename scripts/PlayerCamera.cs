@@ -69,7 +69,8 @@ public partial class PlayerCamera : Camera3D
 
     public override void _Ready()
     {
-        //Input.MouseMode = Input.MouseModeEnum.Captured;
+
+        Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
 
@@ -133,6 +134,7 @@ public partial class PlayerCamera : Camera3D
                     lastCardLooked = null;
                 }
             }
+            TileHighlighter.HighlightRaycast(RaycastScene());
 
         }
         else if (pickedCard != null)

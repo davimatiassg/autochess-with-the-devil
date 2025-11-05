@@ -27,13 +27,6 @@ public partial class TurnState : Node3D
 
     public static Action OnEndTurn;
 
-
-
-    /// <summary>
-    /// The time limit for each turn's playing phase. Values equal or less than 0.1 make the turn infinite. 
-    /// </summary>
-    [Export] public double turnTime = 0;
-
     public static async Task LoopTurn()
     {
         

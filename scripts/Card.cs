@@ -17,7 +17,7 @@ public partial class Card : Area3D
         InputRayPickable = true;
     }
 
-    private Vector3 defaultPos;
+    public Vector3 defaultPos;
 
     Tween bobTween;
     public void OnMouseEntered()
