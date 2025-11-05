@@ -4,7 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    
+
         {
             "name": "Play in Editor",
             "type": "godot-mono",
@@ -13,24 +13,24 @@
         },
         {
             "name": "Launch",
-            "type": "godot-mono",
+            "type": "coreclr",
             "request": "launch",
-            "mode": "executable",
             "preLaunchTask": "build",
-            "executable": "/home/matias/.var/app/io.github.MakovWait.Godots/data/godot/app_userdata/Godots/versions/custom_editor-2eeec6ee/Godot_v4.5-beta1_mono_linux_x86_64/Godot_v4.5-beta1_mono_linux.x86_64",
-            "executableArguments": [
+            "program": "/home/matias/godot/godot",
+            "args": [
+                "-d", 
                 "--path",
                 "${workspaceRoot}"
             ]
         },
         {
             "name": "Launch (Select Scene)",
-            "type": "godot-mono",
+            "type": "coreclr",
             "request": "launch",
-            "mode": "executable",
             "preLaunchTask": "build",
-            "executable": "/home/matias/.var/app/io.github.MakovWait.Godots/data/godot/app_userdata/Godots/versions/custom_editor-2eeec6ee/Godot_v4.5-beta1_mono_linux_x86_64/Godot_v4.5-beta1_mono_linux.x86_64",
-            "executableArguments": [
+            "program": "/home/matias/godot/godot",
+            "args": [
+                "--debug",
                 "--path",
                 "${workspaceRoot}",
                 "${command:SelectLaunchScene}"

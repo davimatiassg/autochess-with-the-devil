@@ -78,7 +78,6 @@ emission_energy_multiplier = 2.73
 [node name="devildeck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, -2.2083616)
 script = ExtResource("5_7q2o4")
-CardPrefab = ExtResource("5_js8at")
 cards = Array[ExtResource("10_0vo08")]([SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")])
 metadata/_custom_type_script = "uid://cjk18k6qfsm61"
 
@@ -136,16 +135,18 @@ gizmo_extents = 4.2
 transform = Transform3D(0.135, 0, 0, 0, 0.1115684, 0.076009825, 0, -0.076009825, 0.1115684, -2.9802322e-08, 1.6756332, 1.6353396)
 script = ExtResource("4_js8at")
 rightHand = NodePath("../Camera3D/Node3D")
+CardPrefab = ExtResource("5_js8at")
 turnTimeLimit = 2.0
 maxCards = 2
+cardSize = 0.5
+cardSeparation = 0.1
 deck = NodePath("../Deck")
 metadata/_custom_type_script = "uid://cbo1txag8k6d3"
 
 [node name="Deck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, 1)
 script = ExtResource("5_7q2o4")
-CardPrefab = ExtResource("5_js8at")
-cards = Array[ExtResource("10_0vo08")]([SubResource("Resource_kc8hc"), SubResource("Resource_qvchn"), null])
+cards = Array[ExtResource("10_0vo08")]([SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")])
 metadata/_custom_type_script = "uid://cjk18k6qfsm61"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Deck"]
@@ -173,7 +174,7 @@ script = ExtResource("14_m1bcj")
 playerHand = NodePath("../PlayerHand")
 playerCamera = NodePath("../Camera3D")
 devilHand = NodePath("../DevilHand")
-turnTime = 4.0
+turnTime = 10.0
 metadata/_custom_type_script = "uid://dk5sto74m2gdi"
 
 [node name="TileHighlighter" type="Node" parent="TurnState"]

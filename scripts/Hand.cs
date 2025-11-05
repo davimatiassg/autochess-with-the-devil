@@ -12,8 +12,11 @@ public abstract partial class Hand : Node3D
 
     [Export]
     public float cardSize = 1f;
+    [Export]
     public float cardSeparation = 0.5f;
-    protected List<Card> cards = new();
+
+    [Export]
+    protected Godot.Collections.Array<CardEffect> cards = new();
 
     [Export]
     public Deck deck;
@@ -40,27 +43,11 @@ public abstract partial class Hand : Node3D
 
 
 
-    public void RestoreHand()
-    {
-        while (cards.Count < maxCards) DrawNewCard();
-    }
+   
 
-    public void DrawNewCard()
-    {
-        cards.Add(deck.GetTopCard());
-    }
-
-    public void Discard(Card card)
-    {
-        cards.Remove(card);
-        deck.PlaceAtBottom(card.effect);
-    }
-
-    public void Replace(Card card) { Discard(card); DrawNewCard(); }
+    public abstract void DrawNewCard();
 
 
-
-    public abstract void PlayCard(Card card, TabletopTile tile);
 
     public override void _Ready()
     {

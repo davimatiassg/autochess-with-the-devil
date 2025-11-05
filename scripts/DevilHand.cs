@@ -9,25 +9,17 @@ public partial class DevilHand : Hand
     public static DevilHand Instance;
 
 
-    public override bool AllowPlay
-    {
-        get => base.AllowPlay;
-        set
-        {
-            base.AllowPlay = value;
-        }
-    }
-
     public void StartTurn()
     {
         
     }
 
-    public override void PlayCard(Card card, TabletopTile tile)
+    public void PlayCard(CardEffect card, TabletopTile tile)
     {
 
-        card.effect.ApplyEffects(tile);
-        Discard(card);
+        card.ApplyEffects(tile);
+        cards.Remove(card);
+        deck.PlaceAtBottom(card);
         TurnState.InterruptPlayPhase();
     }
 
@@ -37,12 +29,15 @@ public partial class DevilHand : Hand
         base._Ready();
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
-
+    
         TurnState.OnStartPlayPhase += () =>
         {
-            //STUB: make proper ai for the devil
+            
+            //STUB: TODO! make proper ai for the devil
             if (TurnState.isPlayerTurn) return;
-            RestoreHand();
+
+            DrawNewCard();
+
             Tween tween = CreateTween();
             tween.TweenInterval(1);
             tween.TweenCallback(Callable.From( () => this.PlayCard(cards[0], Tabletop.table[1][4])));
@@ -51,5 +46,9 @@ public partial class DevilHand : Hand
 
     }
 
-
+    public override void DrawNewCard()
+    {
+        var newCard = deck.GetTopCard();
+        cards.Add(newCard);
+    }
 }

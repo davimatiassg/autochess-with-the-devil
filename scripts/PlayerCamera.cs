@@ -43,7 +43,6 @@ public partial class PlayerCamera : Camera3D
 
     public void PlayCard(Card card, TabletopTile tile)
     {
-        GD.Print("playedCard");
         PlayerHand.Instance.PlayCard(card, tile);
         TileHighlighter.ToggleOff();
         pickedCard = null;
@@ -70,8 +69,7 @@ public partial class PlayerCamera : Camera3D
 
     public override void _Ready()
     {
-        // Capturar e esconder o cursor do mouse
-        Input.MouseMode = Input.MouseModeEnum.Captured;
+        //Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
 

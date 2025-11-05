@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 [GlobalClass]
@@ -35,25 +36,26 @@ public partial class TurnState : Node3D
 
     public static async Task LoopTurn()
     {
-        InterruptPlayPhase += () => GD.Print("INTERRUPT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
         while (true)
         {
             Instance.playerCamera.SlideLookAt(isPlayerTurn ? PlayerHand.Instance.Position : DevilHand.Instance.Position, 0.5);
             Instance.playerHand.AllowPlay = false;
             Instance.devilHand.AllowPlay = false;
             OnStartTurn?.Invoke();
-            var x = isPlayerTurn ? "player" : "inimigo";
-            GD.Print($"Startou {x}");
+
             await Tabletop.MoveCreatures();
-            GD.Print("moveu");
+
 
             Instance.playerHand.AllowPlay = isPlayerTurn;
             Instance.devilHand.AllowPlay = !isPlayerTurn;
-            OnStartPlayPhase?.Invoke();
-            
-            GD.Print($"Playphase fez {x}");
+
+
+            OnStartPlayPhase();
+
+
             await PlayPhase();
-            GD.Print($"Terminou {x}");
+
 
 
             await EndCurrentTurn();

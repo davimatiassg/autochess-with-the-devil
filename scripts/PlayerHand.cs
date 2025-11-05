@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [GlobalClass]
 public partial class PlayerHand : Hand
@@ -8,6 +9,8 @@ public partial class PlayerHand : Hand
     [Export]
     public Node3D rightHand;
 
+    [Export]
+    public PackedScene CardPrefab;
     public static PlayerHand Instance;
 
     [Export] public double turnTimeLimit = 0.0;
@@ -19,8 +22,6 @@ public partial class PlayerHand : Hand
         card.Position = Vector3.Zero;
         Instance.rightHand.AddChild(card);
 
-        //TODO: Spawn placeable positions guide for the selected card;
-
     }
 
     public static void DropCard(Card card)
@@ -30,21 +31,44 @@ public partial class PlayerHand : Hand
         
         Instance.AddChild(card);
         Instance.SpreadCards();
-        //TODO: Dispawn placeable positions guide for the selected card;
 
     }
 
-    public override void PlayCard(Card card, TabletopTile tile)
+    public override void DrawNewCard()
     {
-        //TODO: Dispawn placeable positions vfx for the selected card;
+        var newCardEffect = deck.GetTopCard();
+
+        
+        cards.Add(newCardEffect);
+
+        var newCard = (Card)CardPrefab.Instantiate();
+
+        
+        newCard.effect = newCardEffect;
+
+        newCard.sprite.Texture = newCardEffect.portrait;
+
+
+        AddChild(newCard);
+    }
+
+    public void PlayCard(Card card, TabletopTile tile)
+    {
 
         card.effect.ApplyEffects(tile);
 
-        Discard(card);
+        var cardEffect = card.effect;
+        
+
+        cards.Remove(cardEffect);
+        deck.PlaceAtBottom(cardEffect);
+
+        card.effect = null;
+        card.QueueFree();
 
         TurnState.InterruptPlayPhase();
 
-        card.QueueFree();
+        
     }
     
     public void SpreadCards()
@@ -52,29 +76,51 @@ public partial class PlayerHand : Hand
         Vector3 startPos = new Vector3(-(maxCards * cardSize + (maxCards - 1) * cardSeparation) / 2, 0, 0);
         float i = 0;
 
-        foreach (var card in cards)
+        foreach (Node3D card in GetChildren())
         {
-            if (card.GetParent() == null) AddChild(card);
             card.Position = startPos + i * (cardSize + cardSeparation) * Vector3.Right;
             i++;
         }
     }
 
+    
 
     public void StartPlayPhase()
     {
-        RestoreHand();
+        
+
+        if (!TurnState.isPlayerTurn) return;
+
+
+
+        while (cards.Count < maxCards)
+        {
+            DrawNewCard();
+            
+        } 
+            
+
         SpreadCards();
 
-
-
+        
+        
         if (turnTimeLimit > 0.0)
         {
+            Tween turnTimer = Instance.CreateTween();
 
-            Tween loopPlayPhase = Instance.CreateTween();
-            loopPlayPhase.TweenInterval(turnTimeLimit);
-            loopPlayPhase.TweenCallback(Callable.From(TurnState.InterruptPlayPhase));
-            TurnState.InterruptPlayPhase += () => { if (loopPlayPhase != null) loopPlayPhase.Kill(); };
+            void InterruptTurn()
+            {
+                turnTimer.Kill();
+                TurnState.InterruptPlayPhase -= InterruptTurn;
+            }
+            
+            TurnState.InterruptPlayPhase += InterruptTurn;
+
+            turnTimer.TweenInterval(turnTimeLimit);
+            
+            turnTimer.TweenCallback(Callable.From(TurnState.InterruptPlayPhase));
+
+            
         }
     }
 
@@ -86,7 +132,7 @@ public partial class PlayerHand : Hand
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        TurnState.OnStartPlayPhase += () => { if (TurnState.isPlayerTurn) StartPlayPhase(); };  
+        TurnState.OnStartPlayPhase += StartPlayPhase; 
 
     }
 
