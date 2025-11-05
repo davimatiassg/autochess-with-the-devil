@@ -104,7 +104,7 @@ deck = NodePath("../devildeck")
 metadata/_custom_type_script = "uid://can6bvgu8qmsn"
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.6924329, 0.72148234, 0, -0.72148234, 0.6924329, 0.002, 2.4623976, 1.4527633)
+transform = Transform3D(1, 0, 0, 0, 0.6924329, 0.72148234, 0, -0.72148234, 0.6924329, 0.002, 1.7896793, 1.390811)
 fov = 55.250813
 script = ExtResource("1_r3hxv")
 
@@ -138,7 +138,7 @@ metadata/_custom_type_script = "uid://cbo1txag8k6d3"
 [node name="Tabletop" type="Node3D" parent="." node_paths=PackedStringArray("tableRectCenter")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 script = ExtResource("2_k20h1")
-tileSize = 0.2
+tileSize = 0.18
 tableRectCenter = NodePath("Marker3D")
 tilePrefab = ExtResource("3_7q2o4")
 blackMaterial = SubResource("ORMMaterial3D_7q2o4")

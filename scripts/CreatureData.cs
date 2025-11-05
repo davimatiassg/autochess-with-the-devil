@@ -10,6 +10,9 @@ public partial class CreatureData : Resource
     [Export]
     public int hp;
 
+    [Export]
+    public SpriteFrames sprite;
+
     public Texture2D PlayTexture;
 
     public virtual void SpawnEffect()
