@@ -99,14 +99,14 @@ transform = Transform3D(-0.014780945, 0, -0.13846223, 0, 0.12, 0, 0.09890159, 0,
 mesh = SubResource("BoxMesh_somcj")
 
 [node name="DevilHand" type="Node3D" parent="." node_paths=PackedStringArray("deck")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0392364, -1.8285885)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99210966, -0.61900043)
 script = ExtResource("1_s2des")
 maxCards = 1
 deck = NodePath("../devildeck")
 metadata/_custom_type_script = "uid://can6bvgu8qmsn"
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.6924329, 0.72148234, 0, -0.72148234, 0.6924329, 0.002, 1.7896793, 1.390811)
+transform = Transform3D(1, 0, 0, 0, 0.6924329, 0.72148234, 0, -0.72148234, 0.6924329, 0.002, 2.3753605, 1.2889555)
 fov = 55.250813
 script = ExtResource("1_r3hxv")
 
@@ -126,7 +126,7 @@ texture_filter = 0
 texture = ExtResource("2_yspwb")
 
 [node name="PlayerHand" type="Node3D" parent="." node_paths=PackedStringArray("rightHand", "deck")]
-transform = Transform3D(0.2, 0, 0, 0, 0.16528651, 0.112607144, 0, -0.112607144, 0.16528651, -2.9802322e-08, 1.5367208, 1.18836)
+transform = Transform3D(0.2, 0, 0, 0, 0.16528651, 0.112607144, 0, -0.112607144, 0.16528651, -2.9802322e-08, 2.0422516, 1.2108648)
 script = ExtResource("4_js8at")
 rightHand = NodePath("../Camera3D/Node3D")
 CardPrefab = ExtResource("5_js8at")

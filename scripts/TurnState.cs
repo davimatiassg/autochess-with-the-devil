@@ -36,6 +36,8 @@ public partial class TurnState : Node3D
             
             OnStartTurn?.Invoke();
 
+            if(!isPlayerTurn)Instance.playerCamera.SlideLookAt(DevilHand.Instance.Position, 0.5);
+
             await Tabletop.MoveCreatures();
 
 
@@ -59,7 +61,7 @@ public partial class TurnState : Node3D
             Instance.playerHand.AllowPlay = false;
             Instance.devilHand.AllowPlay = false;
             
-            Instance.playerCamera.SlideLookAt(isPlayerTurn ? PlayerHand.Instance.Position : DevilHand.Instance.Position, 0.5);
+            
         }
         
     }
