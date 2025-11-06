@@ -1,7 +1,7 @@
-[gd_scene load_steps=31 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=33 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
-[ext_resource type="Script" uid="uid://c3wuq83x27ftj" path="res://scripts/PlayerCamera.cs" id="1_r3hxv"]
+[ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/PlayerCamera.cs" id="1_r3hxv"]
 [ext_resource type="Script" uid="uid://can6bvgu8qmsn" path="res://scripts/DevilHand.cs" id="1_s2des"]
 [ext_resource type="Script" uid="uid://c34n4er00nvcv" path="res://scripts/Tabletop.cs" id="2_k20h1"]
 [ext_resource type="Texture2D" uid="uid://c02gtbat8tqsp" path="res://assets/sprites/za_hando_over.png" id="2_somcj"]
@@ -10,11 +10,42 @@
 [ext_resource type="Script" uid="uid://cbo1txag8k6d3" path="res://scripts/PlayerHand.cs" id="4_js8at"]
 [ext_resource type="Script" uid="uid://cjk18k6qfsm61" path="res://scripts/Deck.cs" id="5_7q2o4"]
 [ext_resource type="PackedScene" uid="uid://2eu83js14mgw" path="res://Card.tscn" id="5_js8at"]
+[ext_resource type="Script" uid="uid://duq4ypan2mlo0" path="res://scripts/CardEffect.cs" id="10_0vo08"]
 [ext_resource type="Script" uid="uid://cx2w6vejsu1wi" path="res://scripts/CreatureData.cs" id="11_vp6my"]
 [ext_resource type="Script" uid="uid://dyx18p17d6dv0" path="res://scripts/SpawnCreatureCardEffect.cs" id="12_m1bcj"]
 [ext_resource type="Texture2D" uid="uid://ce6bvcbd7ykhy" path="res://icon.svg" id="12_vp6my"]
 [ext_resource type="Script" uid="uid://dk5sto74m2gdi" path="res://scripts/TurnState.cs" id="14_m1bcj"]
-[ext_resource type="Script" uid="uid://dce00d25vedu5" path="res://scripts/TileHighlighter.cs" id="16_kc8hc"]
+[ext_resource type="Script" uid="uid://cokot44ts0kwq" path="res://scripts/TileHighlighter.cs" id="16_kc8hc"]
+[ext_resource type="Script" uid="uid://csxcfmt6mbli0" path="res://scripts/DialogMessenger.cs" id="17_qvchn"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_7q2o4"]
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture_force_srgb = true
+albedo_texture_msdf = true
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_yspwb"]
+albedo_color = Color(0.30903947, 0.11751383, 0.036398713, 1)
+emission_enabled = true
+emission = Color(0.4643463, 0, 0.08406494, 1)
+normal_enabled = true
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_somcj"]
+emission_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_kc8hc"]
+colors = PackedColorArray(1.1310726e-06, 0.69527227, 0.07990622, 1, 0.25686312, 0.52153283, 0.5500376, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qvchn"]
+gradient = SubResource("Gradient_kc8hc")
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_qvchn"]
+orm_texture = SubResource("GradientTexture1D_qvchn")
+emission = Color(0, 0.22745098, 0, 1)
+emission_energy_multiplier = 2.73
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_kc8hc"]
+emission_enabled = true
+emission = Color(18.892157, 18.892157, 18.892157, 1)
 
 [sub_resource type="Resource" id="Resource_s2des"]
 script = ExtResource("11_vp6my")
@@ -53,56 +84,31 @@ metadata/_custom_type_script = "uid://dyx18p17d6dv0"
 
 [sub_resource type="BoxMesh" id="BoxMesh_somcj"]
 
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_7q2o4"]
-albedo_color = Color(0, 0, 0, 1)
-albedo_texture_force_srgb = true
-albedo_texture_msdf = true
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_yspwb"]
-albedo_color = Color(0.30903947, 0.11751383, 0.036398713, 1)
-emission_enabled = true
-emission = Color(0.4643463, 0, 0.08406494, 1)
-normal_enabled = true
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_somcj"]
-emission_enabled = true
-
-[sub_resource type="Gradient" id="Gradient_kc8hc"]
-colors = PackedColorArray(1, 0.26322997, 0.15772194, 1, 0.6232668, 0.4298395, 0.16334075, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_qvchn"]
-gradient = SubResource("Gradient_kc8hc")
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_qvchn"]
-orm_texture = SubResource("GradientTexture1D_qvchn")
-emission_enabled = true
-emission = Color(0.34087473, 0.22611637, 0, 1)
-emission_energy_multiplier = 2.73
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_kc8hc"]
-emission_enabled = true
-emission = Color(18.892157, 18.892157, 18.892157, 1)
-
 [sub_resource type="BoxMesh" id="BoxMesh_kc8hc"]
 
 [node name="TabletopScene" type="Node3D"]
 
-[node name="devildeck" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, -2.2083616)
-script = ExtResource("5_7q2o4")
-cards = [SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")]
-metadata/_custom_type_script = "uid://cjk18k6qfsm61"
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("17_qvchn")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="devildeck"]
-transform = Transform3D(-0.014780945, 0, -0.13846223, 0, 0.12, 0, 0.09890159, 0, -0.020693323, -0.2328822, -0.09999988, 1.0815997)
-mesh = SubResource("BoxMesh_somcj")
+[node name="Tabletop" type="Node3D" parent="." node_paths=PackedStringArray("tableRectCenter")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("2_k20h1")
+tileSize = 0.18
+tableRectCenter = NodePath("Marker3D")
+tilePrefab = ExtResource("3_7q2o4")
+blackMaterial = SubResource("ORMMaterial3D_7q2o4")
+whiteMaterial = SubResource("ORMMaterial3D_yspwb")
 
-[node name="DevilHand" type="Node3D" parent="." node_paths=PackedStringArray("deck")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99210966, -0.61900043)
-script = ExtResource("1_s2des")
-maxCards = 1
-deck = NodePath("../devildeck")
-metadata/_custom_type_script = "uid://can6bvgu8qmsn"
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Tabletop"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.46038628, 0)
+material_override = SubResource("ORMMaterial3D_somcj")
+mesh = ExtResource("1_5vtir")
+skeleton = NodePath("../..")
+
+[node name="Marker3D" type="Marker3D" parent="Tabletop"]
+transform = Transform3D(2, 0, 7.1054274e-15, 0, 2, 0, -7.1054274e-15, 0, 2, 0, 1.15, 0)
+gizmo_extents = 4.2
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6924329, 0.72148234, 0, -0.72148234, 0.6924329, 0.002, 2.3753605, 1.2889555)
@@ -124,41 +130,44 @@ billboard = 1
 texture_filter = 0
 texture = ExtResource("2_yspwb")
 
+[node name="TileHighlighter" type="Node" parent="."]
+script = ExtResource("16_kc8hc")
+highlightMaterial = SubResource("ORMMaterial3D_qvchn")
+ultraHighlightMaterial = SubResource("ORMMaterial3D_kc8hc")
+
+[node name="devildeck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, -2.2083616)
+script = ExtResource("5_7q2o4")
+cards = Array[ExtResource("10_0vo08")]([SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")])
+metadata/_custom_type_script = "uid://cjk18k6qfsm61"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="devildeck"]
+transform = Transform3D(-0.014780945, 0, -0.13846223, 0, 0.12, 0, 0.09890159, 0, -0.020693323, -0.2328822, -0.09999988, 1.0815997)
+mesh = SubResource("BoxMesh_somcj")
+
+[node name="DevilHand" type="Node3D" parent="." node_paths=PackedStringArray("deck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99210966, -0.61900043)
+script = ExtResource("1_s2des")
+maxCards = 1
+deck = NodePath("../devildeck")
+metadata/_custom_type_script = "uid://can6bvgu8qmsn"
+
 [node name="PlayerHand" type="Node3D" parent="." node_paths=PackedStringArray("rightHand", "deck")]
 transform = Transform3D(0.2, 0, 0, 0, 0.16528651, 0.112607144, 0, -0.112607144, 0.16528651, -2.9802322e-08, 2.0422516, 1.2108648)
 script = ExtResource("4_js8at")
+rightHand = NodePath("../Camera3D/Node3D")
 CardPrefab = ExtResource("5_js8at")
 turnTimeLimit = 10.0
 maxCards = 2
 cardSize = 0.5
 cardSeparation = 0.1
-rightHand = NodePath("../Camera3D/Node3D")
 deck = NodePath("../Deck")
 metadata/_custom_type_script = "uid://cbo1txag8k6d3"
-
-[node name="Tabletop" type="Node3D" parent="." node_paths=PackedStringArray("tableRectCenter")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-script = ExtResource("2_k20h1")
-tileSize = 0.18
-tilePrefab = ExtResource("3_7q2o4")
-blackMaterial = SubResource("ORMMaterial3D_7q2o4")
-whiteMaterial = SubResource("ORMMaterial3D_yspwb")
-tableRectCenter = NodePath("Marker3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Tabletop"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.46038628, 0)
-material_override = SubResource("ORMMaterial3D_somcj")
-mesh = ExtResource("1_5vtir")
-skeleton = NodePath("../..")
-
-[node name="Marker3D" type="Marker3D" parent="Tabletop"]
-transform = Transform3D(2, 0, 7.1054274e-15, 0, 2, 0, -7.1054274e-15, 0, 2, 0, 1.15, 0)
-gizmo_extents = 4.2
 
 [node name="Deck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, 1)
 script = ExtResource("5_7q2o4")
-cards = [SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")]
+cards = Array[ExtResource("10_0vo08")]([SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")])
 metadata/_custom_type_script = "uid://cjk18k6qfsm61"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Deck"]
@@ -188,28 +197,23 @@ playerCamera = NodePath("../Camera3D")
 devilHand = NodePath("../DevilHand")
 metadata/_custom_type_script = "uid://dk5sto74m2gdi"
 
-[node name="TileHighlighter" type="Node" parent="TurnState"]
-script = ExtResource("16_kc8hc")
-highlightMaterial = SubResource("ORMMaterial3D_qvchn")
-ultraHighlightMaterial = SubResource("ORMMaterial3D_kc8hc")
-
 [node name="floor" type="Node3D" parent="."]
-transform = Transform3D(0.5891963, 0, 0.8079899, 0, 1, 0, -0.8079899, 0, 0.5891963, 0, 0, 0)
+transform = Transform3D(0.5891963, 0, 0.8079899, 0, 1, 0, -0.8079899, 0, 0.5891963, 0.31849474, 0, 0.8000488)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
-transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, -0.08297381, -0.5125237, -3.9276528)
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, -0.08297381, -0.6040842, -3.9276528)
 mesh = SubResource("BoxMesh_kc8hc")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="floor"]
-transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 1.1091481, -0.5125237, -0.13162984)
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 1.1091481, -0.46674347, -0.13162984)
 mesh = SubResource("BoxMesh_kc8hc")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="floor"]
-transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.5857779, -0.5125237, -1.0939713)
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.5857779, -0.5811941, -1.0939713)
 mesh = SubResource("BoxMesh_kc8hc")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="floor"]
-transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.26593986, -0.5125237, 2.7034588)
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.2796791, -0.48963362, 2.8079672)
 mesh = SubResource("BoxMesh_kc8hc")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="floor"]
@@ -221,9 +225,9 @@ transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.81838727, -0.5125237
 mesh = SubResource("BoxMesh_kc8hc")
 
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="floor"]
-transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 1.2545291, -0.5125237, 1.6933448)
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 1.258355, -0.5125237, 1.7842587)
 mesh = SubResource("BoxMesh_kc8hc")
 
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="floor"]
-transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.30955377, -0.5125237, -2.9761999)
+transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.30955377, -0.44385338, -2.9761999)
 mesh = SubResource("BoxMesh_kc8hc")

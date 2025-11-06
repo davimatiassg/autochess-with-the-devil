@@ -28,32 +28,44 @@ public partial class DialogScreen : Control
 		// 'pass' não existe em C#
 	}
 
-	//O process checa quando o player ta segurando enter, pra acelerar o diálogo
+	private bool skipping = false;
 	public override void _Process(double delta)
 	{
 		// 'and' vira '&&'
 		// Propriedades são PascalCase (VisibleRatio)
-		if (Input.IsActionPressed("ui_accept") && _dialogText.VisibleRatio < 1)
+		if (Input.IsMouseButtonPressed(MouseButton.Left))
 		{
-			_textVel = 0.01f;
-			return;
-		}
 
-		//Se só apertar enter, skipa o diálogo
-		_textVel = 0.05f;
-		if (Input.IsActionJustPressed("ui_accept"))
-		{
-			_id++; // _id += 1
-			
-			//Checagem pra saber se o dicionário chegou no fim
-			// .size() vira .Count em C#
-			if (_id == Data.Count)
+			if (_dialogText.VisibleRatio < 1)
 			{
-				QueueFree(); // Métodos são PascalCase
+				skipping = true;
+				_textVel = 0.01f;
 				return;
 			}
+			
+			_textVel = 0.05f;
+			if(!skipping)
+			{
+				_id++; // _id += 1
 
-			_InitializeDialog();
+				//Checagem pra saber se o dicionário chegou no fim
+				// .size() vira .Count em C#
+				if (_id == Data.Count)
+				{
+					QueueFree(); // Métodos são PascalCase
+					return;
+				}
+
+				_InitializeDialog();
+			}
+			
+		} else { skipping = false; }
+
+		//Se só apertar enter, skipa o diálogo
+		
+		if (Input.IsActionJustPressed("ui_accept"))
+		{
+			
 		}
 	}
 
