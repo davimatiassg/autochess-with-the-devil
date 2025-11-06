@@ -1,0 +1,109 @@
+[gd_scene load_steps=4 format=3 uid="uid://bic4diu356axg"]
+
+[ext_resource type="Script" uid="uid://dvwfdmb8hwg61" path="res://scripts/MainMenu.cs" id="1_0ykhv"]
+[ext_resource type="FontFile" uid="uid://byvvl8mwnlja3" path="res://assets/fonts/hf-free-complete/compass-pro-v1.1/CompassPro.ttf" id="1_yqorp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqorp"]
+bg_color = Color(0.80280143, 0.527432, 0.32231265, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="MainMenu" type="Control"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0ykhv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Titulo" type="Label" parent="VBoxContainer"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yqorp")
+theme_override_font_sizes/font_size = 32
+text = "Jogando cartas com uma entidade"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxInterior" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="ButtonStart" type="Button" parent="VBoxContainer/HBoxContainer/VBoxInterior"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(96, 32)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yqorp")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_yqorp")
+text = "Jogar"
+icon_alignment = 1
+
+[node name="ButtonInfos" type="Button" parent="VBoxContainer/HBoxContainer/VBoxInterior"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(96, 32)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yqorp")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_yqorp")
+text = "Info
+"
+icon_alignment = 1
+
+[node name="ButtonSair" type="Button" parent="VBoxContainer/HBoxContainer/VBoxInterior"]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(96, 32)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yqorp")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_yqorp")
+text = "Sair"
+icon_alignment = 1
+
+[node name="Rodape" type="Label" parent="VBoxContainer"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yqorp")
+theme_override_font_sizes/font_size = 16
+text = "Criadores: Davi Matias, Gilberto Rodrigues, Kirllyan Klenio, Vitor Cavalcante."
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxInterior/ButtonStart" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxInterior/ButtonInfos" to="." method="_on_button_infos_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxInterior/ButtonSair" to="." method="_on_button_sair_pressed"]
