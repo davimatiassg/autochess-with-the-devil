@@ -8,6 +8,8 @@ public partial class DevilHand : Hand
 {
     public static DevilHand Instance;
 
+    public static Godot.Collections.Dictionary nextDialog;
+
     /// <summary>
     /// Plays a card on a tile.
     /// </summary>
@@ -28,6 +30,27 @@ public partial class DevilHand : Hand
     }
 
     /// <summary>
+    /// Basic Play Phase routine.
+    /// </summary>
+    public async void PlayPhase()
+    {
+        if (TurnState.isPlayerTurn) return;
+
+        DrawNewCard();
+
+        if (nextDialog != null)
+        {
+            await DialogMessenger.SpawnDialog(nextDialog);
+            nextDialog = null;
+        }
+
+
+        Tween tween = CreateTween();
+        tween.TweenInterval(1);
+        tween.TweenCallback(Callable.From(Act));
+    }
+
+    /// <summary>
     /// Configures the method to act once the devil's turn has started
     /// </summary>
     public override void _Ready()
@@ -36,19 +59,6 @@ public partial class DevilHand : Hand
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        TurnState.OnStartPlayPhase += () =>
-        {
-
-            
-            if (TurnState.isPlayerTurn) return;
-
-            DrawNewCard();
-
-            Tween tween = CreateTween();
-            tween.TweenInterval(1);
-            tween.TweenCallback(Callable.From(Act));
-
-        };
 
     }
 
@@ -59,5 +69,7 @@ public partial class DevilHand : Hand
     {
         var newCard = deck.GetTopCard();
         cards.Add(newCard);
+
+        TurnState.OnStartPlayPhase += PlayPhase;
     }
 }
