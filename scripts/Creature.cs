@@ -51,8 +51,10 @@ public partial class Creature : PlacedObject
         animationTween.TweenProperty(this, "position", creature.Position, 0.3).SetTrans(Tween.TransitionType.Expo);
         animationTween.TweenCallback(Callable.From(() => creature.currentHp -= currentDamage));
         animationTween.TweenCallback(Callable.From(() => data.AttackEffect(creature)));
+        animationTween.TweenCallback(Callable.From(() => currentHp -= creature.currentDamage));
         animationTween.TweenProperty(this, "position", currentPos, 0.5);
-        animationTween.TweenCallback(Callable.From(() => creature.DefendFromCreature(this)));        
+        animationTween.TweenCallback(Callable.From(() => creature.DefendFromCreature(this))); 
+        animationTween.TweenCallback(Callable.From(() => DefendFromCreature(creature)));      
     }
 
     public void DefendFromCreature(Creature attacker)
