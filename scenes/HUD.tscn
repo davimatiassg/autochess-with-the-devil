@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://f3w5wpvsatcg"]
+
+[ext_resource type="PackedScene" uid="uid://bxu2wa8ly1hl2" path="res://scenes/DialogScene.tscn" id="1_qpvh6"]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="DialogScene" parent="." instance=ExtResource("1_qpvh6")]
