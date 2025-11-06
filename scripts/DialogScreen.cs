@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections; // Necessário para 'Dictionary'
 
-public partial class Dialog_Screen : Control
+public partial class DialogScreen : Control
 {
 	// _textVel é a velocidade com que o texto aparece na tela, mas quanto menor, mais rápido vai aparecer
 	// O _id é o indice do dicionário, que é incrementado depois pra mudar de diálogo
