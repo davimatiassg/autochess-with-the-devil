@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bxu2wa8ly1hl2"]
 
 [ext_resource type="Texture2D" uid="uid://ce6bvcbd7ykhy" path="res://icon.svg" id="1_o44k7"]
-[ext_resource type="Script" uid="uid://m8o27x045f4o" path="res://scripts/DialogScreen.cs" id="1_qivls"]
+[ext_resource type="Script" uid="uid://m8o27x045f4o" path="res://scripts/game_management/DialogScreen.cs" id="1_qivls"]
 [ext_resource type="FontFile" uid="uid://cejd5mp2yexxy" path="res://assets/fonts/hf-free-complete/equipment-pro-v1.1/EquipmentPro.ttf" id="2_5ar22"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bdun8"]

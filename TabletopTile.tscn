@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c3ggx03ww16bh"]
 
-[ext_resource type="Script" uid="uid://blpf6gwt0n3ie" path="res://scripts/TabletopTile.cs" id="1_ovox3"]
+[ext_resource type="Script" uid="uid://blpf6gwt0n3ie" path="res://scripts/physical_objects/TabletopTile.cs" id="1_ovox3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_igynu"]
 
