@@ -1,21 +1,20 @@
-[gd_scene load_steps=32 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=31 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
-[ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/PlayerCamera.cs" id="1_r3hxv"]
+[ext_resource type="Script" uid="uid://c3wuq83x27ftj" path="res://scripts/PlayerCamera.cs" id="1_r3hxv"]
 [ext_resource type="Script" uid="uid://can6bvgu8qmsn" path="res://scripts/DevilHand.cs" id="1_s2des"]
 [ext_resource type="Script" uid="uid://c34n4er00nvcv" path="res://scripts/Tabletop.cs" id="2_k20h1"]
-[ext_resource type="Texture2D" uid="uid://c02gtbat8tqsp" path="res://sprites/za_hando_over.png" id="2_somcj"]
-[ext_resource type="Texture2D" uid="uid://cqs2bprk61ipo" path="res://sprites/za_hando.png" id="2_yspwb"]
+[ext_resource type="Texture2D" uid="uid://c02gtbat8tqsp" path="res://assets/sprites/za_hando_over.png" id="2_somcj"]
+[ext_resource type="Texture2D" uid="uid://cqs2bprk61ipo" path="res://assets/sprites/za_hando.png" id="2_yspwb"]
 [ext_resource type="PackedScene" uid="uid://c3ggx03ww16bh" path="res://TabletopTile.tscn" id="3_7q2o4"]
 [ext_resource type="Script" uid="uid://cbo1txag8k6d3" path="res://scripts/PlayerHand.cs" id="4_js8at"]
 [ext_resource type="Script" uid="uid://cjk18k6qfsm61" path="res://scripts/Deck.cs" id="5_7q2o4"]
 [ext_resource type="PackedScene" uid="uid://2eu83js14mgw" path="res://Card.tscn" id="5_js8at"]
-[ext_resource type="Script" uid="uid://duq4ypan2mlo0" path="res://scripts/CardEffect.cs" id="10_0vo08"]
 [ext_resource type="Script" uid="uid://cx2w6vejsu1wi" path="res://scripts/CreatureData.cs" id="11_vp6my"]
 [ext_resource type="Script" uid="uid://dyx18p17d6dv0" path="res://scripts/SpawnCreatureCardEffect.cs" id="12_m1bcj"]
 [ext_resource type="Texture2D" uid="uid://ce6bvcbd7ykhy" path="res://icon.svg" id="12_vp6my"]
 [ext_resource type="Script" uid="uid://dk5sto74m2gdi" path="res://scripts/TurnState.cs" id="14_m1bcj"]
-[ext_resource type="Script" uid="uid://cokot44ts0kwq" path="res://scripts/TileHighlighter.cs" id="16_kc8hc"]
+[ext_resource type="Script" uid="uid://dce00d25vedu5" path="res://scripts/TileHighlighter.cs" id="16_kc8hc"]
 
 [sub_resource type="Resource" id="Resource_s2des"]
 script = ExtResource("11_vp6my")
@@ -91,7 +90,7 @@ emission = Color(18.892157, 18.892157, 18.892157, 1)
 [node name="devildeck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, -2.2083616)
 script = ExtResource("5_7q2o4")
-cards = Array[ExtResource("10_0vo08")]([SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")])
+cards = [SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")]
 metadata/_custom_type_script = "uid://cjk18k6qfsm61"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="devildeck"]
@@ -128,12 +127,12 @@ texture = ExtResource("2_yspwb")
 [node name="PlayerHand" type="Node3D" parent="." node_paths=PackedStringArray("rightHand", "deck")]
 transform = Transform3D(0.2, 0, 0, 0, 0.16528651, 0.112607144, 0, -0.112607144, 0.16528651, -2.9802322e-08, 2.0422516, 1.2108648)
 script = ExtResource("4_js8at")
-rightHand = NodePath("../Camera3D/Node3D")
 CardPrefab = ExtResource("5_js8at")
 turnTimeLimit = 10.0
 maxCards = 2
 cardSize = 0.5
 cardSeparation = 0.1
+rightHand = NodePath("../Camera3D/Node3D")
 deck = NodePath("../Deck")
 metadata/_custom_type_script = "uid://cbo1txag8k6d3"
 
@@ -141,10 +140,10 @@ metadata/_custom_type_script = "uid://cbo1txag8k6d3"
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 script = ExtResource("2_k20h1")
 tileSize = 0.18
-tableRectCenter = NodePath("Marker3D")
 tilePrefab = ExtResource("3_7q2o4")
 blackMaterial = SubResource("ORMMaterial3D_7q2o4")
 whiteMaterial = SubResource("ORMMaterial3D_yspwb")
+tableRectCenter = NodePath("Marker3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Tabletop"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.46038628, 0)
@@ -159,7 +158,7 @@ gizmo_extents = 4.2
 [node name="Deck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, 1)
 script = ExtResource("5_7q2o4")
-cards = Array[ExtResource("10_0vo08")]([SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")])
+cards = [SubResource("Resource_kc8hc"), SubResource("Resource_qvchn")]
 metadata/_custom_type_script = "uid://cjk18k6qfsm61"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Deck"]
@@ -193,7 +192,6 @@ metadata/_custom_type_script = "uid://dk5sto74m2gdi"
 script = ExtResource("16_kc8hc")
 highlightMaterial = SubResource("ORMMaterial3D_qvchn")
 ultraHighlightMaterial = SubResource("ORMMaterial3D_kc8hc")
-metadata/_custom_type_script = "uid://cokot44ts0kwq"
 
 [node name="floor" type="Node3D" parent="."]
 transform = Transform3D(0.5891963, 0, 0.8079899, 0, 1, 0, -0.8079899, 0, 0.5891963, 0, 0, 0)

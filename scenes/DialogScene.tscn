@@ -1,0 +1,101 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxu2wa8ly1hl2"]
+
+[ext_resource type="Texture2D" uid="uid://cemk6etr55o8k" path="res://icon.svg" id="1_o44k7"]
+[ext_resource type="Script" uid="uid://dpga0c543rjxl" path="res://scripts/DialogScreen.gd" id="1_qivls"]
+[ext_resource type="FontFile" uid="uid://cejd5mp2yexxy" path="res://assets/fonts/hf-free-complete/equipment-pro-v1.1/EquipmentPro.ttf" id="2_5ar22"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bdun8"]
+line_spacing = 0.0
+font = ExtResource("2_5ar22")
+font_color = Color(0.98487824, 0.9280225, 0.93656164, 1)
+shadow_color = Color(0.48452926, 0, 0, 0.588)
+
+[node name="DialogScene" type="Control" node_paths=PackedStringArray("_name", "_dialogText", "_dialogIcon")]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -100.0
+offset_right = 160.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_qivls")
+_name = NodePath("Background/HBoxContainer/VBoxContainer/Name")
+_dialogText = NodePath("Background/HBoxContainer/VBoxContainer/DialogText")
+_dialogIcon = NodePath("Background/HBoxContainer/IconBorder/DialogIcon")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.18500987, 0.11198204, 0.116835706, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -36.0
+offset_right = 156.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="IconBorder" type="ColorRect" parent="Background/HBoxContainer"]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+
+[node name="DialogIcon" type="TextureRect" parent="Background/HBoxContainer/IconBorder"]
+custom_minimum_size = Vector2(70, 72)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -36.0
+offset_right = 35.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_o44k7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="Background/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+text = "Djabo"
+label_settings = SubResource("LabelSettings_bdun8")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DialogText" type="RichTextLabel" parent="Background/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9411765)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 0
+theme_override_fonts/normal_font = ExtResource("2_5ar22")
+theme_override_font_sizes/normal_font_size = 16
+text = "Esse é um diálogo bem legal, uhul!"
