@@ -8,5 +8,5 @@
 script = ExtResource("3_hojv0")
 creatureData = ExtResource("1_ssmhn")
 portrait = ExtResource("2_ssmhn")
-description = "Criatura. 10 Atk, 6 HP"
+description = "Criatura. Vida e Dano 3-8"
 metadata/_custom_type_script = "uid://dyx18p17d6dv0"

@@ -10,6 +10,8 @@ public partial class DevilHand : Hand
 
     public static Godot.Collections.Dictionary nextDialog = default;
 
+    public static Random rng = new();
+
     //Variáveis pra guardar a melhore decisão com base no scoring
     //Estados da IA: Esperando Turno -> (Evento OnStartPlayPhase) -> Pensando (Act) -> Executando (PlayCard) -> Esperando Turno, dai cicla infinito
     private CardEffect _bestCardToPlay;
@@ -54,7 +56,7 @@ public partial class DevilHand : Hand
 
                 GD.Print($"Robozão tá pensando o seguinte pai: Serasi eu jogo '{card.ResourceName}' em '{tile.Name}', consigo um score massa de: {currentMoveScore}");
 
-                if (currentMoveScore > _bestMoveScore)
+                if (currentMoveScore > _bestMoveScore || ( currentMoveScore == _bestMoveScore && rng.Next() % 2 > 0 ))
                 {
                     _bestMoveScore = currentMoveScore;
                     _bestCardToPlay = card;
@@ -95,10 +97,13 @@ public partial class DevilHand : Hand
     /// <returns>Score numerico, qnt maior melhor</returns>
     private int EvaluateMove(CardEffect card, TabletopTile tile)
     {
-        //TODO verificar os status entre a carta que foi jogada por último e as da sua mão
-        int score = 0;
+        //TODO! verificar os status entre a carta que foi jogada por último e as da sua mão
+        int score = 1;
 
-        score = 1;
+        if (card is SpawnCreatureCardEffect spawnCreature)
+        {
+            score += (spawnCreature.creatureData.maxValues + spawnCreature.creatureData.minValues)/2;
+        }
 
         return score;
     }

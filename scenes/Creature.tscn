@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfllyo6pmq7x"]
+
+[ext_resource type="Script" uid="uid://cipfn3egd0kwr" path="res://scripts/physical_objects/Creature.cs" id="1_7oyyn"]
+[ext_resource type="Texture2D" uid="uid://duekpmjuuv7cc" path="res://assets/sprites/cards/angel.png" id="2_f3nup"]
+[ext_resource type="Texture2D" uid="uid://4cs2dte3x5mg" path="res://assets/sprites/cards/damage-icon.png" id="3_1kcqh"]
+[ext_resource type="FontFile" uid="uid://5qyau3olj3s4" path="res://assets/fonts/hf-free-complete/compass-pro-v1.1/CompassPro.otf" id="4_1kcqh"]
+[ext_resource type="Texture2D" uid="uid://doi3qpht4jdtj" path="res://assets/sprites/cards/armor-icon.png" id="5_db7wv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_444ob"]
+atlas = ExtResource("2_f3nup")
+region = Rect2(360, 0, 90, 109)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2pmn8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_444ob")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="creature" type="AnimatedSprite3D" node_paths=PackedStringArray("atklabel", "hpLabel")]
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_2pmn8")
+frame_progress = 0.047387198
+script = ExtResource("1_7oyyn")
+atklabel = NodePath("atkSprite/Label3D")
+hpLabel = NodePath("armorSprite/Label3D")
+metadata/_custom_type_script = "uid://cipfn3egd0kwr"
+
+[node name="atkSprite" type="Sprite3D" parent="."]
+transform = Transform3D(0.515, 0, 0, 0, 0.515, 0, 0, 0, 0.515, -0.4, 0.4, -0.4)
+billboard = 1
+texture_filter = 0
+texture = ExtResource("3_1kcqh")
+
+[node name="Label3D" type="Label3D" parent="atkSprite"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0.001)
+billboard = 1
+texture_filter = 0
+text = "5"
+font = ExtResource("4_1kcqh")
+font_size = 137
+outline_size = 0
+uppercase = true
+autowrap_mode = 3
+autowrap_trim_flags = 64
+justification_flags = 35
+
+[node name="armorSprite" type="Sprite3D" parent="."]
+transform = Transform3D(0.515, 0, 0, 0, 0.515, 0, 0, 0, 0.515, 0.4, 0.4, 0.4)
+billboard = 1
+texture_filter = 0
+texture = ExtResource("5_db7wv")
+
+[node name="Label3D" type="Label3D" parent="armorSprite"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0.001, 0.001)
+billboard = 1
+texture_filter = 0
+text = "5"
+font = ExtResource("4_1kcqh")
+font_size = 137
+outline_size = 0
+uppercase = true
+autowrap_mode = 3
+autowrap_trim_flags = 64
+justification_flags = 35

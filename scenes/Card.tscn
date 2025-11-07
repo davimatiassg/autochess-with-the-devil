@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://2eu83js14mgw"]
+[gd_scene load_steps=6 format=3 uid="uid://2eu83js14mgw"]
 
 [ext_resource type="Script" uid="uid://cyb23rr66nny7" path="res://scripts/physical_objects/Card.cs" id="1_hael8"]
 [ext_resource type="Texture2D" uid="uid://dmxwrracimcjh" path="res://assets/sprites/cards/fire.png" id="2_21rx5"]
 [ext_resource type="Texture2D" uid="uid://c4qvnu7pwshy5" path="res://assets/sprites/cards/card.png" id="3_21rx5"]
+[ext_resource type="FontFile" uid="uid://5qyau3olj3s4" path="res://assets/fonts/hf-free-complete/compass-pro-v1.1/CompassPro.otf" id="4_qf083"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dd2wi"]
 margin = 0.347
@@ -21,6 +22,7 @@ texture = ExtResource("2_21rx5")
 
 [node name="CardBackGround" type="Sprite3D" parent="."]
 transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0, 0, -0.001)
+shaded = true
 texture_filter = 0
 texture = ExtResource("3_21rx5")
 
@@ -29,9 +31,14 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("BoxShape3D_dd2wi")
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00077852607, -0.031141786, 0.05)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.001, 0)
+offset = Vector2(0, -90)
 texture_filter = 0
-text = "rrewr"
-font_size = 12
+text = "criatura aleatória."
+font = ExtResource("4_qf083")
+font_size = 67
 outline_size = 0
-width = 500.105
+uppercase = true
+autowrap_mode = 3
+autowrap_trim_flags = 64
+justification_flags = 35

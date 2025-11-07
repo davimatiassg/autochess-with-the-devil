@@ -10,6 +10,29 @@ public partial class Creature : PlacedObject
     [Export]
     public int currentDamage;
 
+    public int CurrentHP
+    {
+        get => currentHp;
+        set
+        {
+            currentHp = value;
+            hpLabel.Text = $"{value}";
+        }
+    }
+    public int CurrentDamage{
+        get => currentDamage;
+        set
+        {
+            currentDamage = value;
+            atklabel.Text = $"{value}";
+        }
+    }
+
+    [Export]
+    public Label3D atklabel;
+    [Export]
+    public Label3D hpLabel;
+
     public override TabletopTile Tile
     {
         get => base.Tile;
@@ -19,8 +42,8 @@ public partial class Creature : PlacedObject
             base.Tile = value;
 
             animationTween = CreateTween();
-            animationTween.TweenProperty(this, "global_position", value.TileTop + Scale.Y/2 * Vector3.Up, 0.3);
-            
+            animationTween.TweenProperty(this, "global_position", value.TileTop + Scale.Y / 2 * Vector3.Up, 0.3);
+
         }
     }
 
@@ -29,11 +52,12 @@ public partial class Creature : PlacedObject
 
     public Tween animationTween;
 
-    public Creature(CreatureData data)
+    static Random rng = new Random();
+    public void SetValues(CreatureData data)
     {
         this.data = data;
-        this.currentHp = data.hp;
-        this.currentDamage = data.damage;
+        this.CurrentHP = (int)(data.minValues + rng.NextInt64() % (1 + data.maxValues - data.minValues));
+        this.CurrentDamage = (int)(data.minValues + rng.NextInt64() % (1 + data.maxValues - data.minValues));
         this.SpriteFrames = data.sprite;
         this.Play();
 
@@ -50,9 +74,9 @@ public partial class Creature : PlacedObject
         var currentPos = Position;
         animationTween = CreateTween();
         animationTween.TweenProperty(this, "position", creature.Position, 0.3).SetTrans(Tween.TransitionType.Expo);
-        animationTween.TweenCallback(Callable.From(() => creature.currentHp -= currentDamage));
+        animationTween.TweenCallback(Callable.From(() => creature.CurrentHP -= CurrentDamage));
         animationTween.TweenCallback(Callable.From(() => data.AttackEffect(creature)));
-        animationTween.TweenCallback(Callable.From(() => currentHp -= creature.currentDamage));
+        animationTween.TweenCallback(Callable.From(() => CurrentHP -= creature.CurrentDamage));
         animationTween.TweenProperty(this, "position", currentPos, 0.5);
         animationTween.TweenCallback(Callable.From(() => creature.DefendFromCreature(this))); 
         animationTween.TweenCallback(Callable.From(() => DefendFromCreature(creature)));      
@@ -60,12 +84,11 @@ public partial class Creature : PlacedObject
 
     public void DefendFromCreature(Creature attacker)
     {
-        if (currentHp > 0) data.SurviveEffect(attacker);
+        if (CurrentHP > 0) data.SurviveEffect(attacker);
         else
         {
             data.DeathEffect(attacker);
-            Tile.RemoveObject(this);
-            QueueFree();
+            Remove();
         }
     }
 
@@ -93,8 +116,9 @@ public partial class Creature : PlacedObject
     }
     
 
-    public void Die()
+    public void Remove()
     {
-
+        Tile.RemoveObject(this);
+        QueueFree();
     }
 }
