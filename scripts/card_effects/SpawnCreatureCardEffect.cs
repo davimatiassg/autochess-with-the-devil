@@ -15,8 +15,10 @@ public partial class SpawnCreatureCardEffect : CardEffect
 
 
         Creature creature = (Creature)CreatureScene.Instantiate();
-        creature.SetValues(creatureData);
         creature.isPlayerObject = TurnState.isPlayerTurn;
+        
+        creature.SetValues(creatureData);
+        
 
         Tabletop.Instance.AddChild(creature);
         tile.objectsInThisTile.Add(creature);

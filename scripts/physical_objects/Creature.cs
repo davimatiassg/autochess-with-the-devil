@@ -56,9 +56,12 @@ public partial class Creature : PlacedObject
     public void SetValues(CreatureData data)
     {
         this.data = data;
-        this.CurrentHP = (int)(data.minValues + rng.NextInt64() % (1 + data.maxValues - data.minValues));
-        this.CurrentDamage = (int)(data.minValues + rng.NextInt64() % (1 + data.maxValues - data.minValues));
+        this.CurrentHP = (int)(data.minValues -1 + (rng.NextInt64() % (1 + data.maxValues - data.minValues)));
+        this.CurrentDamage = (int)(data.minValues - 1 + (rng.NextInt64() % (1 + data.maxValues - data.minValues)));
         this.SpriteFrames = data.sprite;
+
+        if (!isPlayerObject) this.Modulate = Colors.DarkRed;
+
         this.Play();
 
         this.Scale = Vector3.One * 0.3f;
@@ -118,7 +121,15 @@ public partial class Creature : PlacedObject
 
     public void Remove()
     {
-        Tile.RemoveObject(this);
-        QueueFree();
+        var deathTween = CreateTween();
+
+        deathTween.TweenInterval(0.1);
+        deathTween.TweenProperty(this, "modulate", Colors.Transparent, 0.5);
+        deathTween.TweenCallback(Callable.From(() =>
+            {
+                Tile.RemoveObject(this);
+                QueueFree();
+            })
+        );
     }
 }

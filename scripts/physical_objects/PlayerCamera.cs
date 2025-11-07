@@ -71,7 +71,6 @@ public partial class PlayerCamera : Camera3D
 
 
 
-
     public override void _Input(InputEvent @event)
     {
         if (Input.IsActionJustPressed("ui_cancel"))
@@ -81,6 +80,7 @@ public partial class PlayerCamera : Camera3D
             else
                 Input.MouseMode = Input.MouseModeEnum.Captured;
         }
+
 
         if (!PlayerHand.Instance.AllowPlay) return;
 
