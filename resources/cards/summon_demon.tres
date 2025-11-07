@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpawnCreatureCardEffect" load_steps=4 format=3 uid="uid://cemub13omvjwc"]
+
+[ext_resource type="Resource" uid="uid://cdjfo32q5508b" path="res://resources/cards/demon.tres" id="1_7qdhh"]
+[ext_resource type="Script" uid="uid://dyx18p17d6dv0" path="res://scripts/card_effects/SpawnCreatureCardEffect.cs" id="1_ni5ww"]
+[ext_resource type="Texture2D" uid="uid://b6xl330hgbiae" path="res://assets/sprites/cards/demon-portrait.png" id="2_sq8n0"]
+
+[resource]
+script = ExtResource("1_ni5ww")
+creatureData = ExtResource("1_7qdhh")
+portrait = ExtResource("2_sq8n0")
+metadata/_custom_type_script = "uid://dyx18p17d6dv0"

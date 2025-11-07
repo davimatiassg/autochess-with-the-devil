@@ -113,7 +113,7 @@ public partial class Tabletop : Node3D
             
         if (nextTile == null)
         {
-            //TODO: End the round. The current player won.
+            GameManager.RoundEnd(TurnState.isPlayerTurn);
 
             animationTween.Kill();
             return;
@@ -127,14 +127,10 @@ public partial class Tabletop : Node3D
 
     }
 
-    public override void _Ready()
+
+    public void SpawnBoard()
     {
-        base._Ready();
-
-        if (Instance == null) Instance = this;
-        else if (Instance != this) { QueueFree(); return; }
-
-        var tableOffset = new Vector3(tileSize * boardHeight, 0, tileSize * boardWidth)/2;
+        var tableOffset = new Vector3(tileSize * boardHeight, 0, tileSize * boardWidth) / 2;
 
 
         bool isBlack = true;
@@ -143,6 +139,7 @@ public partial class Tabletop : Node3D
         for (int x = 0; x < boardWidth; x++)
         {
             table[x] = new TabletopTile[boardHeight];
+            if (boardHeight % 2 == 0) isBlack = !isBlack;
             for (int y = 0; y < boardHeight; y++)
             {
                 var tile = (TabletopTile)tilePrefab.Instantiate();
@@ -154,7 +151,7 @@ public partial class Tabletop : Node3D
 
                 tableRectCenter.AddChild(tile);
 
-                tile.Position = new Vector3((y+0.5f) * tileSize, 0, (x+0.5f) * tileSize) - tableOffset;
+                tile.Position = new Vector3((y + 0.5f) * tileSize, 10f, (x + 0.5f) * tileSize) - tableOffset;
 
                 if (isBlack) tile.meshInstance.MaterialOverlay = blackMaterial;
                 else tile.meshInstance.MaterialOverlay = whiteMaterial;
@@ -163,6 +160,37 @@ public partial class Tabletop : Node3D
 
             }
         }
+
+        AnimateBoardTransition(true, tableOffset);
+    }
+
+    public void AnimateBoardTransition(bool isDownwards, Vector3 tableOffset)
+    {
+
+        float targetY = isDownwards ? 0 : 10f;
+
+        Tween animationTween = CreateTween();
+        animationTween.SetParallel();
+
+        for (int y = 0; y < boardHeight; y++)
+        {
+            for (int x = 0; x < boardWidth; x++)
+            {
+                foreach (var obj in table[x][y].objectsInThisTile) obj.QueueFree();
+                Vector3 pos = new Vector3((y + 0.5f) * tileSize, targetY, (x + 0.5f) * tileSize) - tableOffset;
+                animationTween.TweenProperty(table[x][y], "position", pos, (x + y) * 0.1 + 0.2);
+            }
+        }
+    }
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        if (Instance == null) Instance = this;
+        else if (Instance != this) { QueueFree(); return; }
+
+        SpawnBoard();
     }
 
 }

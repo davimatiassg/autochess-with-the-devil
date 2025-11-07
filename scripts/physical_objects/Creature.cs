@@ -34,7 +34,8 @@ public partial class Creature : PlacedObject
         this.data = data;
         this.currentHp = data.hp;
         this.currentDamage = data.damage;
-        this.Texture = data.PlayTexture;
+        this.SpriteFrames = data.sprite;
+        this.Play();
 
         this.Scale = Vector3.One * 0.3f;
         this.Billboard = BaseMaterial3D.BillboardModeEnum.Enabled;

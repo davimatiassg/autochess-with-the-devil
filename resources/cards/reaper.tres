@@ -1,0 +1,75 @@
+[gd_resource type="Resource" script_class="CreatureData" load_steps=12 format=3 uid="uid://n22ax7nb4s20"]
+
+[ext_resource type="Script" uid="uid://cx2w6vejsu1wi" path="res://scripts/card_effects/CreatureData.cs" id="1_lw7c1"]
+[ext_resource type="Texture2D" uid="uid://uepk11jprdtp" path="res://assets/sprites/cards/reaper.png" id="2_lw7c1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1xyf"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(0, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3wt7"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(78, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilt2d"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(156, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_labge"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(234, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0sjn"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(312, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuk2o"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(390, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcyal"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(468, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22m33"]
+atlas = ExtResource("2_lw7c1")
+region = Rect2(546, 0, 78, 108)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ljem"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1xyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3wt7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilt2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_labge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0sjn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuk2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcyal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22m33")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[resource]
+script = ExtResource("1_lw7c1")
+damage = 20
+hp = 3
+sprite = SubResource("SpriteFrames_4ljem")
+metadata/_custom_type_script = "uid://cx2w6vejsu1wi"

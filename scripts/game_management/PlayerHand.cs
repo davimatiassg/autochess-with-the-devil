@@ -90,7 +90,7 @@ public partial class PlayerHand : Hand
 
     
 
-    public void StartPlayPhase()
+    public void PlayPhase()
     {
         
 
@@ -101,7 +101,6 @@ public partial class PlayerHand : Hand
         while (cards.Count < maxCards)
         {
             DrawNewCard();
-            
         } 
             
 
@@ -137,7 +136,7 @@ public partial class PlayerHand : Hand
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        TurnState.OnStartPlayPhase += StartPlayPhase; 
+        TurnState.OnStartPlayPhase += PlayPhase; 
 
     }
 

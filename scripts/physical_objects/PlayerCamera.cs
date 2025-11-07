@@ -67,11 +67,7 @@ public partial class PlayerCamera : Camera3D
 
     }
 
-    public override void _Ready()
-    {
 
-        Input.MouseMode = Input.MouseModeEnum.Captured;
-    }
 
 
 
@@ -170,7 +166,11 @@ public partial class PlayerCamera : Camera3D
             ).SetTrans(Tween.TransitionType.Circ);
     }
     
+        public override void _Ready()
+    {
 
+        Input.MouseMode = Input.MouseModeEnum.Captured;
+    }
     
 
 }

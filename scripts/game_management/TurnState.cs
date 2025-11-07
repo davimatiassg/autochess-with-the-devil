@@ -49,7 +49,7 @@ public partial class TurnState : Node3D
             Instance.devilHand.AllowPlay = !isPlayerTurn;
 
 
-            OnStartPlayPhase();
+            OnStartPlayPhase?.Invoke();
 
 
             await PlayPhase();
@@ -93,13 +93,16 @@ public partial class TurnState : Node3D
         await Task.Delay(500);
     }
 
-    public override void _Ready()
+    public async override void _Ready()
     {
         base._Ready();
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-         
+        await ToSignal(this, SignalName.Ready);
+
+        GameManager.OnStopGame += (bool _) => IsRoundRunning = false;
+        
     
     }
 }

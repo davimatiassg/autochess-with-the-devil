@@ -72,8 +72,6 @@ public partial class DevilHand : Hand
 
         TurnState.OnStartPlayPhase += PlayPhase;
 
-
-        nextDialog = DialogMessenger.dialogDataExample;
     }
 
 

@@ -11,24 +11,6 @@ public partial class DialogMessenger : CanvasLayer
 
 	public static DialogScreen currentDialog;
 	
-	// Modelo de dicionário padrão
-	public static Dictionary dialogDataExample = new Dictionary
-	{
-		{ 0, new Dictionary
-			{
-				{ "icon", "res://icon.svg" },
-				{ "title", "character name" },
-				{ "dialog", "dialog" },
-				{ "method", new Dictionary
-					{
-						{ "object", new GodotObject() },
-						{ "methodPath", "" },
-						{ "args", new Array()}
-					}
-				}
-			}
-		}
-	};
 
 	public static async Task SpawnDialog(Dictionary dialogData)
 	{

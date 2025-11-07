@@ -21,7 +21,8 @@
                 "-d", 
                 "--path",
                 "${workspaceRoot}"
-            ]
+            ],
+            "justMyCode": false
         },
         {
             "name": "Launch (Select Scene)",
@@ -34,7 +35,8 @@
                 "--path",
                 "${workspaceRoot}",
                 "${command:SelectLaunchScene}"
-            ]
+            ],
+            "justMyCode": false
         },
         {
             "name": "Attach",

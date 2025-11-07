@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class PlacedObject : Sprite3D
+public partial class PlacedObject : AnimatedSprite3D
 {
     [Export]
     public virtual TabletopTile Tile { get; set; }

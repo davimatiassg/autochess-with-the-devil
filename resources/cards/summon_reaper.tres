@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpawnCreatureCardEffect" load_steps=4 format=3 uid="uid://rvm84eok0k3e"]
+
+[ext_resource type="Resource" uid="uid://n22ax7nb4s20" path="res://resources/cards/reaper.tres" id="1_dyi54"]
+[ext_resource type="Texture2D" uid="uid://bladhq8eq52o5" path="res://assets/sprites/cards/reaper-portrait.png" id="2_4f5kn"]
+[ext_resource type="Script" uid="uid://dyx18p17d6dv0" path="res://scripts/card_effects/SpawnCreatureCardEffect.cs" id="3_c0f47"]
+
+[resource]
+script = ExtResource("3_c0f47")
+creatureData = ExtResource("1_dyi54")
+portrait = ExtResource("2_4f5kn")
+metadata/_custom_type_script = "uid://dyx18p17d6dv0"

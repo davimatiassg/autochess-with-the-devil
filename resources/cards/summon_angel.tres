@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SpawnCreatureCardEffect" load_steps=4 format=3 uid="uid://dvhsaep12yh2g"]
+
+[ext_resource type="Resource" uid="uid://dn0430kcsol53" path="res://resources/cards/angel.tres" id="1_ssmhn"]
+[ext_resource type="Texture2D" uid="uid://dmkk56l0khm2d" path="res://assets/sprites/cards/angel-portrait.png" id="2_ssmhn"]
+[ext_resource type="Script" uid="uid://dyx18p17d6dv0" path="res://scripts/card_effects/SpawnCreatureCardEffect.cs" id="3_hojv0"]
+
+[resource]
+script = ExtResource("3_hojv0")
+creatureData = ExtResource("1_ssmhn")
+portrait = ExtResource("2_ssmhn")
+description = "Criatura. 10 Atk, 6 HP"
+metadata/_custom_type_script = "uid://dyx18p17d6dv0"
