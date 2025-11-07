@@ -35,14 +35,23 @@ public partial class GameManager : Node
     public static void RoundEnd(bool playerWon)
     {
         TurnState.IsRoundRunning = false;
-
         OnStopGame?.Invoke(playerWon);
+
+        var tween = Instance.CreateTween();
+        tween.TweenInterval(0.5);
+        tween.TweenCallback(Callable.From(()=> { Tabletop.Instance.AnimateBoardTransition(false, 0.5); }));
+
+        
     }
 
     public static void RoundStart()
     {
         TurnState.IsRoundRunning = true;
         _ = TurnState.LoopTurns();
+
+        var tween = Instance.CreateTween();
+        tween.TweenInterval(0.5);
+        tween.TweenCallback(Callable.From(()=> { Tabletop.Instance.AnimateBoardTransition(); }));
     }
 
     public override void _Ready()
