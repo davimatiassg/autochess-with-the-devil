@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bic4diu356axg"]
 
-[ext_resource type="Script" uid="uid://dvwfdmb8hwg61" path="res://scripts/MainMenu.cs" id="1_0ykhv"]
+[ext_resource type="Script" uid="uid://bt8am48bo45ok" path="res://scripts/UI/MainMenu.cs" id="1_0ykhv"]
 [ext_resource type="FontFile" uid="uid://byvvl8mwnlja3" path="res://assets/fonts/hf-free-complete/compass-pro-v1.1/CompassPro.ttf" id="1_yqorp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqorp"]
