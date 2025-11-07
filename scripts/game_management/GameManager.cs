@@ -32,15 +32,23 @@ public partial class GameManager : Node
         }
     }
 
-    public static void RoundEnd(bool playerWon)
+    public static async void RoundEnd(bool playerWon)
     {
         TurnState.IsRoundRunning = false;
         OnStopGame?.Invoke(playerWon);
 
         var tween = Instance.CreateTween();
         tween.TweenInterval(0.5);
-        tween.TweenCallback(Callable.From(()=> { Tabletop.Instance.AnimateBoardTransition(false, 0.5); }));
+        tween.TweenCallback(Callable.From(() => { Tabletop.Instance.AnimateBoardTransition(false, 0.5); }));
 
+        if (playerWon) PlayerScore++;
+        else EnemyScore++;
+
+        await DialogMessenger.SpawnDialog((Godot.Collections.Dictionary)GameDialogs.DialogData[playerWon ? "Win_" + PlayerScore : "Loss_" + EnemyScore]);
+
+        //TODO! something, idk, show the images I guess;
+
+        RoundStart(); 
         
     }
 
@@ -51,7 +59,10 @@ public partial class GameManager : Node
 
         var tween = Instance.CreateTween();
         tween.TweenInterval(0.5);
-        tween.TweenCallback(Callable.From(()=> { Tabletop.Instance.AnimateBoardTransition(); }));
+        tween.TweenCallback(Callable.From(() => { Tabletop.Instance.AnimateBoardTransition(); }));
+        
+           
+
     }
 
     public override void _Ready()
