@@ -1,22 +1,22 @@
 [gd_scene load_steps=27 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
-[ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/physical_objects/PlayerCamera.cs" id="1_r3hxv"]
-[ext_resource type="Script" uid="uid://can6bvgu8qmsn" path="res://scripts/game_management/DevilHand.cs" id="1_s2des"]
-[ext_resource type="Script" uid="uid://c34n4er00nvcv" path="res://scripts/physical_objects/Tabletop.cs" id="2_k20h1"]
+[ext_resource type="Script" uid="uid://1iy5exj1oa18" path="res://scripts/physical_objects/PlayerCamera.cs" id="1_r3hxv"]
+[ext_resource type="Script" uid="uid://cw17a5x0a62jt" path="res://scripts/game_management/DevilHand.cs" id="1_s2des"]
+[ext_resource type="Script" uid="uid://c6okb5uopbcip" path="res://scripts/physical_objects/Tabletop.cs" id="2_k20h1"]
 [ext_resource type="Texture2D" uid="uid://cqs2bprk61ipo" path="res://assets/sprites/za_hando.png" id="2_yspwb"]
 [ext_resource type="PackedScene" uid="uid://c3ggx03ww16bh" path="res://scenes/TabletopTile.tscn" id="3_7q2o4"]
-[ext_resource type="Script" uid="uid://cbo1txag8k6d3" path="res://scripts/game_management/PlayerHand.cs" id="4_js8at"]
-[ext_resource type="Script" uid="uid://cjk18k6qfsm61" path="res://scripts/game_management/Deck.cs" id="5_7q2o4"]
+[ext_resource type="Script" uid="uid://bky2v0gti1xqu" path="res://scripts/game_management/PlayerHand.cs" id="4_js8at"]
+[ext_resource type="Script" uid="uid://dwfk24ek1kl3l" path="res://scripts/game_management/Deck.cs" id="5_7q2o4"]
 [ext_resource type="PackedScene" uid="uid://2eu83js14mgw" path="res://scenes/Card.tscn" id="5_js8at"]
-[ext_resource type="Script" uid="uid://duq4ypan2mlo0" path="res://scripts/card_effects/CardEffect.cs" id="10_0vo08"]
+[ext_resource type="Script" uid="uid://doechdavtq6bg" path="res://scripts/card_effects/CardEffect.cs" id="10_0vo08"]
 [ext_resource type="Resource" uid="uid://cemub13omvjwc" path="res://resources/cards/summon_demon.tres" id="13_yjggs"]
-[ext_resource type="Script" uid="uid://cwfrxhvfmn52g" path="res://scripts/game_management/GameManager.cs" id="14_k3mpp"]
-[ext_resource type="Script" uid="uid://dk5sto74m2gdi" path="res://scripts/game_management/TurnState.cs" id="14_m1bcj"]
+[ext_resource type="Script" uid="uid://cd3g58x3rnst1" path="res://scripts/game_management/GameManager.cs" id="14_k3mpp"]
+[ext_resource type="Script" uid="uid://brsfbv4qhdo5e" path="res://scripts/game_management/TurnState.cs" id="14_m1bcj"]
 [ext_resource type="Resource" uid="uid://dvhsaep12yh2g" path="res://resources/cards/summon_angel.tres" id="14_ocugq"]
 [ext_resource type="Resource" uid="uid://rvm84eok0k3e" path="res://resources/cards/summon_reaper.tres" id="15_1ubtn"]
-[ext_resource type="Script" uid="uid://cokot44ts0kwq" path="res://scripts/physical_objects/TileHighlighter.cs" id="16_kc8hc"]
-[ext_resource type="Script" uid="uid://csxcfmt6mbli0" path="res://scripts/game_management/DialogMessenger.cs" id="17_qvchn"]
+[ext_resource type="Script" uid="uid://ceoam1vvouqcs" path="res://scripts/physical_objects/TileHighlighter.cs" id="16_kc8hc"]
+[ext_resource type="Script" uid="uid://bup2kwhyoiuaa" path="res://scripts/game_management/DialogMessenger.cs" id="17_qvchn"]
 
 [sub_resource type="Gradient" id="Gradient_kc8hc"]
 colors = PackedColorArray(1.1310726e-06, 0.69527227, 0.07990622, 1, 0.25686312, 0.52153283, 0.5500376, 1)
@@ -95,18 +95,17 @@ texture = ExtResource("2_yspwb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, -2.2083616)
 script = ExtResource("5_7q2o4")
 cards = Array[ExtResource("10_0vo08")]([ExtResource("13_yjggs"), ExtResource("14_ocugq"), ExtResource("15_1ubtn")])
-metadata/_custom_type_script = "uid://cjk18k6qfsm61"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="devildeck"]
 transform = Transform3D(-0.014780945, 0, -0.13846223, 0, 0.12, 0, 0.09890159, 0, -0.020693323, -0.2328822, -0.09999988, 1.0815997)
 mesh = SubResource("BoxMesh_somcj")
 
-[node name="DevilHand" type="Node3D" parent="." node_paths=PackedStringArray("deck")]
+[node name="DevilHand" type="Node3D" parent="." node_paths=PackedStringArray("_initialPlayableTiles", "deck")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99210966, -0.61900043)
 script = ExtResource("1_s2des")
-maxCards = 1
+_initialPlayableTiles = [null, null, null, null]
+maxCards = 2
 deck = NodePath("../devildeck")
-metadata/_custom_type_script = "uid://can6bvgu8qmsn"
 
 [node name="PlayerHand" type="Node3D" parent="." node_paths=PackedStringArray("rightHand", "deck")]
 transform = Transform3D(0.2, 0, 0, 0, 0.16528651, 0.112607144, 0, -0.112607144, 0.16528651, -2.9802322e-08, 2.0422516, 1.1469305)
@@ -118,13 +117,11 @@ maxCards = 2
 cardSize = 0.5
 cardSeparation = 0.1
 deck = NodePath("../Deck")
-metadata/_custom_type_script = "uid://cbo1txag8k6d3"
 
 [node name="Deck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, 1)
 script = ExtResource("5_7q2o4")
 cards = Array[ExtResource("10_0vo08")]([ExtResource("13_yjggs"), ExtResource("14_ocugq"), ExtResource("15_1ubtn")])
-metadata/_custom_type_script = "uid://cjk18k6qfsm61"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Deck"]
 transform = Transform3D(-0.014780945, 0, -0.13846223, 0, 0.12, 0, 0.09890159, 0, -0.020693323, -0.232, -0.1, 0.123)
@@ -157,7 +154,6 @@ script = ExtResource("14_m1bcj")
 playerHand = NodePath("../PlayerHand")
 playerCamera = NodePath("../Camera3D")
 devilHand = NodePath("../DevilHand")
-metadata/_custom_type_script = "uid://dk5sto74m2gdi"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("17_qvchn")
