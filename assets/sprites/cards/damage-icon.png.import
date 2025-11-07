@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duekpmjuuv7cc"
-path.s3tc="res://.godot/imported/angel.png-67dd6906779a2d0500f14baee8df9bd5.s3tc.ctex"
+uid="uid://4cs2dte3x5mg"
+path.s3tc="res://.godot/imported/damage-icon.png-132ad07f231174f10ff803c139f40e79.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/cards/angel.png"
-dest_files=["res://.godot/imported/angel.png-67dd6906779a2d0500f14baee8df9bd5.s3tc.ctex"]
+source_file="res://assets/sprites/cards/damage-icon.png"
+dest_files=["res://.godot/imported/damage-icon.png-132ad07f231174f10ff803c139f40e79.s3tc.ctex"]
 
 [params]
 

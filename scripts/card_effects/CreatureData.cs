@@ -5,10 +5,10 @@ using System;
 public partial class CreatureData : Resource
 {
     [Export]
-    public int damage;
+    public int maxValues;
 
     [Export]
-    public int hp;
+    public int minValues;
 
     [Export]
     public SpriteFrames sprite;

@@ -10,6 +10,9 @@ public partial class Card : Area3D
     [Export]
     public Sprite3D sprite;
 
+    [Export]
+    public Label3D description;
+
     public override void _Ready()
     {
         base._Ready();
