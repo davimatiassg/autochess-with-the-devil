@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duekpmjuuv7cc"
-path.s3tc="res://.godot/imported/angel.png-67dd6906779a2d0500f14baee8df9bd5.s3tc.ctex"
+uid="uid://doi3qpht4jdtj"
+path.s3tc="res://.godot/imported/armor-icon.png-3b7d4c77c6ade6d29bc0169f6af8c3db.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/cards/angel.png"
-dest_files=["res://.godot/imported/angel.png-67dd6906779a2d0500f14baee8df9bd5.s3tc.ctex"]
+source_file="res://assets/sprites/cards/armor-icon.png"
+dest_files=["res://.godot/imported/armor-icon.png-3b7d4c77c6ade6d29bc0169f6af8c3db.s3tc.ctex"]
 
 [params]
 

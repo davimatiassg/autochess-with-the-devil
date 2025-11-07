@@ -52,6 +52,8 @@ public partial class PlayerHand : Hand
 
         newCard.sprite.Texture = newCardEffect.portrait;
 
+        newCard.description.Text = newCardEffect.description;
+
 
         AddChild(newCard);
     }

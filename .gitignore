@@ -4,4 +4,4 @@
 
 *.uid
 
-.vscode/settings.json
+.vscode/*

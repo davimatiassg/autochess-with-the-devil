@@ -161,13 +161,13 @@ public partial class Tabletop : Node3D
             }
         }
 
-        AnimateBoardTransition(true, tableOffset);
+        AnimateBoardTransition(true);
     }
 
-    public void AnimateBoardTransition(bool isDownwards, Vector3 tableOffset)
+    public void AnimateBoardTransition(bool isDownwards = true, double timePerTile = 0.1)
     {
-
-        float targetY = isDownwards ? 0 : 10f;
+        var tableOffset = new Vector3(tileSize * boardHeight, 0, tileSize * boardWidth) / 2;
+        float targetY = isDownwards ? 0 : 5f;
 
         Tween animationTween = CreateTween();
         animationTween.SetParallel();
@@ -176,9 +176,9 @@ public partial class Tabletop : Node3D
         {
             for (int x = 0; x < boardWidth; x++)
             {
-                foreach (var obj in table[x][y].objectsInThisTile) obj.QueueFree();
+                foreach (var obj in table[x][y].objectsInThisTile) obj.Remove();
                 Vector3 pos = new Vector3((y + 0.5f) * tileSize, targetY, (x + 0.5f) * tileSize) - tableOffset;
-                animationTween.TweenProperty(table[x][y], "position", pos, (x + y) * 0.1 + 0.2);
+                animationTween.TweenProperty(table[x][y], "position", pos, (x + y) * timePerTile + 0.2);
             }
         }
     }

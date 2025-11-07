@@ -69,7 +69,7 @@ animations = [{
 
 [resource]
 script = ExtResource("1_lw7c1")
-damage = 20
-hp = 3
+maxValues = 10
+minValues = 1
 sprite = SubResource("SpriteFrames_4ljem")
 metadata/_custom_type_script = "uid://cx2w6vejsu1wi"

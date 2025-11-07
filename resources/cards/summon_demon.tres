@@ -8,4 +8,5 @@
 script = ExtResource("1_ni5ww")
 creatureData = ExtResource("1_7qdhh")
 portrait = ExtResource("2_sq8n0")
+description = "Criatura. Vida e Dano 6-6"
 metadata/_custom_type_script = "uid://dyx18p17d6dv0"

@@ -1,10 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=27 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
 [ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/physical_objects/PlayerCamera.cs" id="1_r3hxv"]
 [ext_resource type="Script" uid="uid://can6bvgu8qmsn" path="res://scripts/game_management/DevilHand.cs" id="1_s2des"]
 [ext_resource type="Script" uid="uid://c34n4er00nvcv" path="res://scripts/physical_objects/Tabletop.cs" id="2_k20h1"]
-[ext_resource type="Texture2D" uid="uid://c02gtbat8tqsp" path="res://assets/sprites/za_hando_over.png" id="2_somcj"]
 [ext_resource type="Texture2D" uid="uid://cqs2bprk61ipo" path="res://assets/sprites/za_hando.png" id="2_yspwb"]
 [ext_resource type="PackedScene" uid="uid://c3ggx03ww16bh" path="res://scenes/TabletopTile.tscn" id="3_7q2o4"]
 [ext_resource type="Script" uid="uid://cbo1txag8k6d3" path="res://scripts/game_management/PlayerHand.cs" id="4_js8at"]
@@ -88,12 +87,6 @@ transform = Transform3D(0.175, 0, 0, 0, 0.175, -5.2154063e-09, 0, 5.2154063e-09,
 
 [node name="Sprite3D" type="Sprite3D" parent="Camera3D/Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0.235396, -0.26095068, 0.024999712)
-billboard = 1
-texture_filter = 0
-texture = ExtResource("2_somcj")
-
-[node name="Sprite3D2" type="Sprite3D" parent="Camera3D/Node3D/Sprite3D"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, 0)
 billboard = 1
 texture_filter = 0
 texture = ExtResource("2_yspwb")
