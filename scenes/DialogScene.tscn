@@ -60,6 +60,7 @@ alignment = 1
 [node name="IconBorder" type="ColorRect" parent="Background/HBoxContainer"]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+color = Color(0, 0, 0, 1)
 
 [node name="DialogIcon" type="TextureRect" parent="Background/HBoxContainer/IconBorder"]
 custom_minimum_size = Vector2(70, 72)

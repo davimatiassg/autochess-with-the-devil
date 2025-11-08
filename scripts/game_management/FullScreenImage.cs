@@ -5,6 +5,13 @@ public partial class FullScreenImage : TextureRect
 {
     public static FullScreenImage Instance;
 
+    public void ResetImage()
+    {
+        Modulate = Colors.White;
+        PivotOffset = Vector2.Zero;
+        Scale = Vector2.One;
+    }
+
     public void FadeImage(Texture2D texture, double duration)
     {
         Tween tween = CreateTween();

@@ -12,5 +12,9 @@ public partial class Hask : Node
         {
             GameManager.RoundEnd(true);
         }
+        else if (@event.IsActionPressed("ui_select"))
+        {
+            GameManager.RoundEnd(true);
+        }
     }
 }

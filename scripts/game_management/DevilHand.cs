@@ -8,7 +8,7 @@ public partial class DevilHand : Hand
 {
     public static DevilHand Instance;
 
-    public static Godot.Collections.Dictionary nextDialog = default;
+    public static Godot.Collections.Array nextDialog = default;
 
     public static Random rng = new();
 

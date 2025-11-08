@@ -44,7 +44,7 @@ public partial class GameManager : Node
         if (playerWon) PlayerScore++;
         else EnemyScore++;
 
-        await DialogMessenger.SpawnDialog((Godot.Collections.Dictionary)GameDialogs.DialogData[playerWon ? "Win_" + PlayerScore : "Loss_" + EnemyScore]);
+        await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData[playerWon ? "Win_" + PlayerScore : "Loss_" + EnemyScore]);
 
         //TODO! something, idk, show the images I guess;
 

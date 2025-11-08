@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lu1g332gkmum"
-path="res://.godot/imported/gan_vogh tenso.png-264f1b6960092878169bea9503ceed3b.ctex"
+uid="uid://dy1ypequlubt6"
+path="res://.godot/imported/idle.png-8b935f928dd68fe55c91c02f52613ff9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/gan_vogh tenso.png"
-dest_files=["res://.godot/imported/gan_vogh tenso.png-264f1b6960092878169bea9503ceed3b.ctex"]
+source_file="res://assets/sprites/portraits/idle.png"
+dest_files=["res://.godot/imported/idle.png-8b935f928dd68fe55c91c02f52613ff9.ctex"]
 
 [params]
 

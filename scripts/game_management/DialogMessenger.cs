@@ -12,7 +12,7 @@ public partial class DialogMessenger : CanvasLayer
 	public static DialogScreen currentDialog;
 	
 
-	public static async Task SpawnDialog(Dictionary dialogData)
+	public static async Task SpawnDialog(Array dialogData)
 	{
 		if (currentDialog != null && IsInstanceValid(currentDialog)) return;
 

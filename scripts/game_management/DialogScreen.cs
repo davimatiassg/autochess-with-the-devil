@@ -13,7 +13,7 @@ public partial class DialogScreen : Control
 
 	// Em C#, é boa prática expor variáveis públicas como Propriedades (PascalCase).
 	// O script DialogTest vai acessar esta propriedade 'Data'.
-	public Dictionary Data { get; set; } = new Dictionary();
+	public Array Data { get; set; } = new Array();
 
 	//Aq tô exportando pra linkar os objetos da cena DialogScreen
 	[Export] private Label _name;
@@ -60,13 +60,6 @@ public partial class DialogScreen : Control
 			}
 			
 		} else { skipping = false; }
-
-		//Se só apertar enter, skipa o diálogo
-		
-		if (Input.IsActionJustPressed("ui_accept"))
-		{
-			
-		}
 	}
 
 	//Começa o diálogo
@@ -75,7 +68,7 @@ public partial class DialogScreen : Control
 	{
 		//Bug q tava dando, tratei assim, mas n sei se tem algo melhor a se fazer
 		// 'not' vira '!' e .has() vira .ContainsKey()
-		if (!Data.ContainsKey(_id))
+		if (Data.Count <= _id)
 		{
 			GD.Print("Diálogo não encontrado para o ID: ", _id);
 			QueueFree(); //Diálogo fecha
@@ -91,7 +84,12 @@ public partial class DialogScreen : Control
 		
 		// Carregar o ícone requer GD.Load e uma conversão para o tipo de textura
 		string iconPath = entry["icon"].AsString();
-		_dialogIcon.Texture = GD.Load<Texture2D>(iconPath);
+		if (iconPath != "")
+		{
+			_dialogIcon.Texture = GD.Load<Texture2D>(iconPath);
+			_dialogIcon.GetParent<Control>().Visible = true;
+		 }
+		else _dialogIcon.GetParent<Control>().Visible = false;
 
 		var method = entry["method"];
 
