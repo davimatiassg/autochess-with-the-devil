@@ -130,11 +130,12 @@ public partial class PlayerCamera : Camera3D
                     lastCardLooked = null;
                 }
             }
-            TileHighlighter.HighlightRaycast(RaycastScene());
+            if(pickedCard != null) TileHighlighter.HighlightRaycast(RaycastScene());
 
         }
         else if (pickedCard != null)
         {
+
             var result = RaycastScene();
 
             if (result.Count > 0)

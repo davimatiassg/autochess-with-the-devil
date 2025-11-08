@@ -63,7 +63,11 @@ public partial class TileHighlighter : Node
         }
         else
         {
-            ultraHighlighted.GetNode<MeshInstance3D>("MeshInstance3D").MaterialOverlay = Instance.highlightMaterial;
+            if (ultraHighlighted != null)
+            {
+                ultraHighlighted.GetNode<MeshInstance3D>("MeshInstance3D").MaterialOverlay = Instance.highlightMaterial;
+                ultraHighlighted = null;
+            }
         }
     }
 

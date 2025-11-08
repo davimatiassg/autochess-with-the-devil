@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CreatureData" load_steps=10 format=3 uid="uid://cdjfo32q5508b"]
 
-[ext_resource type="Script" uid="uid://cftj6cadfbrep" path="res://scripts/card_effects/CreatureData.cs" id="1_7bcx6"]
+[ext_resource type="Script" uid="uid://cx2w6vejsu1wi" path="res://scripts/card_effects/CreatureData.cs" id="1_7bcx6"]
 [ext_resource type="Texture2D" uid="uid://qwk5mft0wakq" path="res://assets/sprites/cards/demon.png" id="2_emtbw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7wgir"]

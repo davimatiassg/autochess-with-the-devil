@@ -13,13 +13,7 @@ public static Dictionary DialogData = new Dictionary
                     { "icon", "res://icon.svg" },
                     { "title", "character name" },
                     { "dialog", "dialog" },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "method", default }
                 }
             },
         }
@@ -30,12 +24,7 @@ public static Dictionary DialogData = new Dictionary
                     { "icon", "res://icon.svg" },
                     { "title", "character name" },
                     { "dialog", "dialog" },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },
-                            { "args", new Godot.Collections.Array()}
-                        }
+                    { "method", default
                     }
                 }
             },
@@ -47,13 +36,7 @@ public static Dictionary DialogData = new Dictionary
                     { "icon", "res://icon.svg" },
                     { "title", "character name" },
                     { "dialog", "dialog" },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "method",default}
                 }
             },
         }
@@ -63,26 +46,19 @@ public static Dictionary DialogData = new Dictionary
         { {0, new Dictionary {
                     { "icon", "res://icon.svg" },
                     { "title", "???" },
-                    { "dialog", "Se é o que deseja, espie." },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "dialog", "..." },
+                    { "method", default}
                 }
             },
             {1, new Dictionary {
                     { "icon", "res://icon.svg" },
                     { "title", "???" },
-                    { "dialog", "Através da porta." },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },//TODO! colocar imagem da porta em tela cheia
-                            { "args", new Godot.Collections.Array()}
-                        }
+                    { "dialog", "Se é o que deseja, espie. Através da porta." },
+                    { "method", Callable.From( () =>
+                        FullScreenImage.Instance.FadeImage(
+                            ResourceLoader.Load<Texture2D>("res://assets/cutscenes/door.jpg"),
+                            1.5) 
+                        )
                     }
                 }
             },
@@ -90,12 +66,9 @@ public static Dictionary DialogData = new Dictionary
                     { "icon", "res://icon.svg" },
                     { "title", "???" },
                     { "dialog", "Por de trás dessa porta, há o que era você." },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },//TODO! por imagem da fechadura em tela cheia
-                            { "args", new Godot.Collections.Array()}
-                        }
+                    { "method", Callable.From( () =>
+                        FullScreenImage.Instance.ZoomImage(10, new Vector2I(91*5/4, 56*5/4), 5) 
+                        )
                     }
                 }
             },
@@ -103,54 +76,36 @@ public static Dictionary DialogData = new Dictionary
                     { "icon", "res://icon.svg" },
                     { "title", "???" },
                     { "dialog", "Não se deixe levar por algo tão vago como uma vida." },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },//TODO! por imagem do homem, blurry, através da fechadura
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "method", default }
                 }
             },
             {4, new Dictionary {
                     { "icon", "res://icon.svg" },
                     { "title", "???" },
                     { "dialog", "Lembre-se de porque você está aqui." },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },//TODO! por imagem do homem de costas no limbo
-                            { "args", new Godot.Collections.Array()}
-                        }
+
+                    { "method", Callable.From( () => {
+                        FullScreenImage.Instance.FadeImage(ResourceLoader.Load<Texture2D>("res://assets/cutscenes/man.jpg"), 1.5);
+                        FullScreenImage.Instance.RemoveZoom(1.5);
+                        })
                     }
                 }
             },
 
             {5, new Dictionary {
                     { "icon", "res://icon.svg" },
-                    { "title", "Introspecção" },
+                    { "title", "" },
                     { "dialog", "Você tem a sensação de familiaridade, como ao ver uma foto de muito tempo atrás, tão antiga que nem se lembra mais quando foi tirada." },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },//TODO! por imagem do homem de costas no limbo
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "method", Callable.From( () => FullScreenImage.Instance.FadeImage(null, 1.5) ) }
                 }
+
             },
 
             {6, new Dictionary {
                     { "icon", "res://icon.svg" },
                     { "title", "" },
                     { "dialog", "Pela primeira vez desde que você chegou na sala, você consegue sentir suas mãos." },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "method", default }
                 }
             },
 
@@ -160,9 +115,9 @@ public static Dictionary DialogData = new Dictionary
                     { "dialog", "Elas querem [shake rate=20.0 level=5 connected=1][b]continuar jogando[/b][/shake]." },
                     { "method", new Dictionary
                         {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" }, //TODO: REMOVER IMAGEM DA TELA
-                            { "args", new Godot.Collections.Array()}
+                            { "object", default },
+                            { "methodPath", default },
+                            { "args", default },
                         }
                     }
                 }
@@ -175,13 +130,7 @@ public static Dictionary DialogData = new Dictionary
                     { "icon", "res://icon.svg" },
                     { "title", "character name" },
                     { "dialog", "dialog" },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "method",default}
                 }
             },
         }
@@ -192,13 +141,7 @@ public static Dictionary DialogData = new Dictionary
                     { "icon", "res://icon.svg" },
                     { "title", "character name" },
                     { "dialog", "dialog" },
-                    { "method", new Dictionary
-                        {
-                            { "object", new GodotObject() },
-                            { "methodPath", "" },
-                            { "args", new Godot.Collections.Array()}
-                        }
-                    }
+                    { "method",default}
                 }
             },
         }

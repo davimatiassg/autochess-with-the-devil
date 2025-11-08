@@ -93,6 +93,12 @@ public partial class DialogScreen : Control
 		string iconPath = entry["icon"].AsString();
 		_dialogIcon.Texture = GD.Load<Texture2D>(iconPath);
 
+		var method = entry["method"];
+
+		if (method.VariantType != Variant.Type.Nil)
+		{
+			method.AsCallable().CallDeferred();
+		} 
 
 		//Parte da exibição de caractéres aos poucos
 		_dialogText.VisibleCharacters = 0;
