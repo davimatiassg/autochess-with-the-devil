@@ -9,6 +9,8 @@ public partial class GameManager : Node
 
     public static Action<bool> OnStopGame;
 
+    private static readonly PackedScene MenuScene = GD.Load<PackedScene>("res://scenes/MainMenu.tscn");
+
     public static int[] scores = new int[2];
     public static int PlayerScore
     {
@@ -17,7 +19,6 @@ public partial class GameManager : Node
         {
             scores[0] = value;
             //TODO! Update ui to show player victories
-            if (value > 2) { }
         }
     }
 
@@ -28,7 +29,6 @@ public partial class GameManager : Node
         {
             scores[1] = value;
             //TODO! Update ui to show enemy victories
-            if (value > 2) { }
         }
     }
 
@@ -46,10 +46,8 @@ public partial class GameManager : Node
 
         await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData[playerWon ? "Win_" + PlayerScore : "Loss_" + EnemyScore]);
 
-        //TODO! something, idk, show the images I guess;
+        RoundStart();
 
-        RoundStart(); 
-        
     }
 
     public static void RoundStart()
@@ -60,9 +58,47 @@ public partial class GameManager : Node
         var tween = Instance.CreateTween();
         tween.TweenInterval(0.5);
         tween.TweenCallback(Callable.From(() => { Tabletop.Instance.AnimateBoardTransition(); }));
-        
-           
 
+
+
+    }
+
+    public static async void PreGame()
+    {
+        await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData["Pre_Menu"]);
+        GameMenu();
+    }
+
+    public static void PreGameWrapper()
+    {
+        PreGame();
+    }
+
+    public static async void GameStart()
+    {
+        await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData["Game_Start"]);
+    }
+
+    public static async void GameEnd(int i)
+    {
+        await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData[$"End_{i}"]);
+        
+    }
+
+    public static void GameMenu()
+    {
+
+        MainMenu menu = (MainMenu)MenuScene.Instantiate();
+        DialogMessenger.Instance.AddChild(menu);
+        menu.playGame += GameStart;
+        menu.exitGame += () => GameEnd(1);
+    }
+
+    public static void Credits()
+    {
+
+        //TODO: Show proper credits.
+        Instance.GetTree().Quit();
     }
 
     public override void _Ready()
@@ -71,7 +107,7 @@ public partial class GameManager : Node
         if (Instance == null) Instance = this;
         else if (Instance != this) { QueueFree(); return; }
 
-        CallDeferred(MethodName.RoundStart);
+        CallDeferred(MethodName.PreGameWrapper);
 
     }
 

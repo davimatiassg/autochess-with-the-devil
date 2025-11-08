@@ -161,7 +161,6 @@ public partial class Tabletop : Node3D
             }
         }
 
-        AnimateBoardTransition(true);
     }
 
     public void AnimateBoardTransition(bool isDownwards = true, double timePerTile = 0.1)

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class GameDialogs : Resource
@@ -59,19 +60,23 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "???" },
             { "dialog", "Pois bem, tome suas cartas e jogue. Espero que este passa-tempo lhe traga algum conforto." },
-            { "method", default }
+            { "method", Callable.From(()=>Tabletop.Instance.AnimateBoardTransition()) }
+
         },
         new Dictionary {
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "???" },
             { "dialog", "Uma carta por turno. Criaturas se movem sozinhas. Leve uma criatura até o meu lado do tabuleiro e você vencerá." },
-            { "method", default }//TODO! abrir menu principal
+            { "method", default }
         },
         new Dictionary {
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "???" },
             { "dialog", "Sua vez." },
-            { "method", default }//TODO! abrir menu principal
+            { "method", Callable.From(() => {
+                TurnState.IsRoundRunning = true;
+                _ = TurnState.LoopTurns(); })
+            }
         },
 
     }},
@@ -150,7 +155,11 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "O anjo" },
             { "dialog", "Esta foi a derradeira vez." },
-            { "method", Callable.From( () => FullScreenImage.Instance.ResetImage() ) }
+            { "method", Callable.From( () => {
+                    FullScreenImage.Instance.ResetImage();
+                    GameManager.GameEnd(1);
+                })
+            }
         }
     }},
     {"End_1", new Array<Dictionary>
@@ -162,6 +171,7 @@ public static Dictionary DialogData = new Dictionary
             { "method", Callable.From( () => {
                     FullScreenImage.Instance.ResetImage();
                     FullScreenImage.Instance.FadeImage( ResourceLoader.Load<Texture2D>("res://assets/cutscenes/angel.jpg"), 1.5);
+                    
                 })
             }
         },
@@ -176,7 +186,11 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "" },
             { "title", "" },
             { "dialog", "Você acompanha O Anjo. Até a luz." },
-            { "method", default} //TODO: Call credits & game ending
+            { "method", Callable.From( () =>
+                {
+                    FullScreenImage.Instance.FadeColor(Colors.White, 1.5);
+                    Task.Delay(3000).ContinueWith((Task t) => GameManager.Credits());
+                 }) }
         }
     }},
     {"Win_1", new Array<Dictionary>
@@ -265,7 +279,7 @@ public static Dictionary DialogData = new Dictionary
         new Dictionary {
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "???" },
-            { "dialog", "Você venceu novamente. Mas isso há de trazer-te ganho algum, para nossa infelicidade." },
+            { "dialog", "Você venceu novamente. Mas isso não há de trazer-te ganho algum, para nossa infelicidade." },
             { "method", Callable.From( () => FullScreenImage.Instance.ResetImage() ) }
         },
 
@@ -331,7 +345,7 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "A Morte" },
             { "dialog", "... Desculpe, criança, pois falhei em proteger-te. Vãos foram meus esforços, pois tu mesmo quisestes este fim. Agora, deves abraça-lo de acordo. " },
-            { "method",default } 
+            { "method", Callable.From( () => GameManager.GameEnd(2) ) }
         }
     }
     },
@@ -341,7 +355,12 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "" },
             { "title", "" },
             { "dialog", "Você sente dor." },
-            { "method", Callable.From( () => FullScreenImage.Instance.ResetImage() ) }//TODO! Tela preta.
+            { "method", Callable.From(
+                () => {
+                    FullScreenImage.Instance.ResetImage();
+                    FullScreenImage.Instance.FadeColor(Colors.Black, 0.01);
+                })
+            }
         },
 
         new Dictionary {
@@ -384,7 +403,7 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "res://assets/sprites/portraits/sad.png" },
             { "title", "Israel" },
             { "dialog", "Talvez nós ainda... [i]É tudo culpa minha[/i]." },
-            { "method", default } //TODO: Tela preta
+            { "method", Callable.From( () => FullScreenImage.Instance.FadeColor(Colors.Black, 1.5) ) }
         },
         new Dictionary {
             { "icon", "res://assets/sprites/portraits/eye.png" },
@@ -396,7 +415,10 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "" },
             { "title", "" },
             { "dialog", "Seu coração para." },
-            { "method", default } //TODO: tela vermelha e créditos.
+            { "method", Callable.From( () => {
+                FullScreenImage.Instance.FadeColor(Colors.Red, 1.5);
+                Task.Delay(3000).ContinueWith((Task t) => GameManager.Credits());
+            }) }
         }
     }}
 };

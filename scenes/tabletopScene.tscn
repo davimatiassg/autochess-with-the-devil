@@ -134,7 +134,7 @@ light_color = Color(2.551, 1.9982289, 1.9531319, 1)
 light_energy = 2.564
 light_volumetric_fog_energy = 6.135
 spot_range = 27.81626
-spot_angle = 5.74435
+spot_angle = 18.799185
 spot_angle_attenuation = 0.2176377
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]

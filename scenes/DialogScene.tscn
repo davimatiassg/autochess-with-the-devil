@@ -35,10 +35,12 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -176.0
-offset_top = -22.0
+offset_top = -39.11
 offset_right = 174.0
+offset_bottom = -39.765
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.64, 1.64)
 pivot_offset = Vector2(335, 0)
 color = Color(0.18500987, 0.11198204, 0.116835706, 1)
 
@@ -63,6 +65,7 @@ layout_mode = 2
 color = Color(0, 0, 0, 1)
 
 [node name="DialogIcon" type="TextureRect" parent="Background/HBoxContainer/IconBorder"]
+texture_filter = 1
 custom_minimum_size = Vector2(70, 72)
 layout_mode = 1
 anchors_preset = 8

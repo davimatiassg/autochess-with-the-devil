@@ -12,6 +12,15 @@ public partial class FullScreenImage : TextureRect
         Scale = Vector2.One;
     }
 
+    public void FadeColor(Color color, double duration)
+    {
+        var colorImg = new GradientTexture1D();
+        colorImg.Gradient = new();
+        colorImg.Gradient.AddPoint(0, color);
+        colorImg.Gradient.AddPoint(1, color);
+        FadeImage(colorImg, duration);
+    }
+
     public void FadeImage(Texture2D texture, double duration)
     {
         Tween tween = CreateTween();
