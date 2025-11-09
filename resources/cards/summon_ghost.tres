@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SpawnCreatureCardEffect" load_steps=4 format=3 uid="uid://dlygqdqssibym"]
+
+[ext_resource type="Texture2D" uid="uid://bow1ahw2305wn" path="res://assets/sprites/cards/ghost-portrait.png" id="1_cg8o3"]
+[ext_resource type="Resource" uid="uid://dkhframcgrfu4" path="res://resources/cards/ghost.tres" id="1_jwxdf"]
+[ext_resource type="Script" uid="uid://dyx18p17d6dv0" path="res://scripts/card_effects/SpawnCreatureCardEffect.cs" id="3_mrigf"]
+
+[resource]
+script = ExtResource("3_mrigf")
+creatureData = ExtResource("1_jwxdf")
+portrait = ExtResource("1_cg8o3")
+description = "Criatura 10/1. Ao morrer, causa 10 de dano."
+metadata/_custom_type_script = "uid://dyx18p17d6dv0"

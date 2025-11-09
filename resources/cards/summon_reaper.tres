@@ -8,5 +8,5 @@
 script = ExtResource("3_c0f47")
 creatureData = ExtResource("1_dyi54")
 portrait = ExtResource("2_4f5kn")
-description = "Criatura. Vida e Dano 1-10"
+description = "Criatura 4/4. Ao sobreviver ou atacar, ganha 3 de vida."
 metadata/_custom_type_script = "uid://dyx18p17d6dv0"

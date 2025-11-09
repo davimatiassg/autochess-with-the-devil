@@ -146,7 +146,7 @@ public class DevilAI
         {
             if (spawnEffect.creatureData != null)
             {
-                return spawnEffect.creatureData.maxValues;
+                return spawnEffect.creatureData.hp + spawnEffect.creatureData.damage;
             }
         }
         return 1;

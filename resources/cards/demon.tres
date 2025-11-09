@@ -55,7 +55,7 @@ animations = [{
 
 [resource]
 script = ExtResource("1_7bcx6")
-maxValues = 6
-minValues = 6
+damage = 6
+hp = 6
 sprite = SubResource("SpriteFrames_noglf")
 metadata/_custom_type_script = "uid://cx2w6vejsu1wi"

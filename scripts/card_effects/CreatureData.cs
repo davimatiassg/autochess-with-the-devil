@@ -1,28 +1,29 @@
 using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 [GlobalClass]
 public partial class CreatureData : Resource
 {
     [Export]
-    public int maxValues;
+    public int damage;
 
     [Export]
-    public int minValues;
+    public int hp;
 
     [Export]
     public SpriteFrames sprite;
 
     public Texture2D PlayTexture;
 
-    public virtual void SpawnEffect()
+    public virtual void SpawnEffect(Creature thisCreature)
     { }
-    public virtual void MoveEffect()
+    public virtual void MoveEffect(Creature thisCreature)
     { }
-    public virtual void AttackEffect(PlacedObject target)
+    public virtual void AttackEffect(Creature thisCreature, PlacedObject target)
     { }
-    public virtual void SurviveEffect(PlacedObject attacker)
+    public virtual void SurviveEffect(Creature thisCreature, PlacedObject attacker)
     { }
-    public virtual void DeathEffect(PlacedObject killer)
+    public virtual void DeathEffect(Creature thisCreature, PlacedObject killer)
     { }
 }

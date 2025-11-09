@@ -83,13 +83,15 @@ public partial class Tabletop : Node3D
 
 
 
-    public static TabletopTile GetNextTile(TabletopTile current, int direction)
+    public static TabletopTile GetNextTile(TabletopTile current, Vector2I direction)
     {
-        int newY = current.tilePosition.Y + direction;
+        int newX = current.tilePosition.X + direction.X;
+        int newY = current.tilePosition.Y + direction.Y;
 
+        if(newX >= Instance.boardWidth || newX < 0){ return null;  }
         if(newY >= Instance.boardHeight || newY < 0){ return null;  }
 
-        return table[current.tilePosition.X][newY];
+        return table[newX][newY];
     }
 
     public static async Task MoveCreatures()
@@ -137,7 +139,7 @@ public partial class Tabletop : Node3D
 
     public async Task TryMoveCreature(Creature creature, TabletopTile currentTile, int direction)
     {
-        var nextTile = GetNextTile(currentTile, direction);
+        var nextTile = GetNextTile(currentTile, new Vector2I(0, direction));
 
             
         if (nextTile == null)

@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="CreatureData" load_steps=12 format=3 uid="uid://n22ax7nb4s20"]
+[gd_resource type="Resource" load_steps=12 format=3 uid="uid://n22ax7nb4s20"]
 
-[ext_resource type="Script" uid="uid://cx2w6vejsu1wi" path="res://scripts/card_effects/CreatureData.cs" id="1_lw7c1"]
+[ext_resource type="Script" uid="uid://dxh01o1naygqb" path="res://scripts/card_effects/ReaperCreatureData.cs" id="1_lw7c1"]
 [ext_resource type="Texture2D" uid="uid://uepk11jprdtp" path="res://assets/sprites/cards/reaper.png" id="2_lw7c1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t1xyf"]
@@ -64,12 +64,12 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 8.0
+"speed": 5.0
 }]
 
 [resource]
 script = ExtResource("1_lw7c1")
-maxValues = 10
-minValues = 1
+damage = 4
+hp = 4
 sprite = SubResource("SpriteFrames_4ljem")
 metadata/_custom_type_script = "uid://cx2w6vejsu1wi"

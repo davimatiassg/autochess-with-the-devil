@@ -60,7 +60,7 @@ void fragment() {
         float d = length(diff);
 
         if (d < eye_radius) {
-            vec2 eye_uv = diff / eye_radius + vec2(0.5);
+            vec2 eye_uv = d / eye_radius + vec2(0.5);
             int tex_index = int(mod(fi, 4.0));
             vec4 eye_tex = sample_eye_tex(tex_index, eye_uv);
             float flick = 0.8 + 0.2 * sin(time * 6.0 + fi * 0.37);

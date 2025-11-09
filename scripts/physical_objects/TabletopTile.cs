@@ -40,10 +40,11 @@ public partial class TabletopTile : Area3D
     public bool IsTileValid(CardEffect effect)
     {
         //STUB: tem que verificar a situação da carta
-        if (containsCreature() != null) return false;
+        
 
         if (effect is SpawnCreatureCardEffect)
         {
+            if (containsCreature() != null) return false;
 
             if (TurnState.isPlayerTurn)
             {

@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="CreatureData" load_steps=9 format=3 uid="uid://dn0430kcsol53"]
+[gd_resource type="Resource" load_steps=9 format=3 uid="uid://dn0430kcsol53"]
 
-[ext_resource type="Script" uid="uid://cx2w6vejsu1wi" path="res://scripts/card_effects/CreatureData.cs" id="1_mub4o"]
+[ext_resource type="Script" uid="uid://b5vf8hs6uyuj8" path="res://scripts/card_effects/AngelCreatureData.cs" id="1_mub4o"]
 [ext_resource type="Texture2D" uid="uid://duekpmjuuv7cc" path="res://assets/sprites/cards/angel.png" id="2_mub4o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3srxv"]
@@ -48,7 +48,7 @@ animations = [{
 
 [resource]
 script = ExtResource("1_mub4o")
-maxValues = 3
-minValues = 8
+damage = 3
+hp = 4
 sprite = SubResource("SpriteFrames_o7hhk")
 metadata/_custom_type_script = "uid://cx2w6vejsu1wi"

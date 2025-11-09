@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=37 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
 [ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/physical_objects/PlayerCamera.cs" id="1_r3hxv"]
@@ -15,13 +15,16 @@
 [ext_resource type="Script" uid="uid://dk5sto74m2gdi" path="res://scripts/game_management/TurnState.cs" id="14_m1bcj"]
 [ext_resource type="Resource" uid="uid://dvhsaep12yh2g" path="res://resources/cards/summon_angel.tres" id="14_ocugq"]
 [ext_resource type="Resource" uid="uid://rvm84eok0k3e" path="res://resources/cards/summon_reaper.tres" id="15_1ubtn"]
+[ext_resource type="Resource" uid="uid://dlygqdqssibym" path="res://resources/cards/summon_ghost.tres" id="15_m84t7"]
+[ext_resource type="Script" uid="uid://c8jkdlfd6v5pg" path="res://scripts/physical_objects/Lightworks.cs" id="16_bpywt"]
 [ext_resource type="Script" uid="uid://cokot44ts0kwq" path="res://scripts/physical_objects/TileHighlighter.cs" id="16_kc8hc"]
 [ext_resource type="Script" uid="uid://csxcfmt6mbli0" path="res://scripts/game_management/DialogMessenger.cs" id="17_qvchn"]
 [ext_resource type="Script" uid="uid://cbi7oig5dfp3d" path="res://scripts/game_management/FullScreenImage.cs" id="18_ocugq"]
+[ext_resource type="Texture2D" uid="uid://v02xr63iaars" path="res://assets/sprites/eyes/eye2.png" id="19_odn6r"]
 [ext_resource type="Texture2D" uid="uid://cn00pyclebstk" path="res://assets/sprites/eyes/eye1.png" id="20_8kohv"]
+[ext_resource type="Texture2D" uid="uid://0yfsxujvbneh" path="res://assets/sprites/eyes/eye3.png" id="20_307xl"]
 [ext_resource type="Shader" uid="uid://dgmqxlw6kqt0m" path="res://materials/eyes.gdshader" id="21_uhv3s"]
 [ext_resource type="Texture2D" uid="uid://jxtjaixj627i" path="res://assets/sprites/eyes/eye4.png" id="24_34ova"]
-[ext_resource type="Texture2D" uid="uid://7i8iegctay4a" path="res://assets/sprites/eyes/eye5.png" id="25_cypra"]
 
 [sub_resource type="Gradient" id="Gradient_kc8hc"]
 colors = PackedColorArray(1.1310726e-06, 0.69527227, 0.07990622, 1, 0.25686312, 0.52153283, 0.5500376, 1)
@@ -54,22 +57,22 @@ emission_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_somcj"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_kc8hc"]
+[sub_resource type="SphereMesh" id="SphereMesh_uhv3s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m84t7"]
 render_priority = 0
 shader = ExtResource("21_uhv3s")
 shader_parameter/eye0 = ExtResource("20_8kohv")
-shader_parameter/eye1 = ExtResource("24_34ova")
-shader_parameter/eye2 = ExtResource("24_34ova")
-shader_parameter/eye3 = ExtResource("25_cypra")
-shader_parameter/eye_count = 256
-shader_parameter/seed = 12.34
-shader_parameter/eye_tint = Vector3(1, -1.545, 0.1)
-shader_parameter/eye_radius = 0.03
-shader_parameter/time = 126.8930060274175
+shader_parameter/eye1 = ExtResource("19_odn6r")
+shader_parameter/eye2 = ExtResource("20_307xl")
+shader_parameter/eye3 = ExtResource("24_34ova")
+shader_parameter/eye_count = 396
+shader_parameter/seed = 12.48
+shader_parameter/eye_tint = Vector3(1, -0.745, -0.305)
+shader_parameter/eye_radius = 0.01
+shader_parameter/time = 99.49600472606
 
-[sub_resource type="SphereMesh" id="SphereMesh_uhv3s"]
+[sub_resource type="BoxMesh" id="BoxMesh_kc8hc"]
 
 [node name="TabletopScene" type="Node3D"]
 
@@ -98,7 +101,7 @@ transform = Transform3D(2, 0, 7.1054274e-15, 0, 2, 0, -7.1054274e-15, 0, 2, 0, 1
 gizmo_extents = 4.2
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.6924329, 0.72148234, 0, -0.72148234, 0.6924329, 0.002, 2.3753605, 1.2889555)
+transform = Transform3D(1, 0, 0, 0, 0.9292487, 0.3694548, 0, -0.3694548, 0.9292487, 0.002, 2.3753605, 1.2889555)
 fov = 55.250813
 script = ExtResource("1_r3hxv")
 
@@ -114,7 +117,7 @@ texture = ExtResource("2_yspwb")
 [node name="devildeck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, -2.2083616)
 script = ExtResource("5_7q2o4")
-cards = Array[ExtResource("10_0vo08")]([ExtResource("13_yjggs"), ExtResource("14_ocugq"), ExtResource("15_1ubtn")])
+cards = Array[ExtResource("10_0vo08")]([ExtResource("14_ocugq"), ExtResource("13_yjggs"), ExtResource("15_m84t7"), ExtResource("15_m84t7"), ExtResource("15_1ubtn"), ExtResource("13_yjggs")])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="devildeck"]
 transform = Transform3D(-0.014780945, 0, -0.13846223, 0, 0.12, 0, 0.09890159, 0, -0.020693323, -0.2328822, -0.09999988, 1.0815997)
@@ -123,7 +126,7 @@ mesh = SubResource("BoxMesh_somcj")
 [node name="DevilHand" type="Node3D" parent="." node_paths=PackedStringArray("deck")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99210966, -0.61900043)
 script = ExtResource("1_s2des")
-maxCards = 2
+maxCards = 5
 deck = NodePath("../devildeck")
 
 [node name="PlayerHand" type="Node3D" parent="." node_paths=PackedStringArray("rightHand", "deck")]
@@ -132,7 +135,6 @@ script = ExtResource("4_js8at")
 rightHand = NodePath("../Camera3D/Node3D")
 CardPrefab = ExtResource("5_js8at")
 turnTimeLimit = 10.0
-maxCards = 2
 cardSize = 0.5
 cardSeparation = 0.1
 deck = NodePath("../Deck")
@@ -140,30 +142,11 @@ deck = NodePath("../Deck")
 [node name="Deck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, 1)
 script = ExtResource("5_7q2o4")
-cards = Array[ExtResource("10_0vo08")]([ExtResource("13_yjggs"), ExtResource("14_ocugq"), ExtResource("15_1ubtn")])
+cards = Array[ExtResource("10_0vo08")]([ExtResource("13_yjggs"), ExtResource("13_yjggs"), ExtResource("13_yjggs"), ExtResource("14_ocugq"), ExtResource("14_ocugq"), ExtResource("14_ocugq"), ExtResource("15_m84t7"), ExtResource("15_m84t7"), ExtResource("15_m84t7"), ExtResource("15_1ubtn"), ExtResource("15_1ubtn"), ExtResource("15_1ubtn")])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Deck"]
 transform = Transform3D(-0.014780945, 0, -0.13846223, 0, 0.12, 0, 0.09890159, 0, -0.020693323, -0.232, -0.1, 0.123)
 mesh = SubResource("BoxMesh_somcj")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(1.0000002, 0, 0, 0, -4.3711385e-08, 1.0000001, 0, -0.99999994, -4.3711392e-08, 0, 22.044, 0)
-light_color = Color(2.551, 1.9982289, 1.9531319, 1)
-light_energy = 2.564
-light_volumetric_fog_energy = 6.135
-spot_range = 27.81626
-spot_angle = 18.799185
-spot_angle_attenuation = 0.2176377
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(0.9783022, -0.12047405, -0.16855568, 0.19600773, 0.8017715, 0.56457365, 0.06712666, -0.58536184, 0.8079886, -1.8446093, 6.160242, 9.053522)
-light_color = Color(0, 0.7662846, 0.98049945, 1)
-light_energy = 9.637
-light_volumetric_fog_energy = 6.135
-spot_range = 15.035258
-spot_angle = 7.4137096
-spot_angle_attenuation = 0.2176377
-metadata/_edit_group_ = true
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("14_k3mpp")
@@ -196,6 +179,48 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(640, 360)
 script = ExtResource("18_ocugq")
+
+[node name="lights" type="Node3D" parent="." node_paths=PackedStringArray("eyeMesh", "spotlights")]
+transform = Transform3D(3.8209383, 0, 0.8079899, 0, 0.13, 0, -5.2398148, 0, 0.5891963, -5.1352344, -0.5125237, 2.381577)
+script = ExtResource("16_bpywt")
+eyeMesh = NodePath("MeshInstance3D")
+spotlights = [NodePath("SpotLight3D2"), NodePath("SpotLight3D3"), NodePath("SpotLight3D")]
+lightIntensities = Array[float]([1.0, 1.0, 2.5])
+
+[node name="SpotLight3D" type="SpotLight3D" parent="lights"]
+transform = Transform3D(0.111741774, 0.9937373, 4.3437637e-08, 0, -4.371139e-08, 1, 0.9937373, -0.111741774, -4.884388e-09, 0.76329243, 173.51173, 2.7460012)
+light_color = Color(2.551, 1.9982289, 1.9531319, 1)
+light_energy = 0.0
+light_volumetric_fog_energy = 6.135
+spot_range = 27.81626
+spot_angle = 18.799185
+spot_angle_attenuation = 0.2176377
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="lights"]
+transform = Transform3D(0.04673154, -0.053590916, -0.99746895, 0.8750759, 0.48375311, 0.015006852, 0.48172444, -0.8735622, 0.069502644, -0.5323113, 51.32897, 6.5898776)
+light_color = Color(0, 0.7662846, 0.98049945, 1)
+light_energy = 0.0
+light_volumetric_fog_energy = 6.135
+spot_range = 15.035258
+spot_angle = 7.4137096
+spot_angle_attenuation = 0.2176377
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="lights"]
+transform = Transform3D(0.018997129, -0.05727232, 0.9981778, 0.8444899, 0.5353713, 0.014645762, -0.5352345, 0.84267277, 0.058536414, 1.3072056, 30.832207, 4.1261454)
+light_color = Color(0.44705883, 0.20392157, 0.53333336, 1)
+light_energy = 0.0
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+spot_range = 15.035258
+spot_angle = 7.4137096
+spot_angle_attenuation = 0.2176377
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1.817105, 0, -2.491873, 0, 153.84616, 0, -16.159798, 0, 11.783926, 0.76329243, 3.9424906, 2.7460012)
+transparency = 1.0
+mesh = SubResource("SphereMesh_uhv3s")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_m84t7")
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(3.8209383, 0, 0.8079899, 0, 0.13, 0, -5.2398148, 0, 0.5891963, -5.1352344, -0.5125237, 2.381577)
@@ -514,8 +539,3 @@ mesh = SubResource("BoxMesh_kc8hc")
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="Node3D/floor14"]
 transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.9331362, -0.3947811, -3.1388316)
 mesh = SubResource("BoxMesh_kc8hc")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_m84t7")
-mesh = SubResource("SphereMesh_uhv3s")

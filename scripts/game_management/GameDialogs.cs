@@ -54,7 +54,7 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "???" },
             { "dialog", "Uma lástima." },
-            { "method", default }
+            { "method", Callable.From( () => Lightworks.InitializationSequence() ) }
         },
         new Dictionary {
             { "icon", "res://assets/sprites/portraits/eye.png" },
