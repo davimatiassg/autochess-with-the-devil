@@ -3,5 +3,5 @@
 /android/
 
 *.uid
-
+build/*
 .vscode/*
