@@ -13,7 +13,7 @@ public partial class AudioPlayer : Node
 
     public static void Play(string sound, bool loop = false, float pitch = 1, float volume = 0)
     {
-        var soundStream = AudioStreamOggVorbis.LoadFromFile(Instance.sounds[sound].AsString());
+        AudioStreamOggVorbis soundStream = AudioStreamOggVorbis.LoadFromFile(Instance.sounds[sound].AsString());
         var streamPlayer = new AudioStreamPlayer();
         Instance.AddChild(streamPlayer);
         streamPlayer.Stream = soundStream;
