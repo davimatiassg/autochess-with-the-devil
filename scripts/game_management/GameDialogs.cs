@@ -69,18 +69,26 @@ public static Dictionary DialogData = new Dictionary
             { "dialog", "Uma carta por turno. Criaturas se movem sozinhas. Leve uma criatura até o meu lado do tabuleiro e você vencerá." },
             { "method", default }
         },
+
+    }},
+    { "Player_Turn", new Array<Dictionary>
+    {
         new Dictionary {
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "???" },
-            { "dialog", "Sua vez." },
-            { "method", Callable.From(() => {
-                TurnState.IsRoundRunning = true;
-                _ = TurnState.LoopTurns(); })
-            }
-        },
-
+            { "dialog", "Jogue." },
+            { "method", default }
+        }
     }},
-
+    { "Enemy_Turn", new Array<Dictionary>
+    {
+        new Dictionary {
+            { "icon", "res://assets/sprites/portraits/eye.png" },
+            { "title", "???" },
+            { "dialog", "Minha vez." },
+            { "method", default }
+        }
+    }},
     { "Loss_1", new Array<Dictionary>
     {
         new Dictionary {
@@ -129,7 +137,7 @@ public static Dictionary DialogData = new Dictionary
             { "dialog", "Mesmo sem face, você consegue sentir que, aquilo está sorrindo para ti. Todos seus infinitos olhos, que vão muito mais a fundo que está sala consegue ser." },
             { "method", default }
         },
-    
+
         new Dictionary {
             { "icon", "res://assets/sprites/portraits/tense.png" },
             { "title", "Israel" },
@@ -171,7 +179,7 @@ public static Dictionary DialogData = new Dictionary
             { "method", Callable.From( () => {
                     FullScreenImage.Instance.ResetImage();
                     FullScreenImage.Instance.FadeImage( ResourceLoader.Load<Texture2D>("res://assets/cutscenes/angel.jpg"), 1.5);
-                    
+
                 })
             }
         },
@@ -209,7 +217,7 @@ public static Dictionary DialogData = new Dictionary
             { "method", Callable.From( () =>
                 FullScreenImage.Instance.FadeImage(
                     ResourceLoader.Load<Texture2D>("res://assets/cutscenes/door.jpg"),
-                    1.5) 
+                    1.5)
                 )
             }
         },
@@ -219,7 +227,7 @@ public static Dictionary DialogData = new Dictionary
             { "title", "???" },
             { "dialog", "Por de trás dessa porta, há o que era você." },
             { "method", Callable.From( () =>
-                FullScreenImage.Instance.ZoomImage(10, new Vector2I(91*5/4, 56*5/4), 5) 
+                FullScreenImage.Instance.ZoomImage(10, new Vector2I(91*5/4, 56*5/4), 5)
                 )
             }
         },

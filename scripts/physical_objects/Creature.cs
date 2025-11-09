@@ -97,6 +97,7 @@ public partial class Creature : PlacedObject
     public void Move(Vector2I direction, bool hasEffect = true) => Move(Tabletop.GetNextTile(Tile, direction), hasEffect);
     public virtual void Move(TabletopTile nextTile, bool hasEffect = true)
     {
+
         var possibleTarget = nextTile.containsCreature();
         if (possibleTarget != null)
         {

@@ -85,6 +85,8 @@ public partial class GameManager : Node
     {
         AudioPlayer.Play("music", true);
         await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData["Game_Start"]);
+        TurnState.IsRoundRunning = true;
+        _ = TurnState.LoopTurns(); 
     }
 
     public static async Task GameEnd(int i)

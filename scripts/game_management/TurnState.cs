@@ -37,12 +37,29 @@ public partial class TurnState : Node3D
 
 
             OnStartTurn?.Invoke();
+            
+            if (!IsRoundRunning) break;
 
-            if (!isPlayerTurn) Instance.playerCamera.SlideLookAt(DevilHand.Instance.Position, 0.5);
 
+            if (isPlayerTurn)
+            {
+
+                await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData[$"Player_Turn"]);
+
+            }
+            else
+            {
+                Instance.playerCamera.SlideLookAt(DevilHand.Instance.Position, 0.5);
+                await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData[$"Enemy_Turn"]);
+
+            }
             await Tabletop.MoveCreatures();
 
-            if (!IsRoundRunning) break;
+            
+
+            
+
+            
 
 
             Instance.playerHand.AllowPlay = isPlayerTurn;
