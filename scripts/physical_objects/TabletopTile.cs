@@ -44,9 +44,17 @@ public partial class TabletopTile : Area3D
 
         if (effect is SpawnCreatureCardEffect)
         {
-            if (TurnState.isPlayerTurn) {
-                if (tilePosition.Y > 0) { return false; } }
-            else if (tilePosition.Y < Tabletop.Instance.boardHeight - 1) return false;
+
+            if (TurnState.isPlayerTurn)
+            {
+                if (tilePosition.Y > Tabletop.Instance.highestAdvances[0]) return false;
+                if (tilePosition.Y == Tabletop.Instance.boardHeight - 1) return false;
+            }
+            else
+            {
+                if (tilePosition.Y < Tabletop.Instance.highestAdvances[1]) return false;
+                if (tilePosition.Y == 0)  return false; 
+            }
         }
 
         return true;

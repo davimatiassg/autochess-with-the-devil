@@ -39,12 +39,12 @@ public partial class DialogScreen : Control
 			if (_dialogText.VisibleRatio < 1)
 			{
 				skipping = true;
-				_textVel = 0.01f;
+				_textVel = 0.005f;
 				return;
 			}
-			
+
 			_textVel = 0.05f;
-			if(!skipping)
+			if (!skipping)
 			{
 				_id++; // _id += 1
 
@@ -58,8 +58,10 @@ public partial class DialogScreen : Control
 
 				_InitializeDialog();
 			}
-			
-		} else { skipping = false; }
+
+		}
+		else { skipping = false; }
+		
 	}
 
 	//Começa o diálogo

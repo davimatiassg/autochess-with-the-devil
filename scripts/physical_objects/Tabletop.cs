@@ -33,8 +33,35 @@ public partial class Tabletop : Node3D
     public static Tween animationTween;
 
 
-    
+    public int[] highestAdvances = new int[2];
 
+
+
+    public static void UpdateHighestAdvances()
+    {
+        Instance.highestAdvances[0] = 0;
+        Instance.highestAdvances[1] = Instance.boardHeight - 1;
+
+        for (int y = 0; y < Instance.boardHeight; y++)
+        {
+            for (int x = 0; x < Instance.boardWidth; x++)
+            {
+                var tile = table[x][y];
+                if (table[x][y].objectsInThisTile.Count > 0)
+                {
+                    if (tile.objectsInThisTile.Find((PlacedObject p) => p.isPlayerObject) != null)
+                    {
+                        if (Instance.highestAdvances[0] < y) Instance.highestAdvances[0] = y;
+                    }
+                    if (tile.objectsInThisTile.Find((PlacedObject p) => !p.isPlayerObject) != null)
+                    {
+                        if (Instance.highestAdvances[1] > y) Instance.highestAdvances[1] = y;
+                    }
+                }
+
+            }
+        }
+    }
 
 
     public static List<TabletopTile> GetPlaceablePositions(CardEffect effect)
@@ -71,6 +98,8 @@ public partial class Tabletop : Node3D
         animationTween.TweenInterval(0.5);
         if (TurnState.isPlayerTurn) await Instance.MovePlayerCreatures();
         else await Instance.MoveEnemyCreatures();
+
+        UpdateHighestAdvances();
         
     }
 
