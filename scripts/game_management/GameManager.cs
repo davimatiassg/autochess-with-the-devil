@@ -18,7 +18,7 @@ public partial class GameManager : Node
         set
         {
             scores[0] = value;
-            //TODO! Update ui to show player victories
+            AudioPlayer.Play("strumHigh");
         }
     }
 
@@ -28,7 +28,7 @@ public partial class GameManager : Node
         set
         {
             scores[1] = value;
-            //TODO! Update ui to show enemy victories
+            AudioPlayer.Play("strumLow");
         }
     }
 
@@ -45,7 +45,14 @@ public partial class GameManager : Node
         else EnemyScore++;
 
         await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData[playerWon ? "Win_" + PlayerScore : "Loss_" + EnemyScore]);
-
+        if (scores[0] > 2)
+        {
+            await GameEnd(2);
+        }
+        if (scores[1] > 2)
+        {
+            await GameEnd(1);
+        }
         RoundStart();
 
     }
@@ -76,10 +83,11 @@ public partial class GameManager : Node
 
     public static async void GameStart()
     {
+        AudioPlayer.Play("music", true);
         await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData["Game_Start"]);
     }
 
-    public static async void GameEnd(int i)
+    public static async Task GameEnd(int i)
     {
         await DialogMessenger.SpawnDialog((Godot.Collections.Array)GameDialogs.DialogData[$"End_{i}"]);
         

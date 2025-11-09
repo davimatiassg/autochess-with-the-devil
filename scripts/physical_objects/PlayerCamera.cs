@@ -30,6 +30,7 @@ public partial class PlayerCamera : Camera3D
         pickedCard = card;
         PlayerHand.PickCard(pickedCard);
         TileHighlighter.ToggleOn(card);
+        AudioPlayer.PlayRandomPitch("card");
     }
 
     public void DropCard()
@@ -46,7 +47,7 @@ public partial class PlayerCamera : Camera3D
         PlayerHand.Instance.PlayCard(card, tile);
         TileHighlighter.ToggleOff();
         pickedCard = null;
-
+        AudioPlayer.PlayRandomPitch("card");
     }
 
 

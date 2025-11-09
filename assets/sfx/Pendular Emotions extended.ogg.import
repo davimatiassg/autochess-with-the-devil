@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c8cha345gtufj"
+path="res://.godot/imported/Pendular Emotions extended.ogg-ab3bcdae8f66e3e19a6ab0d86f595779.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Pendular Emotions extended.ogg"
+dest_files=["res://.godot/imported/Pendular Emotions extended.ogg-ab3bcdae8f66e3e19a6ab0d86f595779.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -88,7 +88,8 @@ public partial class Creature : PlacedObject
         if (CurrentHP > 0 && hasEffect) data.SurviveEffect(this, attacker);
         else
         {
-            if(hasEffect) data.DeathEffect(this, attacker);
+            AudioPlayer.PlayRandomPitch("scaryBackground", false, 1, 0.1f, -1f);
+            if (hasEffect) data.DeathEffect(this, attacker);
             Remove();
         }
     }

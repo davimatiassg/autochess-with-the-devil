@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dpcmktm2l5pqe"]
+[gd_scene load_steps=38 format=3 uid="uid://dpcmktm2l5pqe"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkmoxfc8pqc5b" path="res://meshes/table.obj" id="1_5vtir"]
 [ext_resource type="Script" uid="uid://6h32dgjqrij1" path="res://scripts/physical_objects/PlayerCamera.cs" id="1_r3hxv"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://0yfsxujvbneh" path="res://assets/sprites/eyes/eye3.png" id="20_307xl"]
 [ext_resource type="Shader" uid="uid://dgmqxlw6kqt0m" path="res://materials/eyes.gdshader" id="21_uhv3s"]
 [ext_resource type="Texture2D" uid="uid://jxtjaixj627i" path="res://assets/sprites/eyes/eye4.png" id="24_34ova"]
+[ext_resource type="Script" uid="uid://dkm08kqii8k8e" path="res://scripts/physical_objects/AudioPlayer.cs" id="27_34ova"]
 
 [sub_resource type="Gradient" id="Gradient_kc8hc"]
 colors = PackedColorArray(1.1310726e-06, 0.69527227, 0.07990622, 1, 0.25686312, 0.52153283, 0.5500376, 1)
@@ -113,6 +114,8 @@ transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0.23
 billboard = 1
 texture_filter = 0
 texture = ExtResource("2_yspwb")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="Camera3D"]
 
 [node name="devildeck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45823666, 1.2124658, -2.2083616)
@@ -539,3 +542,14 @@ mesh = SubResource("BoxMesh_kc8hc")
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="Node3D/floor14"]
 transform = Transform3D(6.485, 0, 0, 0, 0.13, 0, 0, 0, 1, 0.9331362, -0.3947811, -3.1388316)
 mesh = SubResource("BoxMesh_kc8hc")
+
+[node name="AudioPlayer" type="Node" parent="."]
+script = ExtResource("27_34ova")
+sounds = {
+"card": "res://assets/sfx/cardPick.ogg",
+"music": "res://assets/sfx/Pendular Emotions extended.ogg",
+"scaryBackground": "res://assets/sfx/background.ogg",
+"strumHigh": "res://assets/sfx/pianoStrum.ogg",
+"strumLow": "res://assets/sfx/pianoStrumLow.ogg",
+"wind chimes": "res://assets/sfx/chimesWind.ogg"
+}

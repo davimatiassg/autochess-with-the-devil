@@ -345,7 +345,7 @@ public static Dictionary DialogData = new Dictionary
             { "icon", "res://assets/sprites/portraits/eye.png" },
             { "title", "A Morte" },
             { "dialog", "... Desculpe, criança, pois falhei em proteger-te. Vãos foram meus esforços, pois tu mesmo quisestes este fim. Agora, deves abraça-lo de acordo. " },
-            { "method", Callable.From( () => GameManager.GameEnd(2) ) }
+            { "method", default }
         }
     }
     },
